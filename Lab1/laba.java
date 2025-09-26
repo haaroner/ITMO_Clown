@@ -42,6 +42,7 @@ public class laba
 		{
 			x[i] = (float)(random.nextInt(210)/10.0)-11;
 		}
+		
 		printout();	
 	}
 }
