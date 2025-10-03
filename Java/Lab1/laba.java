@@ -24,7 +24,7 @@ public class laba
 			for(int j = 0; j < 20; ++j)
 			{
 				xj = x[j];
-				System.out.printf("%.5f", (float)calc(i, j, xj));
+				System.out.printf("%10.5f", (float)calc(i, j, xj));
 				System.out.print("  ");
 			}
 			System.out.println(" ");
