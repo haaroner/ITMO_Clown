@@ -1,6 +1,6 @@
 #!/bin/bash
-
-chmod -R 777 lab0
+clear
+chmod -R 700 lab0
 rm -R lab0
 mkdir -p lab0
 cd lab0
@@ -221,21 +221,23 @@ chmod 046 venonat5
 echo section 3
 
 ln venonat5 dragonite5/dusclops/scraftyvenonat
-
-chmod 700 pikachu2/chimchar/seel 
-chmod 700 seedot5/ralts 
+chmod u=rwx pikachu2/chimchar/seel 
+chmod u=rwx seedot5/ralts 
 cp -r seedot5 pikachu2/chimchar/seel
+
 chmod 066 seedot5/ralts
 chmod 576 pikachu2/chimchar/seel  
+
+echo ""
 
 cp ludicolo0 pikachu2/deerling/wigglytuff/
 ln -s venonat5 dragonite5/watchogvenonat
 ln -s venonat5 seedot5/sphealvenonat
 
-chmod 446 venonat5
+chmod 400 venonat5
 cat venonat5 > dragonite5/vigorothvenonat
 cat venonat5 > dragonite5/dusclops/masquerainvenonat
-chmod 046 venonat5
+# no chmod 046 venonat5  file used later
 
 
 cp ludicolo0 pikachu2/deerling/wigglytuff
@@ -250,11 +252,12 @@ ln seaking3 dragonite5/dusclops/masquerainseaking
 ln -s seedot5 Copy_76
 #List files tree
 #ls -lR
+
 #4
 echo section 4
-cat *5 */*5 */*/*5 | wc -l 2>/dev/null
+cat *5 */*5 */*/*5 2>/dev/null | wc -l 
 
-ls -lRt 2>>dev/null | tail -n 2
+ls -lRt 2>/dev/null | grep "studs"| tail -n 2 
 
 echo ""
 
@@ -266,11 +269,11 @@ cat ludicolo0 2>&1 | grep -vn "y$"
 
 echo ""
 
-cat pikachu2/* | sort -r | cat -n
+cat pikachu2/* 2>/dev/null| sort -r | cat -n
 
-echo""
+echo ""
 
-ls -lRt | head -n 6 | tail -n 4
+ls -lRt 2>&1 | grep "studs" |head -n 4
 
 echo ""
 
@@ -278,11 +281,11 @@ cat seedot5/{pidove,ralts,pidgey,spheal} | grep -n "fen"
 
 echo ""
 
-ls -lS v* */v* */*/v* | grep "clown" | head -n 2
+ls -lRS v* */v* */*/v* 2>/dev/null | grep "studs"| head -n 2
 
 echo ""
 
-cat dragonite5/dusclops/{masquerain,bellsprout,bidoof} dragonite5/vigoroth dragonite5/grovyle{blissey,machamp,conkeldurr,lotad} pikachu2/misdreavus pikachu2/chimchar/kabuto | grep -v "ron" 2>&1
+cat dragonite5/dusclops/{masquerain,bellsprout,bidoof} dragonite5/vigoroth dragonite5/grovyle/{blissey,machamp,conkeldurr,lotad} pikachu2/misdreavus pikachu2/chimchar/kabuto 2>&1 | grep -v "ron" 2>&1
 
 echo ""
 
@@ -291,20 +294,22 @@ cat *5 */*5 */*/*5 | sort -r
 echo ""
 mkdir tmp
 touch tmp/output
-cat venonat5 | wc -m >> venonat5 2>>tmp/output
+chmod 777 venonat5
+cat venonat5 2>>tmp/output | wc -m >> venonat5 2>>tmp/output
+chmod 046 venonat5
 
 echo ""
 
 cat seedot5/* 2>>tmp/output | grep -v "y$"
 
 #5
-echo section 5
+echo "section 5"
 rm -f seaking3 2>/dev/null
 rm -f dragonite5/dusclops/bidoof
 rm -f dragonite5/watchogvenon*
 rm -f dragonite5/scraftyvenon*
 rm -Rf dragonite5
-cd ~
-chmod -R 700 lab0
+cd ..
+chmod -R u+rw lab0
 rm -Rf lab0/pikachu2/chimchar
 #ls -lR
