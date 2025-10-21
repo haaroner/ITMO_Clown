@@ -12,12 +12,9 @@ public class FireBlast extends SpecialMove
 	protected void applyOppDamage(Pokemon def, double damage)
 	{
 		//with chance 10% make def pokemon burn
-		if(random.nextInt(10) < 7)
-		{
-			Effect e = new Effect();
-			e.burn(def);
-			def.setCondition(e);
-		}
+		Effect e = new Effect().chance(0.1);
+		e.burn(def);
+		def.setMod(Stat.HP, (int)damage);
 	}
 	
 	protected String describe()
