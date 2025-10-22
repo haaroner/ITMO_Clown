@@ -1,9 +1,7 @@
 import ru.ifmo.se.pokemon.*;
-import java.util.Random;
 
-public class Blizzard extends SpecialMove 
+public final class Blizzard extends SpecialMove 
 {
-	Random random = new Random();
 	public Blizzard()
 	{
 		super(Type.ICE, 110, 70);
@@ -14,6 +12,7 @@ public class Blizzard extends SpecialMove
 		def.setMod(Stat.HP, (int)damage);
 		Effect e = new Effect().chance(0.1);
 		e.freeze(def);
+		def.setMod(Stat.HP, (int)Math.round(damage));
 	}
 
 	protected String describe()

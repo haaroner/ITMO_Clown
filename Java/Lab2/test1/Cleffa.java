@@ -9,7 +9,7 @@ public class Cleffa extends Pokemon
 	{
 		super(name, level);
 		setType(Type.FAIRY);
-		setStats(hp, att, deff, spAtt, spDeff, speed);
+		setStats(50D, 25D, 28D, 45D, 55D, 15D);
 		DreamEater CleffaAttack1 = new DreamEater();
 		FireBlast CleffaAttack2 = new FireBlast();
 		this.setMove(CleffaAttack1, CleffaAttack2);

@@ -1,7 +1,7 @@
 import ru.ifmo.se.pokemon.*;
 import java.util.Random;
 
-public class FireBlast extends SpecialMove
+public final class FireBlast extends SpecialMove
 {
 	private Random random = new Random();
 	public FireBlast()
@@ -14,12 +14,12 @@ public class FireBlast extends SpecialMove
 		//with chance 10% make def pokemon burn
 		Effect e = new Effect().chance(0.1);
 		e.burn(def);
-		def.setMod(Stat.HP, (int)damage);
+		def.setMod(Stat.HP, (int)Math.round(damage));
 	}
 	
 	protected String describe()
 	{
-		return "burned";
+		return "Fire Blast";
 	}
 
 }

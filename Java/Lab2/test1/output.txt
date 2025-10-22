@@ -1,0 +1,417 @@
+Rotom Ivan from the team Greren enters the battle!
+Cleffa Clown from the team Purple enters the battle!
+Rotom Ivan Thunder Wave. 
+Cleffa Clown is paralyzed
+
+Cleffa Clown ест сон. 
+Critical hit!
+
+Cleffa Clown Fire Blast. 
+Critical hit!
+Rotom Ivan is burned
+Rotom Ivan loses 14 hit points.
+
+Rotom Ivan Thunder Wave. 
+
+Rotom Ivan loses 1 hit points.
+Rotom Ivan attacks. 
+
+
+Rotom Ivan loses 1 hit points.
+Cleffa Clown ест сон. 
+Critical hit!
+
+Rotom Ivan Thunder Wave. 
+
+Rotom Ivan loses 1 hit points.
+Phanpy Volodya from the team Greren enters the battle!
+Phanpy Volodya CONFIDE. 
+Cleffa Clown decreases special attack.
+
+
+Cleffa Clown hits himself in confusion. 
+Cleffa Clown loses 4 hit points.
+
+Phanpy Volodya CONFIDE. 
+Cleffa Clown decreases special attack.
+
+Cleffa Clown hits himself in confusion. 
+Cleffa Clown loses 4 hit points.
+
+Phanpy Volodya Growl. 
+Cleffa Clown decreases attack.
+
+Cleffa Clown ест сон. 
+Critical hit!
+
+Phanpy Volodya Growl. 
+Cleffa Clown decreases attack.
+
+Cleffa Clown hits himself in confusion. 
+Cleffa Clown loses 2147483647 hit points.
+
+Phanpy Volodya CONFIDE. 
+Cleffa Clown decreases special attack.
+
+Cleffa Clown hits himself in confusion. 
+Cleffa Clown loses 2147483647 hit points.
+
+Phanpy Volodya Slam. 
+Cleffa Clown loses 9 hit points.
+Cleffa Clown faints.
+Clefairy __ from the team Purple enters the battle!
+Phanpy Volodya Slam. 
+Clefairy __ loses 4 hit points.
+
+Clefairy __ ест сон. 
+
+Phanpy Volodya CONFIDE. 
+Clefairy __ decreases special attack.
+
+Clefairy __ ест сон. 
+
+Phanpy Volodya CONFIDE. 
+Clefairy __ decreases special attack.
+
+Clefairy __ METEOR MASH. 
+Phanpy Volodya loses 7 hit points.
+
+Phanpy Volodya Growl. 
+Clefairy __ decreases attack.
+
+Clefairy __ ест сон. 
+
+Phanpy Volodya Growl. 
+Clefairy __ decreases attack.
+
+Clefairy __ Fire Blast. 
+Phanpy Volodya is burned
+Phanpy Volodya restores 1 hit points.
+
+Phanpy Volodya loses 1 hit points.
+Phanpy Volodya CONFIDE. 
+Clefairy __ decreases special attack.
+
+Clefairy __ ест сон. 
+
+Phanpy Volodya loses 1 hit points.
+Phanpy Volodya Growl. 
+Clefairy __ decreases attack.
+
+Clefairy __ Fire Blast. 
+Phanpy Volodya loses 2 hit points.
+
+Phanpy Volodya loses 1 hit points.
+Phanpy Volodya Slam. 
+Clefairy __ restores 1 hit points.
+
+Clefairy __ Fire Blast. 
+Phanpy Volodya loses 3 hit points.
+
+Phanpy Volodya loses 1 hit points.
+Phanpy Volodya Slam. 
+Clefairy __ restores 1 hit points.
+
+Clefairy __ Fire Blast. 
+Phanpy Volodya loses 1 hit points.
+
+Phanpy Volodya loses 1 hit points.
+Phanpy Volodya Slam. 
+Clefairy __ restores 1 hit points.
+
+Clefairy __ ест сон. 
+
+Phanpy Volodya loses 1 hit points.
+Phanpy Volodya CONFIDE. 
+Clefairy __ decreases special attack.
+
+Clefairy __ Fire Blast. 
+Phanpy Volodya loses 5 hit points.
+Phanpy Volodya faints.
+Donphan Mike from the team Greren enters the battle!
+Clefairy __ ест сон. 
+
+Donphan Mike struggles. 
+Clefairy __ loses 4 hit points.
+Donphan Mike loses 1 hit points.
+
+Clefairy __ METEOR MASH. 
+Donphan Mike loses 3 hit points.
+
+Donphan Mike struggles. 
+Clefairy __ loses 5 hit points.
+Donphan Mike loses 1 hit points.
+
+Clefairy __ ест сон. 
+
+Donphan Mike struggles. 
+Clefairy __ loses 5 hit points.
+Donphan Mike loses 1 hit points.
+
+Clefairy __ METEOR MASH. 
+Donphan Mike loses 8 hit points.
+Donphan Mike faints.
+Team Greren loses its last Pokemon.
+The team Purple wins the battle!
+BATTLE ENDED
+Rotom Ivan from the team Purple enters the battle!
+Cleffa Clown from the team Black enters the battle!
+Rotom Ivan Thunder Wave. 
+Cleffa Clown is paralyzed
+
+Cleffa Clown ест сон. 
+Critical hit!
+
+Rotom Ivan Will O Wisp. 
+Cleffa Clown is burned
+
+
+Cleffa Clown loses 1 hit points.
+Rotom Ivan Thunder Wave. 
+Cleffa Clown is paralyzed
+
+Cleffa Clown Fire Blast. 
+Critical hit!
+Rotom Ivan is burned
+Rotom Ivan loses 21 hit points.
+Rotom Ivan faints.
+Phanpy Volodya from the team Purple enters the battle!
+Cleffa Clown Fire Blast. 
+Critical hit!
+Phanpy Volodya is burned
+Phanpy Volodya loses 20 hit points.
+Phanpy Volodya faints.
+Donphan Mike from the team Purple enters the battle!
+Donphan Mike ROCK POLISH. 
+Cleffa Clown increases speed.
+
+
+Donphan Mike ROCK POLISH. 
+Cleffa Clown increases speed.
+
+Cleffa Clown ест сон. 
+
+Donphan Mike ROCK POLISH. 
+Cleffa Clown increases speed.
+
+
+Cleffa Clown Fire Blast. 
+Donphan Mike is burned
+Donphan Mike loses 10 hit points.
+
+Donphan Mike struggles. 
+Cleffa Clown restores 1 hit points.
+
+Donphan Mike loses 1 hit points.
+Cleffa Clown Fire Blast. 
+Donphan Mike loses 7 hit points.
+
+Donphan Mike ROCK POLISH. 
+Cleffa Clown increases speed.
+
+Donphan Mike loses 1 hit points.
+Donphan Mike ROCK POLISH. 
+Cleffa Clown increases speed.
+
+
+Donphan Mike loses 1 hit points.
+Cleffa Clown ест сон. 
+
+Donphan Mike ROCK POLISH. 
+Cleffa Clown increases speed.
+
+Donphan Mike loses 1 hit points.
+Donphan Mike struggles. 
+Cleffa Clown restores 1 hit points.
+
+
+Donphan Mike loses 1 hit points.
+Team Purple loses its last Pokemon.
+The team Black wins the battle!
+BATTLE ENDED
+Rotom Ivan from the team Striped enters the battle!
+Cleffa Clown from the team Black enters the battle!
+Rotom Ivan CONFIDE. 
+Cleffa Clown decreases special attack.
+
+Cleffa Clown Fire Blast. 
+Rotom Ivan is burned
+Rotom Ivan loses 5 hit points.
+
+Rotom Ivan loses 1 hit points.
+Rotom Ivan CONFIDE. 
+Cleffa Clown decreases special attack.
+
+Cleffa Clown ест сон. 
+
+Rotom Ivan loses 1 hit points.
+Rotom Ivan Thunder Wave. 
+Cleffa Clown is paralyzed
+
+Cleffa Clown Fire Blast. 
+Critical hit!
+Rotom Ivan restores 1 hit points.
+
+Rotom Ivan loses 1 hit points.
+Cleffa Clown ест сон. 
+Critical hit!
+
+Rotom Ivan Thunder Wave. 
+
+Rotom Ivan loses 1 hit points.
+Cleffa Clown ест сон. 
+Critical hit!
+
+Rotom Ivan CONFIDE. 
+Cleffa Clown decreases special attack.
+
+Rotom Ivan loses 1 hit points.
+Cleffa Clown ест сон. 
+Critical hit!
+
+Rotom Ivan Thunder Wave. 
+
+Rotom Ivan loses 1 hit points.
+Cleffa Clown ест сон. 
+Critical hit!
+
+Rotom Ivan CONFIDE. 
+Cleffa Clown decreases special attack.
+
+Rotom Ivan loses 1 hit points.
+Cleffa Clown ест сон. 
+Critical hit!
+
+Rotom Ivan Thunder Wave. 
+
+Rotom Ivan loses 1 hit points.
+Cleffa Clown ест сон. 
+Critical hit!
+
+Rotom Ivan Thunder Wave. 
+
+Rotom Ivan loses 1 hit points.
+Rotom Ivan attacks. 
+
+
+Rotom Ivan loses 1 hit points.
+Cleffa Clown hits himself in confusion. 
+Cleffa Clown loses 4 hit points.
+
+Rotom Ivan attacks. 
+
+Rotom Ivan loses 1 hit points.
+Cleffa Clown Fire Blast. 
+Critical hit!
+Rotom Ivan loses 10 hit points.
+Rotom Ivan faints.
+Phanpy Volodya from the team Striped enters the battle!
+Cleffa Clown ест сон. 
+Critical hit!
+
+Phanpy Volodya CONFIDE. 
+Cleffa Clown decreases special attack.
+
+Cleffa Clown hits himself in confusion. 
+Cleffa Clown loses 3 hit points.
+
+Phanpy Volodya CONFIDE. 
+Cleffa Clown decreases special attack.
+
+Cleffa Clown ест сон. 
+Critical hit!
+
+Phanpy Volodya CONFIDE. 
+Cleffa Clown decreases special attack.
+
+Cleffa Clown ест сон. 
+Critical hit!
+
+Phanpy Volodya Slam. 
+Cleffa Clown loses 8 hit points.
+
+Cleffa Clown Fire Blast. 
+Critical hit!
+Phanpy Volodya is burned
+Phanpy Volodya loses 9 hit points.
+
+Phanpy Volodya Slam. 
+Cleffa Clown restores 1 hit points.
+
+Phanpy Volodya loses 1 hit points.
+Phanpy Volodya Growl. 
+Cleffa Clown decreases attack.
+
+
+Phanpy Volodya loses 1 hit points.
+Cleffa Clown ест сон. 
+Critical hit!
+
+Phanpy Volodya Growl. 
+Cleffa Clown decreases attack.
+
+Phanpy Volodya loses 1 hit points.
+Cleffa Clown ест сон. 
+Critical hit!
+
+Phanpy Volodya Growl. 
+Cleffa Clown decreases attack.
+
+Phanpy Volodya loses 1 hit points.
+Cleffa Clown Fire Blast. 
+Critical hit!
+Phanpy Volodya loses 9 hit points.
+Phanpy Volodya faints.
+Donphan Mike from the team Striped enters the battle!
+Donphan Mike ROCK POLISH. 
+Cleffa Clown increases speed.
+
+
+Donphan Mike ROCK POLISH. 
+Cleffa Clown increases speed.
+
+Cleffa Clown ест сон. 
+
+Donphan Mike struggles. 
+Cleffa Clown loses 8 hit points.
+Donphan Mike loses 2 hit points.
+Cleffa Clown faints.
+Clefairy __ from the team Black enters the battle!
+Donphan Mike struggles. 
+Clefairy __ loses 9 hit points.
+Donphan Mike loses 2 hit points.
+
+Clefairy __ Fire Blast. 
+Donphan Mike is burned
+Donphan Mike loses 6 hit points.
+
+Donphan Mike loses 1 hit points.
+Donphan Mike struggles. 
+Clefairy __ restores 1 hit points.
+
+Clefairy __ Fire Blast. 
+Donphan Mike loses 7 hit points.
+
+Donphan Mike loses 1 hit points.
+Donphan Mike struggles. 
+Clefairy __ restores 1 hit points.
+
+Clefairy __ Fire Blast. 
+Donphan Mike loses 6 hit points.
+
+Donphan Mike loses 1 hit points.
+Donphan Mike struggles. 
+Clefairy __ restores 1 hit points.
+
+Clefairy __ ест сон. 
+
+Donphan Mike loses 1 hit points.
+Donphan Mike struggles. 
+Clefairy __ restores 1 hit points.
+
+Clefairy __ METEOR MASH. 
+Donphan Mike loses 4 hit points.
+Donphan Mike faints.
+Team Striped loses its last Pokemon.
+The team Black wins the battle!
+BATTLE ENDED

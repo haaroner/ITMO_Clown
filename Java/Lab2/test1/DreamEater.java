@@ -1,10 +1,6 @@
-import ru.ifmo.se.pokemon.SpecialMove;
-import ru.ifmo.se.pokemon.Pokemon;
-import ru.ifmo.se.pokemon.Stat;
-import ru.ifmo.se.pokemon.Type;
-import ru.ifmo.se.pokemon.Status;
+import ru.ifmo.se.pokemon.*;
 
-public class DreamEater extends SpecialMove
+public final class DreamEater extends SpecialMove
 {
 	double power = 100.0, accuracy = 100.0;
 	private Status oppStatus;
@@ -18,7 +14,7 @@ public class DreamEater extends SpecialMove
 	{
 		if(oppStatus == Status.SLEEP)
 		{
-			att.setMod(Stat.HP, (int)(-1.0 * (att.getStat(Stat.HP) - att.getHP()) / 2.0));
+			att.setMod(Stat.HP, (int)Math.round(-1.0 * (att.getStat(Stat.HP) - att.getHP()) / 2.0));
 		}
 	}
 
@@ -27,7 +23,7 @@ public class DreamEater extends SpecialMove
 		oppStatus = def.getCondition();
 		if(oppStatus == Status.SLEEP)
 		{
-			def.setMod(Stat.HP, (int)damage);
+			def.setMod(Stat.HP, (int)Math.round(damage));
 		}
 	}
 	
