@@ -5,8 +5,7 @@ public final class Will_O_Wisp extends StatusMove {
 		super(Type.FIRE, 1, 85);
 	}
 
-	protected void applyOppEffects(Pokemon p)
-	{
+	protected void applyOppEffects(Pokemon p) {
 		Effect effect = new Effect();
 		effect.burn(p);
 	}

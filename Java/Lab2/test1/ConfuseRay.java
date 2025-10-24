@@ -9,4 +9,8 @@ public final class ConfuseRay extends StatusMove {
       Effect effect = new Effect();
       effect.confuse(p);
    }
+
+   protected String describe() {
+      return "confuse";
+   }
 }

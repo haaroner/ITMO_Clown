@@ -1,10 +1,11 @@
 import ru.ifmo.se.pokemon.*;
 
 public class Clefairy extends Cleffa {
+   double hp = 70D, att = 45D, def = 48D, spAtt = 60D, spDeff = 65D, sp = 35D;
 
    public Clefairy(String name, int level) {
       super(name, level);
-      this.setStats(70D, 45D, 48D, 60D, 65D, 35D);
+      this.setStats(hp, att, def, spAtt, spDeff, sp);
       MeteorMash ClefairyAttack1 = new MeteorMash();
       this.addMove(ClefairyAttack1);
    }
