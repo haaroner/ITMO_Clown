@@ -1,0 +1,456 @@
+
+src/Common/Common.java:10: error: cannot find symbol
+   NameRecord curNameRecord;
+   ^
+  symbol:   class NameRecord
+  location: class Common
+src/Alliens/Alliens.java:5: error: cannot find symbol
+public final class Alliens extends Creature{
+                                   ^
+  symbol: class Creature
+src/Alliens/Alliens.java:6: error: cannot find symbol
+   Thing temp;
+   ^
+  symbol:   class Thing
+  location: class Alliens
+src/Alliens/Alliens.java:11: error: cannot find symbol
+   public void moveTo(Place place_to) throws Exception{
+                      ^
+  symbol:   class Place
+  location: class Alliens
+src/Alliens/Alliens.java:32: error: cannot find symbol
+   public void changeMood(CreatureState my_state) throws MyException {
+                          ^
+  symbol:   class CreatureState
+  location: class Alliens
+src/Alliens/Alliens.java:32: error: cannot find symbol
+   public void changeMood(CreatureState my_state) throws MyException {
+                                                      ^
+  symbol:   class MyException
+  location: class Alliens
+src/Sound/Sound.java:3: error: cannot find symbol
+public class Sound extends Thing{
+                           ^
+  symbol: class Thing
+src/Sound/Sound.java:8: error: cannot find symbol
+   public void occure(Creature myCreature) throws MyException {
+                      ^
+  symbol:   class Creature
+  location: class Sound
+src/Sound/Sound.java:8: error: cannot find symbol
+   public void occure(Creature myCreature) throws MyException {
+                                                  ^
+  symbol:   class MyException
+  location: class Sound
+src/Common/Common.java:14: error: cannot find symbol
+      curNameRecord = new NameRecord(name, 20);
+                          ^
+  symbol:   class NameRecord
+  location: class Common
+src/Actor/Actor.java:16: error: GameObjects is not public in Creature; cannot be accessed from outside package
+      this.GameObjects = new_Objects;
+          ^
+src/Actor/Actor.java:31: error: cannot find symbol
+      if(place_to == Place.OutOfWorld)
+                     ^
+  symbol:   variable Place
+  location: class Actor
+src/Actor/Actor.java:33: error: cannot find symbol
+      else if(place_to == Place.Camp)
+                          ^
+  symbol:   variable Place
+  location: class Actor
+src/Actor/Actor.java:48: error: cannot find symbol
+      if(this.cur_Place == Place.Camp)
+                           ^
+  symbol:   variable Place
+  location: class Actor
+src/Actor/Actor.java:50: error: GameObjects is not public in Creature; cannot be accessed from outside package
+         if(this.GameObjects != null)
+                ^
+src/Actor/Actor.java:52: error: GameObjects is not public in Creature; cannot be accessed from outside package
+            for(Thing CurThing: this.GameObjects)
+                                    ^
+src/Actor/Actor.java:54: error: cannot find symbol
+               if(CurThing.getType() == ThingType.back)
+                                        ^
+  symbol:   variable ThingType
+  location: class Actor
+src/Actor/Actor.java:58: error: cannot find symbol
+                     if(result.getType() == ThingType.back)
+                                            ^
+  symbol:   variable ThingType
+  location: class Actor
+src/Actor/Actor.java:59: error: name has protected access in Common
+                        System.out.println(this.name + " достали что-то похожее на " + result.name);
+                                                                                             ^
+src/Actor/Actor.java:61: error: alive has protected access in Common
+                     if(result.alive == true && result.getType() == ThingType.Hero)
+                              ^
+src/Actor/Actor.java:61: error: cannot find symbol
+                     if(result.alive == true && result.getType() == ThingType.Hero)
+                                                                    ^
+  symbol:   variable ThingType
+  location: class Actor
+src/Actor/Actor.java:64: error: cannot find symbol
+                     changeMood(CreatureState.Happy);
+                                ^
+  symbol:   variable CreatureState
+  location: class Actor
+src/Actor/Actor.java:71: error: cannot find symbol
+      if(this.cur_Place==Place.OutOfWorld) {
+                         ^
+  symbol:   variable Place
+  location: class Actor
+src/Actor/Actor.java:72: error: cannot find symbol
+         if(this.curState == CreatureState.Happy) {
+                             ^
+  symbol:   variable CreatureState
+  location: class Actor
+src/Actor/Actor.java:75: error: cannot find symbol
+         else if(this.curState == CreatureState.Interested){
+                                  ^
+  symbol:   variable CreatureState
+  location: class Actor
+src/Thing/Thing.java:31: error: cannot find symbol
+      if(this.cur_Type == ThingType.Hero)
+                          ^
+  symbol:   variable ThingType
+  location: class Thing
+src/Alliens/Alliens.java:13: error: cannot find symbol
+      this.cur_Place = place_to;
+          ^
+  symbol: variable cur_Place
+src/Alliens/Alliens.java:14: error: cannot find symbol
+      if(this.alive == false) {
+             ^
+  symbol: variable alive
+src/Alliens/Alliens.java:15: error: cannot find symbol
+         System.out.println(name + " try to go somewhere, but he is dead haha");
+                            ^
+  symbol:   variable name
+  location: class Alliens
+src/Alliens/Alliens.java:18: error: cannot find symbol
+      if(place_to == Place.OutOfWorld)
+                     ^
+  symbol:   variable Place
+  location: class Alliens
+src/Alliens/Alliens.java:19: error: cannot find symbol
+         System.out.println(name+" goes to outer world");
+                            ^
+  symbol:   variable name
+  location: class Alliens
+src/Alliens/Alliens.java:20: error: cannot find symbol
+      else if(place_to == Place.Camp)
+                          ^
+  symbol:   variable Place
+  location: class Alliens
+src/Alliens/Alliens.java:21: error: cannot find symbol
+         System.out.println(name+" goes to the camp");
+                            ^
+  symbol:   variable name
+  location: class Alliens
+src/Alliens/Alliens.java:23: error: cannot find symbol
+         throw new MyException("UNEXPECTED PLACE STOP THE STORY!!!", "test");
+                   ^
+  symbol:   class MyException
+  location: class Alliens
+src/Alliens/Alliens.java:31: error: method does not override or implement a method from a supertype
+   @Override
+   ^
+src/Alliens/Alliens.java:33: error: cannot find symbol
+      throw new MyException("This creature doesnt have any emotions =<", this.toString());
+                ^
+  symbol:   class MyException
+  location: class Alliens
+src/Alliens/Alliens.java:33: error: cannot find symbol
+      throw new MyException("This creature doesnt have any emotions =<", this.toString());
+                                                                             ^
+  symbol: method toString()
+src/Alliens/Alliens.java:38: error: cannot find symbol
+      if(this.cur_Place == Place.Camp)
+             ^
+  symbol: variable cur_Place
+src/Alliens/Alliens.java:38: error: cannot find symbol
+      if(this.cur_Place == Place.Camp)
+                           ^
+  symbol:   variable Place
+  location: class Alliens
+src/Alliens/Alliens.java:41: error: cannot find symbol
+         if(this.OpponentCreature.getPlace() == Place.Camp)
+                ^
+  symbol: variable OpponentCreature
+src/Alliens/Alliens.java:41: error: cannot find symbol
+         if(this.OpponentCreature.getPlace() == Place.Camp)
+                                                ^
+  symbol:   variable Place
+  location: class Alliens
+src/Alliens/Alliens.java:42: error: cannot find symbol
+            this.OpponentCreature.die();
+                ^
+  symbol: variable OpponentCreature
+src/Alliens/Alliens.java:43: error: cannot find symbol
+         for(Thing CurThing: this.GameObjects)
+                                 ^
+  symbol: variable GameObjects
+src/Alliens/Alliens.java:43: error: cannot find symbol
+         for(Thing CurThing: this.GameObjects)
+             ^
+  symbol:   class Thing
+  location: class Alliens
+src/Alliens/Alliens.java:45: error: cannot find symbol
+            if(CurThing.getType() == ThingType.Hero)
+                                     ^
+  symbol:   variable ThingType
+  location: class Alliens
+src/Alliens/Alliens.java:51: error: cannot find symbol
+         for(Thing CurThing: this.GameObjects)
+                                 ^
+  symbol: variable GameObjects
+src/Alliens/Alliens.java:51: error: cannot find symbol
+         for(Thing CurThing: this.GameObjects)
+             ^
+  symbol:   class Thing
+  location: class Alliens
+src/Alliens/Alliens.java:53: error: cannot find symbol
+            if(CurThing.getType() == ThingType.back)
+                                     ^
+  symbol:   variable ThingType
+  location: class Alliens
+src/Alliens/Alliens.java:57: error: cannot find symbol
+            moveTo(Place.OutOfWorld);
+                   ^
+  symbol:   variable Place
+  location: class Alliens
+src/Main/Main.java:7: error: cannot find symbol
+      ArrayList<Thing> background = new ArrayList<>();
+                ^
+  symbol:   class Thing
+  location: class Main
+src/Main/Main.java:8: error: cannot find symbol
+      Alliens gopniki = new Alliens("gopniki");
+      ^
+  symbol:   class Alliens
+  location: class Main
+src/Main/Main.java:8: error: cannot find symbol
+      Alliens gopniki = new Alliens("gopniki");
+                            ^
+  symbol:   class Alliens
+  location: class Main
+src/Main/Main.java:9: error: cannot find symbol
+      Actor vasya = new Actor("Vasya");
+      ^
+  symbol:   class Actor
+  location: class Main
+src/Main/Main.java:9: error: cannot find symbol
+      Actor vasya = new Actor("Vasya");
+                        ^
+  symbol:   class Actor
+  location: class Main
+src/Main/Main.java:10: error: cannot find symbol
+      Thing dog = new Thing("bobik", ThingType.Hero);
+      ^
+  symbol:   class Thing
+  location: class Main
+src/Main/Main.java:10: error: cannot find symbol
+      Thing dog = new Thing("bobik", ThingType.Hero);
+                      ^
+  symbol:   class Thing
+  location: class Main
+src/Main/Main.java:10: error: cannot find symbol
+      Thing dog = new Thing("bobik", ThingType.Hero);
+                                     ^
+  symbol:   variable ThingType
+  location: class Main
+src/Main/Main.java:11: error: cannot find symbol
+      Thing tuk = new Thing("grobik", ThingType.back);
+      ^
+  symbol:   class Thing
+  location: class Main
+src/Main/Main.java:11: error: cannot find symbol
+      Thing tuk = new Thing("grobik", ThingType.back);
+                      ^
+  symbol:   class Thing
+  location: class Main
+src/Main/Main.java:11: error: cannot find symbol
+      Thing tuk = new Thing("grobik", ThingType.back);
+                                      ^
+  symbol:   variable ThingType
+  location: class Main
+src/Main/Main.java:12: error: cannot find symbol
+      Sound mySound = new Sound("Земные знакомые звуки");
+      ^
+  symbol:   class Sound
+  location: class Main
+src/Main/Main.java:12: error: cannot find symbol
+      Sound mySound = new Sound("Земные знакомые звуки");
+                          ^
+  symbol:   class Sound
+  location: class Main
+src/Main/Main.java:20: error: cannot find symbol
+      gopniki.moveTo(Place.Camp);
+                     ^
+  symbol:   variable Place
+  location: class Main
+src/Main/Main.java:21: error: cannot find symbol
+      vasya.moveTo(Place.Camp);
+                   ^
+  symbol:   variable Place
+  location: class Main
+src/Main/Main.java:26: error: cannot find symbol
+      vasya.moveTo(Place.OutOfWorld);
+                   ^
+  symbol:   variable Place
+  location: class Main
+src/Sound/Sound.java:5: error: cannot find symbol
+      super(name, ThingType.Sound);
+                  ^
+  symbol:   variable ThingType
+  location: class Sound
+src/Sound/Sound.java:9: error: cannot find symbol
+         myCreature.changeMood(CreatureState.Interested);
+                               ^
+  symbol:   variable CreatureState
+  location: class Sound
+src/Sound/Sound.java:10: error: cannot find symbol
+         System.out.println(this.name + " раздались где-то в далеке");
+                                ^
+  symbol: variable name
+73 errors
+src/Actor/Actor.java:56: error: cannot find symbol
+               if(CurThing.getType() == ThingType.back)
+                                        ^
+  symbol:   variable ThingType
+  location: class Actor
+src/Actor/Actor.java:60: error: cannot find symbol
+                     if(result.getType() == ThingType.back)
+                                            ^
+  symbol:   variable ThingType
+  location: class Actor
+src/Actor/Actor.java:61: error: name has protected access in Common
+                        System.out.println(this.name + " достали что-то похожее на " + result.name);
+                                                                                             ^
+src/Actor/Actor.java:63: error: alive has protected access in Common
+                     if(result.alive == true && result.getType() == ThingType.Hero)
+                              ^
+src/Actor/Actor.java:63: error: cannot find symbol
+                     if(result.alive == true && result.getType() == ThingType.Hero)
+                                                                    ^
+  symbol:   variable ThingType
+  location: class Actor
+src/Actor/Actor.java:66: error: cannot find symbol
+                     changeMood(CreatureState.Happy);
+                                ^
+  symbol:   variable CreatureState
+  location: class Actor
+src/Actor/Actor.java:74: error: cannot find symbol
+         if(this.curState == CreatureState.Happy) {
+                             ^
+  symbol:   variable CreatureState
+  location: class Actor
+src/Actor/Actor.java:77: error: cannot find symbol
+         else if(this.curState == CreatureState.Interested){
+                                  ^
+  symbol:   variable CreatureState
+  location: class Actor
+src/Alliens/Alliens.java:50: error: cannot find symbol
+            if(CurThing.getType() == ThingType.Hero)
+                                     ^
+  symbol:   variable ThingType
+  location: class Alliens
+src/Alliens/Alliens.java:58: error: cannot find symbol
+            if(CurThing.getType() == ThingType.back)
+                                     ^
+  symbol:   variable ThingType
+  location: class Alliens
+src/Main/Main.java:7: error: cannot find symbol
+      ArrayList<Thing> background = new ArrayList<>();
+                ^
+  symbol:   class Thing
+  location: class Main
+src/Main/Main.java:8: error: cannot find symbol
+      Alliens gopniki = new Alliens("gopniki");
+      ^
+  symbol:   class Alliens
+  location: class Main
+src/Main/Main.java:8: error: cannot find symbol
+      Alliens gopniki = new Alliens("gopniki");
+                            ^
+  symbol:   class Alliens
+  location: class Main
+src/Main/Main.java:9: error: cannot find symbol
+      Actor vasya = new Actor("Vasya");
+      ^
+  symbol:   class Actor
+  location: class Main
+src/Main/Main.java:9: error: cannot find symbol
+      Actor vasya = new Actor("Vasya");
+                        ^
+  symbol:   class Actor
+  location: class Main
+src/Main/Main.java:10: error: cannot find symbol
+      Thing dog = new Thing("bobik", ThingType.Hero);
+      ^
+  symbol:   class Thing
+  location: class Main
+src/Main/Main.java:10: error: cannot find symbol
+      Thing dog = new Thing("bobik", ThingType.Hero);
+                      ^
+  symbol:   class Thing
+  location: class Main
+src/Main/Main.java:10: error: cannot find symbol
+      Thing dog = new Thing("bobik", ThingType.Hero);
+                                     ^
+  symbol:   variable ThingType
+  location: class Main
+src/Main/Main.java:11: error: cannot find symbol
+      Thing tuk = new Thing("grobik", ThingType.back);
+      ^
+  symbol:   class Thing
+  location: class Main
+src/Main/Main.java:11: error: cannot find symbol
+      Thing tuk = new Thing("grobik", ThingType.back);
+                      ^
+  symbol:   class Thing
+  location: class Main
+src/Main/Main.java:11: error: cannot find symbol
+      Thing tuk = new Thing("grobik", ThingType.back);
+                                      ^
+  symbol:   variable ThingType
+  location: class Main
+src/Main/Main.java:12: error: cannot find symbol
+      Sound mySound = new Sound("Земные знакомые звуки");
+      ^
+  symbol:   class Sound
+  location: class Main
+src/Main/Main.java:12: error: cannot find symbol
+      Sound mySound = new Sound("Земные знакомые звуки");
+                          ^
+  symbol:   class Sound
+  location: class Main
+src/Main/Main.java:20: error: cannot find symbol
+      gopniki.moveTo(Place.Camp);
+                     ^
+  symbol:   variable Place
+  location: class Main
+src/Main/Main.java:21: error: cannot find symbol
+      vasya.moveTo(Place.Camp);
+                   ^
+  symbol:   variable Place
+  location: class Main
+src/Main/Main.java:26: error: cannot find symbol
+      vasya.moveTo(Place.OutOfWorld);
+                   ^
+  symbol:   variable Place
+  location: class Main
+src/Sound/Sound.java:9: error: cannot find symbol
+      super(name, ThingType.Sound);
+                  ^
+  symbol:   variable ThingType
+  location: class Sound
+src/Sound/Sound.java:13: error: cannot find symbol
+         myCreature.changeMood(CreatureState.Interested);
+                               ^
+  symbol:   variable CreatureState
+  location: class Sound
+28 errors
