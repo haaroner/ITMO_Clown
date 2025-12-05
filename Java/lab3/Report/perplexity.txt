@@ -10,12 +10,10 @@ public void fight(Creature opponent) {
             }
         }
         
-        // Атака opponent (если оба еще живы)
-        if (this.isAlive() && opponent.isAlive()) {
-            int attackChance = (int) (Math.random() * 11); // 0-10
-            if (attackChance < opponent.attackPower) {
-                this.die();
-            }
-        }
+        // Атака opponent
+         int attackChance = (int) (Math.random() * 11); // 0-10
+         if (attackChance < opponent.attackPower) {
+               this.die();
+         }
     }
 }
