@@ -1,0 +1,19 @@
+public void fight(Creature opponent) {
+    System.out.println(this.getName() + " и " + opponent.getName() + " встретились лицом к лицу!");
+    
+    while (this.isAlive() && opponent.isAlive()) {
+        // Атака this
+        if (this.isAlive() && opponent.isAlive()) {
+            int attackChance = (int) (Math.random() * 11); // 0-10
+            if (attackChance < this.attackPower) {
+                opponent.die();
+            }
+        }
+        
+        // Атака opponent
+         int attackChance = (int) (Math.random() * 11); // 0-10
+         if (attackChance < opponent.attackPower) {
+               this.die();
+         }
+    }
+}

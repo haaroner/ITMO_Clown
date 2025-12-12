@@ -1,0 +1,87 @@
+import java.util.Random;
+
+public class Creature {
+    private String name;
+    private int attackPower;
+    private boolean alive;
+    private Random random;
+    
+    public Creature(String name, int attackPower) {
+        this.name = name;
+        this.attackPower = attackPower;
+        this.alive = true;
+        this.random = new Random();
+    }
+    
+    public void fight(Creature opponent) {
+        // 1) Вывести что два существа встретились лицом к лицу
+        System.out.println(this.name + " и " + opponent.getName() + " встретились лицом к лицу!");
+        
+        // Цикл боя продолжается, пока оба существа живы
+        while (this.isAlive() && opponent.isAlive()) {
+            System.out.println("\n--- Ход боя ---");
+            
+            // Первое существо атакует
+            System.out.println(this.name + " атакует!");
+            int roll1 = random.nextInt(11); // случайное число от 0 до 10
+            System.out.println("Бросок кубика: " + roll1 + " против силы атаки: " + this.attackPower);
+            
+            if (roll1 >= this.attackPower) {
+                System.out.println(this.name + " попадает по " + opponent.getName() + "!");
+                opponent.die();
+            } else {
+                System.out.println(this.name + " промахивается!");
+            }
+            
+            // Проверяем, жив ли еще оппонент
+            if (!opponent.isAlive()) {
+                break;
+            }
+            
+            // Второе существо атакует
+            System.out.println("\n" + opponent.getName() + " контратакует!");
+            int roll2 = random.nextInt(11); // случайное число от 0 до 10
+            System.out.println("Бросок кубика: " + roll2 + " против силы атаки: " + opponent.getAttackPower());
+            
+            if (roll2 >= opponent.getAttackPower()) {
+                System.out.println(opponent.getName() + " попадает по " + this.name + "!");
+                this.die();
+            } else {
+                System.out.println(opponent.getName() + " промахивается!");
+            }
+        }
+        
+        // Определяем победителя
+        if (this.isAlive()) {
+            System.out.println("\n" + this.name + " побеждает в бою!");
+        } else if (opponent.isAlive()) {
+            System.out.println("\n" + opponent.getName() + " побеждает в бою!");
+        }
+    }
+    
+    public void die() {
+        this.alive = false;
+        System.out.println(this.name + " погибает!");
+    }
+    
+    // Геттеры
+    public String getName() {
+        return name;
+    }
+    
+    public boolean isAlive() {
+        return alive;
+    }
+    
+    public int getAttackPower() {
+        return attackPower;
+    }
+    
+    // Пример использования
+    public static void main(String[] args) {
+        Creature hero = new Creature("Герой", 6);
+        Creature monster = new Creature("Монстр", 5);
+        
+        hero.fight(monster);
+    }
+}
