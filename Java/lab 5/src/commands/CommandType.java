@@ -4,6 +4,7 @@ public enum CommandType {
     info(),
     exit(),
     clear(),
-    getCollection(),
-    save()
+    show(),
+    save(),
+    insert()
 }

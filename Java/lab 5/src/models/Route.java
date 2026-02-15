@@ -8,7 +8,8 @@ import Utility.Element;
 import java.util.Objects;
 
 public class Route extends Element{
-    @CsvBindByName private Integer id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+    private static Integer maxId = 0;
+    @CsvBindByName private Integer id = 0; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     @CsvBindByName private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
     @CsvBindByName private Integer coordinatesId;
@@ -21,13 +22,22 @@ public class Route extends Element{
     @CsvBindByName private Integer toId;
     @CsvBindByName private long distance; //Значение поля должно быть больше 1
     //TODO сделать сеттеры и забиндить подклассы через спомог переменные и в спомог классы добавить нужные сеттеры, вызываемые в конструкторе?
-    public Route (String name, Coordinates coordinates, Location from, Location to, long distance) {
+    public Route (Integer id, String name, Coordinates coordinates,  Location from, Location to, long distance) {
+        this.id = id;
         this.name = name;
         this.coordinates = coordinates;
         this.from = from;
         this.to = to;
         this.distance = distance;
         this.creationDate = new java.util.Date();
+        this.coordinatesId = this.coordinates.getId();
+        this.fromId = this.from.getId();
+        this.toId = this.to.getId();
+        this.updateMaxId();
+    }
+
+    public void updateMaxId() {
+        maxId = Math.max(this.id, maxId);
     }
 
     public Route() {
@@ -36,6 +46,10 @@ public class Route extends Element{
 
     public void setId(CollectionManager manager){
         this.id = manager.getCollection().values().stream().filter(Objects::nonNull).mapToInt(value -> value.getId()).max().orElse(-1) + 1;
+    }
+
+    public static Integer getMaxId() {
+        return maxId;
     }
 
     public void setFrom(Location from) {
@@ -55,11 +69,18 @@ public class Route extends Element{
     public boolean validate() {
         if(id == null || id <= 0) return false;
         if(name == null || name.isEmpty()) return false;
+
         if(coordinates == null) return false;
+        if(!coordinates.validate()) return false;
+
         if(creationDate == null) return false;
+
         if(from == null) return false;
+        if(!from.validate()) return false;
+
         if(to == null) return false;
-        if(distance > 1) return false;
+        if(!to.validate()) return false;
+        if(distance < 1) return false;
 
         return true;
     }
@@ -83,7 +104,9 @@ public class Route extends Element{
 
     @Override
     public String toString() {
-        return "id: " + id.toString() + " name: " + name + " coordinates: " + coordinates.toString() + " creationDate: " + creationDate.toString() +
+        if(this.validate())
+            return "id: " + id.toString() + " name: " + name + " coordinates: " + coordinates.toString() + " creationDate: " + creationDate.toString() +
                 " from: " + from.toString() + " to: " + to.toString();
+        return "Route have not passed validation test, may be some data is missing";
     }
 }

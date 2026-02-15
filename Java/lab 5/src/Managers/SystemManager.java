@@ -7,8 +7,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.opencsv.bean.ColumnPositionMappingStrategy;
-
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import java.io.Writer;
@@ -18,11 +16,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import com.opencsv.bean.CsvToBeanBuilder;
-import com.opencsv.bean.CsvToBean;
 
 import Utility.Element;
-import com.opencsv.exceptions.CsvDataTypeMismatchException;
-import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import commands.*;
 import models.Coordinates;
 import models.Location;
@@ -37,34 +32,43 @@ public class SystemManager {
 
         }
 
-    static public void init(String[] fileName) {
-           // if(fileName.length > 0)
-             //   scanFile(fileName[0]);
-            // for(Coordinates coordinate: readCoordinates())
-            //System.out.println(coordinate.toString());
-
-            //for(Location location: readLocation())
-              //  System.out.println(location.toString());
-
-           // for(Route route: readRoutes())
-            //    System.out.println(route.toString());
-            LinkedHashMap<Integer, Element> data = getNewData(readRoutes(), readCoordinates(), readLocation());
-            for (Map.Entry<Integer, Element> entry : data.entrySet()) {
-                System.out.println(entry.getKey() + ": " + entry.getValue().toString());
-
+    static public void init(String[] fileNames) {
+            if(fileNames.length < 3) {
+                System.out.println("3 file`s names should be given \n exiting...");
+                System.exit(1);
             }
-            collectionManager.setCollection(data);
+            else {
+                try {
+                    LinkedHashMap<Integer, Element> data = getNewData(readRoutes(fileNames[0]), readCoordinates(fileNames[1]), readLocation(fileNames[2]));
+                    for (Map.Entry<Integer, Element> entry : data.entrySet()) {
+                        System.out.println(entry.getKey() + ": " + entry.getValue().toString());
+
+                    }
+                    collectionManager.setCollection(data);
+                }
+                catch (NullPointerException e) {
+                    System.err.println("Some of data might be damaged.");
+                }
+            }
             //TODO вставить парсинг Route и распихать по id-шникам распаршенные подразделы
         }
-    static private List<Coordinates> readCoordinates() {
-            try(BufferedReader fileReader = Files.newBufferedReader(Paths.get("src/coordinates.csv"))) {//TODO выкинуть в отдельную папку
-                List<Coordinates> rawData= new CsvToBeanBuilder<Coordinates>(fileReader)
-                        .withType(Coordinates.class)
-                        .withIgnoreLeadingWhiteSpace(true)
-                        .withSeparator(',')
-                        .build()
-                        .parse();
-                return rawData;
+    static private List<Coordinates> readCoordinates(String file) {
+            try(BufferedReader fileReader = Files.newBufferedReader(Paths.get(file))) {//TODO выкинуть в отдельную папку
+                try {
+                    List<Coordinates> rawData = new CsvToBeanBuilder<Coordinates>(fileReader)
+                            .withType(Coordinates.class)
+                            .withIgnoreLeadingWhiteSpace(true)
+                            .withSeparator(',')
+                            .build()
+                            .parse();
+                    for(Coordinates coordinates: rawData)
+                        coordinates.updateMaxId();
+                    return rawData;
+                }
+                catch (RuntimeException e){
+                    System.err.println("Problem in parsing. File :" + file + ", Line: ");
+                    return null;
+                }
             }
             catch (FileNotFoundException e) {
                 System.err.println("file not found");
@@ -74,17 +78,29 @@ public class SystemManager {
                 System.err.println("file not found");
                 return null;//TODO check nonull in init!!
             }
+            catch (Throwable e) {
+                System.err.println("unexpected exception occured");
+                return null;
+            }
         }
 
-    static private List<Location> readLocation() {
-        try(BufferedReader fileReader = Files.newBufferedReader(Paths.get("src/location.csv"))) {//TODO выкинуть в отдельную папку
-            List<Location> rawData= new CsvToBeanBuilder<Location>(fileReader)
-                    .withType(Location.class)
-                    .withIgnoreLeadingWhiteSpace(true)
-                    .withSeparator(',')
-                    .build()
-                    .parse();
-            return rawData;
+    static private List<Location> readLocation(String file) {
+        try(BufferedReader fileReader = Files.newBufferedReader(Paths.get(file))) {//TODO выкинуть в отдельную папку
+            try {
+                List<Location> rawData= new CsvToBeanBuilder<Location>(fileReader)
+                        .withType(Location.class)
+                        .withIgnoreLeadingWhiteSpace(true)
+                        .withSeparator(',')
+                        .build()
+                        .parse();
+                for(Location location: rawData)
+                    location.updateMaxId();
+                return rawData;
+            }
+             catch (RuntimeException e){
+                System.err.println("Problem in parsing. File :" + file + ", Line: ");
+                return null;
+            }
         }
         catch (FileNotFoundException e) {
             System.err.println("file not found");
@@ -93,18 +109,31 @@ public class SystemManager {
         catch (IOException e) {
             System.err.println("file not found");
             return null;//TODO check nonull in init!!
+        }
+        catch (Throwable e) {
+            System.err.println("unexpected exception occured");
+            return null;
         }
     }
 
-    static private List<Route> readRoutes() {
-        try(BufferedReader fileReader = Files.newBufferedReader(Paths.get("src/data.csv"))) {//TODO выкинуть в отдельную папку
-            List<Route> rawData= new CsvToBeanBuilder<Route>(fileReader)
-                    .withType(Route.class)
-                    .withIgnoreLeadingWhiteSpace(true)
-                    .withSeparator(',')
-                    .build()
-                    .parse();
-            return rawData;
+    static private List<Route> readRoutes(String file) {
+        try(BufferedReader fileReader = Files.newBufferedReader(Paths.get(file))) {//TODO выкинуть в отдельную папку
+           try {
+               List<Route> rawData = new CsvToBeanBuilder<Route>(fileReader)
+                       .withType(Route.class)
+                       .withIgnoreLeadingWhiteSpace(true)
+                       .withSeparator(',')
+                       .build()
+                       .parse();
+
+               for(Route route: rawData)
+                   route.updateMaxId();
+               return rawData;
+           }
+           catch (RuntimeException e){
+               System.err.println("Problem in parsing. File :" + file + ", Line: ");
+               return null;
+           }
         }
         catch (FileNotFoundException e) {
             System.err.println("file not found");
@@ -113,6 +142,10 @@ public class SystemManager {
         catch (IOException e) {
             System.err.println("file not found");
             return null;//TODO check nonull in init!!
+        }
+        catch (Throwable e) {
+            System.err.println("unexpected exception occured");
+            return null;
         }
     }
 
@@ -149,6 +182,30 @@ public class SystemManager {
 
     }
 
+    public static <T> T ask(String line, Class<T> type) throws IOException {
+        System.out.println(line);
+        while (true) {
+            String data = console.readLine();
+            try {
+                if(type == Integer.class) return (T)Integer.valueOf(data);
+                else if(type == long.class) return (T)Long.valueOf(data);
+                else if(type == Float.class) return (T)Float.valueOf(data);
+                else if(type == Double.class) return (T)Double.valueOf(data);
+                else if(type == int.class) return (T)Integer.valueOf(data);
+                else if(type == double.class) return (T)Double.valueOf(data);
+                else if(type == String.class) return (T)data;
+                else {
+                    System.err.println("Unknown type used");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Cannot convert input to type[" + type.toString() + "]. Try again");
+            }
+            catch(Throwable e) {
+                System.out.println("try again");
+            }
+        }
+    }
+
     static public void startScan () throws IOException {
         while(true) {
             scanNewCommand();
@@ -167,10 +224,12 @@ public class SystemManager {
                         Exit.apply(line);
                     if(command.equals(CommandType.clear))
                         ClearCollection.apply(line);
-                    if(command.equals(CommandType.getCollection))
-                        GetCollection.apply(line);
+                    if(command.equals(CommandType.show))
+                        Show.apply(line);
                     if(command.equals(CommandType.save))
                         Save.apply(line);
+                    if(command.equals(CommandType.insert))
+                        Insert.apply(line);
                     //TODO Если у команды не те типы ключей - просто System.print и return;
                 } catch (IllegalArgumentException e) {
                     System.out.println("command not found, try again");
