@@ -1,6 +1,5 @@
-package models;
+package Models;
 
-import Managers.SystemManager;
 import com.opencsv.bean.*;
 import Managers.CollectionManager;
 import Utility.Element;
@@ -46,6 +45,10 @@ public class Route extends Element{
 
     public void setId(CollectionManager manager){
         this.id = manager.getCollection().values().stream().filter(Objects::nonNull).mapToInt(value -> value.getId()).max().orElse(-1) + 1;
+    }
+
+    public double getDistance(){
+        return this.distance;
     }
 
     public static Integer getMaxId() {

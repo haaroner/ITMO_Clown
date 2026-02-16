@@ -1,8 +1,8 @@
-package models;
+package Models;
 
 import Utility.Element;
 import com.opencsv.bean.CsvBindByName;
-import interfaces.Validatable;
+import Interfaces.Validatable;
 
 public class Location extends Element implements Validatable {
     private static Integer maxId = 0;

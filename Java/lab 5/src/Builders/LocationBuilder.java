@@ -1,6 +1,6 @@
 package Builders;
 
-import models.Location;
+import Models.Location;
 
 public class LocationBuilder {
     public LocationBuilder LocationBuilder(){

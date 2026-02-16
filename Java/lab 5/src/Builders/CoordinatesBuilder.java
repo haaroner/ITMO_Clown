@@ -1,7 +1,6 @@
 package Builders;
 
-import models.Coordinates;
-import models.Location;
+import Models.Coordinates;
 
 public class CoordinatesBuilder {
     public CoordinatesBuilder CoordinatesBuilder(){

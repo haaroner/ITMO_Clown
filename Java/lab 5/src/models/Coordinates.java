@@ -1,7 +1,7 @@
-package models;
+package Models;
 
 import Utility.Element;
-import interfaces.Validatable;
+import Interfaces.Validatable;
 import com.opencsv.bean.CsvBindByName;
 
 public class Coordinates extends Element implements Validatable{

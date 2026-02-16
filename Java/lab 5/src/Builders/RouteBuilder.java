@@ -1,8 +1,8 @@
 package Builders;
 
-import models.Coordinates;
-import models.Location;
-import models.Route;
+import Models.Coordinates;
+import Models.Location;
+import Models.Route;
 
 import java.util.Date;
 
