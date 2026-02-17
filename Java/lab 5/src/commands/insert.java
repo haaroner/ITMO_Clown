@@ -1,54 +1,29 @@
-package commands;
+package Commands;
 
-import Builders.CoordinatesBuilder;
-import Builders.LocationBuilder;
-import Builders.RouteBuilder;
 import Managers.CollectionManager;
-import Managers.SystemManager;
-import models.Coordinates;
-import models.Location;
-import models.Route;
+import Managers.ConsoleManager;
+import Models.Route;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Objects;
 
+/**
+ * Insert command class
+ * @author Clown
+ */
 public class Insert extends Command{
-    public Insert() {
-        super("insert", "inserts new element to collection");
+    public Insert(){
     }
 
-    public static void apply(String[] data) {
-        try {//TODO проверить что координаты и локация не совпадают с пред-ми
+    /**
+     * Command apply method. Inserts new Route to the Collection
+     * @param data input from console
+     * @param console which console to use
+     */
+    public static void apply(String[] data, BufferedReader console) {
+        try {//TODO перекинуть это в консоль
             System.out.println("from: ");
-            Location from = new LocationBuilder()
-                        .setId()
-                        .setX(SystemManager.ask("X", long.class))
-                        .setY(SystemManager.ask("Y", Float.class))
-                        .setZ(SystemManager.ask("Z", Double.class))
-                        .build();
-            System.out.println("to: ");
-            Location to = new LocationBuilder()
-                    .setId()
-                    .setX(SystemManager.ask("X", long.class))
-                    .setY(SystemManager.ask("Y", Float.class))
-                    .setZ(SystemManager.ask("Z", Double.class))
-                    .build();
-            System.out.println("Coordinates: ");
-            Coordinates coordinates = new CoordinatesBuilder()
-                    .setId()
-                    .setX(SystemManager.ask("X", int.class))
-                    .setY(SystemManager.ask("Y", double.class))
-                    .build();
-
-            Route route = new RouteBuilder()
-                    .setId()
-                    .setName(SystemManager.ask("Route name ", String.class))
-                    .setCoordinates(coordinates)
-                    .setDate()
-                    .setFrom(from)
-                    .setTo(to)
-                    .setDistance(SystemManager.ask("distance ", long.class))
-                    .build();
+            Route route = ConsoleManager.getNewRoute(console);
             if(route.validate())
                 CollectionManager.putItem(route.getId(), route);
             else

@@ -1,17 +1,27 @@
-package commands;
+package Commands;
 
 import Managers.CollectionManager;
-import Utility.Element;
+import Models.Route;
 
+import java.io.BufferedReader;
 import java.util.Map;
 
-public class ClearCollection extends Command{
+/**
+ * Class of clear function
+ * @author Clown
+ */
+public final class ClearCollection extends Command{
     public ClearCollection() {
-        super("clearCollection", "clears all data");
+
     }
 
-    public static void apply(String[] data) {
-        for (Map.Entry<Integer, Element> entry : CollectionManager.getCollection().entrySet()) {
+    /**
+     * Command apply method. Clears collection
+     * @param data input from console
+     * @param console which console to use
+     */
+    public static void apply(String[] data, BufferedReader console) {
+        for (Map.Entry<Integer, Route> entry : CollectionManager.getCollection().entrySet()) {
             CollectionManager.removeItem(entry.getKey());
         }
         System.out.println("Cleared");

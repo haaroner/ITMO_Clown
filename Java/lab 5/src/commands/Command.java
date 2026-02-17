@@ -1,15 +1,22 @@
-package commands;
+package Commands;
 
+import java.io.BufferedReader;
+
+/**
+ * Abstract command class
+ * @author Clown
+ */
 public abstract class Command {
-    private String name, description;
 
-    public Command (String name, String description) {
-        this.name = name;
-        this.description = description;
+    public Command () {
     }
 
-    public static void apply(String[] data){
-
+    /**
+     * Command apply method
+     * @param data input from console
+     * @param console which console to use
+     */
+    public static void apply(String[] data, BufferedReader console){
+        System.out.println("Command applied");
     }
-
 }

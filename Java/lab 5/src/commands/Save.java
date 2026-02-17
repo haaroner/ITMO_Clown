@@ -1,18 +1,24 @@
-package commands;
+package Commands;
 
-import Managers.CollectionManager;
 import Managers.SystemManager;
-import com.opencsv.exceptions.CsvDataTypeMismatchException;
-import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
-import java.io.IOException;
+import java.io.BufferedReader;
 
+/**
+ * Save command class
+ * @author Clown
+ */
 public class Save extends Command{
     public Save() {
-        super("save", "saves current collection");
+
     }
 
-    public static void apply(String[] data) {
+    /**
+     * Command apply method. Saves current collection to the file
+     * @param data input from console
+     * @param console which console to use
+     */
+    public static void apply(String[] data, BufferedReader console) {
         SystemManager.saveCollectionToFile();
         System.out.println("Collection saved");
     }

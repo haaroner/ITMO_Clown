@@ -21,6 +21,10 @@ public class Location extends Element implements Validatable {
 
     public Location() {}
 
+    public long getX() {
+        return x;
+    }
+
     @Override
     public boolean validate(){
         return id != null && id > 0 && y != null && z != null;
@@ -34,7 +38,7 @@ public class Location extends Element implements Validatable {
     @Override
     public String toString() {
         if(this.validate())
-            return "id: " + String.valueOf(id) + " x: " + String.valueOf(x) + " y: " + String.valueOf(y) + " z: " + String.valueOf(z);
+            return " x: " + String.valueOf(x) + " y: " + String.valueOf(y) + " z: " + String.valueOf(z);
         else
             return "unvalidatable";
     }

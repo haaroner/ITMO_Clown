@@ -7,17 +7,26 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+/**
+ * Collection Manager class.
+ * It is used to interact with collection of Routes
+ * @author Clown
+ */
 public class CollectionManager {
-    private static ArrayList<Integer> ids = new ArrayList<Integer>();
     private static LinkedHashMap<Integer, Route> collection = new LinkedHashMap<>();
-    public static ArrayList<Integer> getIds() {
-        return ids;
-    }
 
+    /**
+     *
+     * @return LinkedHashMap<Integer, Route>
+     */
     public static LinkedHashMap<Integer, Route> getCollection() {
         return collection;
     }
 
+    /**
+     * 
+     * @param newCollection
+     */
     public static void setCollection(LinkedHashMap<Integer, Route> newCollection) {
         collection = validateCollection(newCollection);
     }
@@ -43,7 +52,7 @@ public class CollectionManager {
         return collection.containsKey(id);
     }
 
-    public static Element getItem(Integer id) {
+    public static Route getItem(Integer id) {
         return collection.get(id);
     }
 

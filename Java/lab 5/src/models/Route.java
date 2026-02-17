@@ -6,7 +6,7 @@ import Utility.Element;
 
 import java.util.Objects;
 
-public class Route extends Element{
+public class Route extends Element implements Comparable<Route>{
     private static Integer maxId = 0;
     @CsvBindByName private Integer id = 0; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     @CsvBindByName private String name; //Поле не может быть null, Строка не может быть пустой
@@ -109,7 +109,12 @@ public class Route extends Element{
     public String toString() {
         if(this.validate())
             return "id: " + id.toString() + " name: " + name + " coordinates: " + coordinates.toString() + " creationDate: " + creationDate.toString() +
-                " from: " + from.toString() + " to: " + to.toString();
+                " from: " + from.toString() + " to: " + to.toString() + " distance: " + distance;
         return "Route have not passed validation test, may be some data is missing";
+    }
+
+    @Override
+    public int compareTo(Route other) {
+        return Integer.parseInt("" + (Math.abs(this.from.getX() - this.to.getX()) - Math.abs(other.from.getX() - other.to.getX())));
     }
 }

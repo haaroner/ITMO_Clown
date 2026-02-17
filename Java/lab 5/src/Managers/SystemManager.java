@@ -2,7 +2,6 @@ package Managers;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Method;
 import java.util.*;
 
 import com.opencsv.bean.StatefulBeanToCsv;
@@ -16,7 +15,7 @@ import java.nio.file.Paths;
 import com.opencsv.bean.CsvToBeanBuilder;
 
 import Utility.Element;
-import Сommands.*;
+import Commands.*;
 import Models.Coordinates;
 import Models.Location;
 import Models.Route;
@@ -24,7 +23,7 @@ import Models.Route;
 import java.io.*;
 
 public class SystemManager {
-    private static BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
+    private static BufferedReader defaultConsole = new BufferedReader(new InputStreamReader(System.in));
     private static Map<String, Class<? extends Command>> commands = new HashMap<>();
     static CollectionManager collectionManager = new CollectionManager();
     public SystemManager () {
@@ -33,13 +32,6 @@ public class SystemManager {
 
 
     static public void init(String[] fileNames) {
-
-//        commands.put(Info.getName(), Info.class);
-//        commands.put(Insert.getName(), Insert.class);
-//        commands.put(Save.getName(), Exit.class);
-//        commands.put(Show.getName(), Show.class);
-//        commands.put(Exit.getName(), Exit.class);
-//        commands.put(ClearCollection.getName(), ClearCollection.class);
             if(fileNames.length < 3) {
                 System.out.println("3 file`s names should be given \n exiting...");
                 System.exit(1);
@@ -56,6 +48,11 @@ public class SystemManager {
                 catch (NullPointerException e) {
                     System.err.println("Some of data might be damaged.");
                 }
+            }
+            try {
+                ConsoleManager.startScan(defaultConsole);
+            } catch (IOException e) {
+                System.err.println("Error occurred while running program\nexiting...");
             }
             //TODO вставить парсинг Route и распихать по id-шникам распаршенные подразделы
         }
@@ -179,73 +176,12 @@ public class SystemManager {
         }*/
 
     static public void saveCollectionToFile() {
-        try(Writer writer = new FileWriter("src/output.csv")) {
+        try(Writer writer = new FileWriter("output.csv")) {
             StatefulBeanToCsv<Route> beanToCsv = new StatefulBeanToCsvBuilder<Route>(writer).build();
             beanToCsv.write((List<Route>) new ArrayList(CollectionManager.getCollection().values()));
         }
         catch (Exception e) {
             System.err.println("Error occured during file saving :(");
         }
-
-    }
-
-    public static <T> T ask(String line, Class<T> type) throws IOException {
-        System.out.println(line);
-        while (true) {
-            String data = console.readLine();
-            if(!data.isEmpty()) {
-                try {
-                    if (type == Integer.class) return (T) Integer.valueOf(data);
-                    else if (type == long.class) return (T) Long.valueOf(data);
-                    else if (type == Float.class) return (T) Float.valueOf(data);
-                    else if (type == Double.class) return (T) Double.valueOf(data);
-                    else if (type == int.class) return (T) Integer.valueOf(data);
-                    else if (type == double.class) return (T) Double.valueOf(data);
-                    else if (type == String.class) return (T) data;
-                    else {
-                        System.err.println("Unknown type used");
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("Cannot convert input to type[" + type.toString() + "]. Try again");
-                } catch (Throwable e) {
-                    System.out.println("try again");
-                }
-            }
-            else {
-                System.out.println("Empty argument is not allowed here");
-            }
-        }
-    }
-
-    static public void startScan () throws IOException {
-        while(true) {
-            scanNewCommand();
-        }
-    }
-    static private /*CommandType*/void scanNewCommand() throws IOException {
-            System.out.println("type new command:");
-            String[] line = console.readLine().split(" ");
-            if (line.length > 0) {
-                try {
-                    Class<? extends Command> newCommand = CommandType.valueOf(line[0]).getClazz();
-                    Command instance = newCommand.getDeclaredConstructor().newInstance();
-                    Method method = instance.getClass().getMethod("apply", String[].class);
-                    Object[] args = {line};
-                    method.invoke(instance, args);
-
-                    //TODO Если у команды не те типы ключей - просто System.print и return;
-                } catch (IllegalArgumentException e) {
-                    System.out.println("command not found, try again");
-                    System.out.println(line[0]);
-                } catch (InstantiationException e) {
-                    System.out.println("command not found, try again");
-                    System.out.println(line[0]);
-                } catch (Throwable e) {
-                    System.out.println("command not found, try again");
-                    System.out.println(line[0]);
-                }
-            } else
-                System.out.println("command not found, try again");
-
     }
 }

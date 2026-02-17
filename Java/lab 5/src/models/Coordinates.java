@@ -35,7 +35,7 @@ public class Coordinates extends Element implements Validatable{
     @Override
     public String toString() {
         if(this.validate())
-            return "id: " + String.valueOf(id) + " x: " + String.valueOf(x) + " y: " + String.valueOf(y);
+            return "x: " + String.valueOf(x) + " y: " + String.valueOf(y);
         else
             return "unvalidatable";
     }
