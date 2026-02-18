@@ -14,11 +14,26 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
-public class ConsoleManager {
+/**
+ * Console and file interact class.
+ * Based on java.io.BufferReader
+ * @author Clown
+ */
+public final class ConsoleManager {
     public ConsoleManager() {
 
     }
 
+    /**
+     * Function for commands to ask certain parameter with certain prompt line and certain response type
+     * If input type is not convertible to needed type prompt would be remade
+     * @param line - prompt for user
+     * @param type - Needed type
+     * @param console - Which console to use (script file input or console)
+     * @return data of needed type
+     * @param <T> Needed type
+     * @throws IOException In case of problems with console input
+     */
     public static <T> T ask(String line, Class<T> type, BufferedReader console) throws IOException {
         System.out.println(line);
         while (true) {
@@ -47,11 +62,25 @@ public class ConsoleManager {
         }
     }
 
+    /**
+     * Starts scanning specified console for new commands until null (occurs in the end of files)
+     * @param console which console to use
+     * @throws IOException in case of IO problems
+     */
     static public void startScan(BufferedReader console) throws IOException {
         while(true) {
             if (!scanNewCommand(console)) break;
         }
     }
+
+    /**
+     * Scans new command from specified console and invokes it's apply method
+     * It is based on making new .class from commands name written in {@link Commands.CommandType}
+     * After it makes new instance of this class and invokes method apply
+     * @param console which to use
+     * @return true/false. True - command invoked, false - No commands remaining (EOF)
+     * @throws IOException in case of IO problems
+     */
     private static boolean scanNewCommand(BufferedReader console) throws IOException {
         System.out.println("type new command:");
         String input = console.readLine();
@@ -85,6 +114,12 @@ public class ConsoleManager {
         }
     }
 
+    /**
+     * Asks all necessary data and forms new Route for collection
+     * @param console which to use
+     * @return new Route
+     * @throws IOException in case of IO problems
+     */
     public static Route getNewRoute(BufferedReader console) throws IOException {
         System.out.println("from: ");
         Location from = new LocationBuilder()

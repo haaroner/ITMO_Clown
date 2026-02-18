@@ -2,7 +2,7 @@ package Builders;
 
 import Models.Location;
 
-public class LocationBuilder {
+public final class LocationBuilder {
     public LocationBuilder LocationBuilder(){
         return this;
     }

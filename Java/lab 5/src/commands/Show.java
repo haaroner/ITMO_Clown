@@ -10,7 +10,7 @@ import java.util.Map;
  * Show command class
  * @author Clown
  */
-public class Show extends Command{
+public final class Show extends Command{
 
     public Show() {
 

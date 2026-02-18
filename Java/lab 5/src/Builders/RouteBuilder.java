@@ -6,7 +6,7 @@ import Models.Route;
 
 import java.util.Date;
 
-public class RouteBuilder {
+public final class RouteBuilder {
     public RouteBuilder RouteBuilder(){
         return this;
     }
@@ -49,7 +49,7 @@ public class RouteBuilder {
         return this;
     }
 
-    public RouteBuilder setDistance(long distance) {
+    public RouteBuilder setDistance(Long distance) {
         this.distance = distance;
         return this;
     }
@@ -73,5 +73,5 @@ public class RouteBuilder {
     private Location to;
     private Integer fromId;
     private Integer toId;
-    private long distance;
+    private Long distance;
 }

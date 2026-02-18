@@ -9,7 +9,7 @@ import java.io.BufferedReader;
  * count_greater_dist Command class
  * @author Clown
  */
-public class CountGreaterDist extends Command{
+public final class CountGreaterDist extends Command{
     public CountGreaterDist() {
 
     }

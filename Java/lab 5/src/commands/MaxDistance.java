@@ -10,7 +10,7 @@ import java.util.Objects;
  * Get Route with max distance command
  * @author Clown
  */
-public class MaxDistance extends Command{
+public final class MaxDistance extends Command{
     public MaxDistance() {
 
     }

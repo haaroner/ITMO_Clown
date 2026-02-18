@@ -4,7 +4,7 @@ import Utility.Element;
 import Interfaces.Validatable;
 import com.opencsv.bean.CsvBindByName;
 
-public class Coordinates extends Element implements Validatable{
+public final class Coordinates extends Element implements Validatable{
     private static Integer maxId = 0;
     @CsvBindByName private Integer id = 0;
     @CsvBindByName private int x;

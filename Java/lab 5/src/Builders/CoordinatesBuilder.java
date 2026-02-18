@@ -2,7 +2,7 @@ package Builders;
 
 import Models.Coordinates;
 
-public class CoordinatesBuilder {
+public final class CoordinatesBuilder {
     public CoordinatesBuilder CoordinatesBuilder(){
         return this;
     }

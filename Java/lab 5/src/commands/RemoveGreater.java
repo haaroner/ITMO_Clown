@@ -11,7 +11,7 @@ import java.io.IOException;
  * Remove with greater ID Routes command class
  * @author Clown
  */
-public class RemoveGreater extends Command{
+public final class RemoveGreater extends Command{
     public RemoveGreater() {
 
     }

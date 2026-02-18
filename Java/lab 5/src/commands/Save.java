@@ -8,7 +8,7 @@ import java.io.BufferedReader;
  * Save command class
  * @author Clown
  */
-public class Save extends Command{
+public final class Save extends Command{
     public Save() {
 
     }

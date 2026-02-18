@@ -8,7 +8,7 @@ import java.io.*;
  * Command class for executing file script
  * @author Clown
  */
-public class ExecuteScript extends Command{
+public final class ExecuteScript extends Command{
     public ExecuteScript() {
     }
 

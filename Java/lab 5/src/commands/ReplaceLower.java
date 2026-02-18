@@ -12,7 +12,7 @@ import java.util.Objects;
  * replace if lower command class
  * @author Clown
  */
-public class ReplaceLower extends Command{
+public final class ReplaceLower extends Command{
     public ReplaceLower() {
     }
 

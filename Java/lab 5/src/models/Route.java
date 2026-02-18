@@ -1,12 +1,13 @@
 package Models;
 
+import Interfaces.Validatable;
 import com.opencsv.bean.*;
 import Managers.CollectionManager;
 import Utility.Element;
 
 import java.util.Objects;
 
-public class Route extends Element implements Comparable<Route>{
+public final class Route extends Element implements Comparable<Route>, Validatable {
     private static Integer maxId = 0;
     @CsvBindByName private Integer id = 0; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     @CsvBindByName private String name; //Поле не может быть null, Строка не может быть пустой
@@ -21,7 +22,7 @@ public class Route extends Element implements Comparable<Route>{
     @CsvBindByName private Integer toId;
     @CsvBindByName private long distance; //Значение поля должно быть больше 1
     //TODO сделать сеттеры и забиндить подклассы через спомог переменные и в спомог классы добавить нужные сеттеры, вызываемые в конструкторе?
-    public Route (Integer id, String name, Coordinates coordinates,  Location from, Location to, long distance) {
+    public Route (Integer id, String name, Coordinates coordinates,  Location from, Location to, Long distance) {
         this.id = id;
         this.name = name;
         this.coordinates = coordinates;
@@ -47,7 +48,7 @@ public class Route extends Element implements Comparable<Route>{
         this.id = manager.getCollection().values().stream().filter(Objects::nonNull).mapToInt(value -> value.getId()).max().orElse(-1) + 1;
     }
 
-    public double getDistance(){
+    public long getDistance(){
         return this.distance;
     }
 
@@ -103,6 +104,18 @@ public class Route extends Element implements Comparable<Route>{
 
     public Integer getCoordinatesId(){
         return this.coordinatesId;
+    }
+
+    public Location getFrom() {
+        return from;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public Location getTo() {
+        return to;
     }
 
     @Override

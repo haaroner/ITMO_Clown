@@ -11,7 +11,7 @@ import java.io.IOException;
  * Insert command class
  * @author Clown
  */
-public class Insert extends Command{
+public final class Insert extends Command{
     public Insert(){
     }
 

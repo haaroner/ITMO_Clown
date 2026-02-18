@@ -6,7 +6,7 @@ import java.io.BufferedReader;
  * Exit command class.
  * @author Clown
  */
-public class Exit extends Command{
+public final class Exit extends Command{
     public Exit() {
     }
     /**

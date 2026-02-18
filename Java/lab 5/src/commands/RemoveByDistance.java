@@ -9,7 +9,7 @@ import java.io.BufferedReader;
  * Remove by distance class
  * @author Clown
  */
-public class RemoveByDistance extends Command{
+public final class RemoveByDistance extends Command{
     public RemoveByDistance() {
 
     }

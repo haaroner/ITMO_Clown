@@ -10,7 +10,7 @@ import java.io.IOException;
  * Remove by key command class
  * @author Clown
  */
-public class RemoveKey extends Command{
+public final class RemoveKey extends Command{
     public RemoveKey() {
 
     }

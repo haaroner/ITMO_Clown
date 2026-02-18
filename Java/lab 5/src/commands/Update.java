@@ -11,7 +11,7 @@ import java.io.IOException;
  * Update collection element command class
  * @author Clown
  */
-public class Update extends Command{
+public final class Update extends Command{
     public Update() {
 
     }

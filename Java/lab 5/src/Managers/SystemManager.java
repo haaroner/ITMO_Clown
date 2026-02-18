@@ -19,18 +19,29 @@ import Commands.*;
 import Models.Coordinates;
 import Models.Location;
 import Models.Route;
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
 import java.io.*;
 
-public class SystemManager {
+/**
+ * System manager class.
+ * Operates with all system (core) functions
+ * There is otsylka in author section
+ * @author GPT
+ */
+public final class SystemManager {
     private static BufferedReader defaultConsole = new BufferedReader(new InputStreamReader(System.in));
-    private static Map<String, Class<? extends Command>> commands = new HashMap<>();
-    static CollectionManager collectionManager = new CollectionManager();
+    private static CollectionManager collectionManager = new CollectionManager();
+    private static String routesFile, locationFile, coordinatesFile;
     public SystemManager () {
 
     }
 
-
+    /**
+     * Inits program and gets data from files
+     * @param fileNames of data
+     */
     static public void init(String[] fileNames) {
             if(fileNames.length < 3) {
                 System.out.println("3 file`s names should be given \n exiting...");
@@ -38,7 +49,13 @@ public class SystemManager {
             }
             else {
                 try {
-                    LinkedHashMap<Integer, Route> data = getNewData(readRoutes(fileNames[0]), readCoordinates(fileNames[1]), readLocation(fileNames[2]));
+                    routesFile = fileNames[0];
+                    coordinatesFile = fileNames[1];
+                    locationFile = fileNames[2];
+                    LinkedHashMap<Integer, Route> data = getNewData(readFromFile(Route.class, routesFile),
+                            readFromFile(Coordinates.class, coordinatesFile),
+                            readFromFile(Location.class, locationFile));
+
                     for (Map.Entry<Integer, Route> entry : data.entrySet()) {
                         System.out.println(entry.getKey() + ": " + entry.getValue().toString());
 
@@ -56,52 +73,22 @@ public class SystemManager {
             }
             //TODO вставить парсинг Route и распихать по id-шникам распаршенные подразделы
         }
-    static private List<Coordinates> readCoordinates(String file) {
-            try(BufferedReader fileReader = Files.newBufferedReader(Paths.get(file))) {//TODO выкинуть в отдельную папку
-                try {
-                    List<Coordinates> rawData = new CsvToBeanBuilder<Coordinates>(fileReader)
-                            .withType(Coordinates.class)
-                            .withIgnoreLeadingWhiteSpace(true)
-                            .withSeparator(',')
-                            .build()
-                            .parse();
-                    for(Coordinates coordinates: rawData)
-                        coordinates.updateMaxId();
-                    return rawData;
-                }
-                catch (RuntimeException e){
-                    System.err.println("Problem in parsing. File :" + file + ", Line: ");
-                    return null;
-                }
-            }
-            catch (FileNotFoundException e) {
-                System.err.println("file not found");
-                return null;//TODO check nonull in init!!
-            }
-            catch (IOException e) {
-                System.err.println("file not found");
-                return null;//TODO check nonull in init!!
-            }
-            catch (Throwable e) {
-                System.err.println("unexpected exception occured");
-                return null;
-            }
-        }
 
-    static private List<Location> readLocation(String file) {
+    static private <T extends Element>  List<T> readFromFile(Class<T> tClass, String file) {
         try(BufferedReader fileReader = Files.newBufferedReader(Paths.get(file))) {//TODO выкинуть в отдельную папку
             try {
-                List<Location> rawData= new CsvToBeanBuilder<Location>(fileReader)
-                        .withType(Location.class)
+                List<T> rawData = new CsvToBeanBuilder<T>(fileReader)
+                        .withType(tClass)
                         .withIgnoreLeadingWhiteSpace(true)
                         .withSeparator(',')
                         .build()
                         .parse();
-                for(Location location: rawData)
-                    location.updateMaxId();
+
+                for(T t: rawData)
+                    t.updateMaxId();
                 return rawData;
             }
-             catch (RuntimeException e){
+            catch (RuntimeException e){
                 System.err.println("Problem in parsing. File :" + file + ", Line: ");
                 return null;
             }
@@ -120,39 +107,13 @@ public class SystemManager {
         }
     }
 
-    static private List<Route> readRoutes(String file) {
-        try(BufferedReader fileReader = Files.newBufferedReader(Paths.get(file))) {//TODO выкинуть в отдельную папку
-           try {
-               List<Route> rawData = new CsvToBeanBuilder<Route>(fileReader)
-                       .withType(Route.class)
-                       .withIgnoreLeadingWhiteSpace(true)
-                       .withSeparator(',')
-                       .build()
-                       .parse();
-
-               for(Route route: rawData)
-                   route.updateMaxId();
-               return rawData;
-           }
-           catch (RuntimeException e){
-               System.err.println("Problem in parsing. File :" + file + ", Line: ");
-               return null;
-           }
-        }
-        catch (FileNotFoundException e) {
-            System.err.println("file not found");
-            return null;//TODO check nonull in init!!
-        }
-        catch (IOException e) {
-            System.err.println("file not found");
-            return null;//TODO check nonull in init!!
-        }
-        catch (Throwable e) {
-            System.err.println("unexpected exception occured");
-            return null;
-        }
-    }
-
+    /**
+     * Linkes all parsed data to one collection by IDs of elements
+     * @param routes - all routes to link with loc-ns and coord-s
+     * @param coordinates coordinates to link with their routes by ID
+     * @param locations locations to link with their routes by ID
+     * @return
+     */
     static private LinkedHashMap<Integer, Route> getNewData(List<Route> routes, List<Coordinates> coordinates, List<Location> locations) {
             LinkedHashMap<Integer, Route> newData = new LinkedHashMap<Integer, Route>();
             for(Route route: routes) {
@@ -164,6 +125,12 @@ public class SystemManager {
             return newData;//TODO объеденить с текущей коллекцией
     }
 
+    /**
+     * Returns element by its ID
+     * @param id
+     * @param data
+     * @return Route
+     */
     static private Element getById(Integer id, List<? extends Element> data) {
             for(Element element: data) {
                 if(element.getId().equals(id))
@@ -171,14 +138,45 @@ public class SystemManager {
             }
             return null;
     }
-        /*private LinkedHashMap<Integer, Element> scanFile(String fileName) {
 
-        }*/
+    static public <T extends Element> void saveToFile (List<T> list, String file) {
+        try {
+            Writer writer = new FileWriter(file);
+            StatefulBeanToCsv<T> beanToCsv = new StatefulBeanToCsvBuilder<T>(writer).build();
+            beanToCsv.write(list);
+            writer.close();
 
+        } catch (IOException | CsvDataTypeMismatchException | CsvRequiredFieldEmptyException e) {
+            System.err.println("Error occured during file saving :(");
+        }
+    }
+
+    public static ArrayList<Location> getLocations() {
+        ArrayList<Location> data = new ArrayList<>();
+        for(Route route: CollectionManager.getCollection().values()) {
+            data.add(route.getTo());
+            data.add(route.getFrom());
+        }
+        return data;
+    }
+
+    public static List<Coordinates> getCoordinates() {
+        List<Coordinates> data = new ArrayList<>();
+        for(Route route: CollectionManager.getCollection().values()) {
+            data.add(route.getCoordinates());
+        }
+        return data;
+    }
+    /**
+     * Saves collection to the file
+     * Saving is made with similar file structure and column naming
+     */
     static public void saveCollectionToFile() {
-        try(Writer writer = new FileWriter("output.csv")) {
-            StatefulBeanToCsv<Route> beanToCsv = new StatefulBeanToCsvBuilder<Route>(writer).build();
-            beanToCsv.write((List<Route>) new ArrayList(CollectionManager.getCollection().values()));
+        try {
+            String[] files = {routesFile, coordinatesFile, locationFile};
+            saveToFile((List<Route>) new ArrayList(CollectionManager.getCollection().values()), routesFile);
+            saveToFile((List<Location>) new ArrayList(getLocations()), locationFile);
+            saveToFile((List<Location>) new ArrayList(getCoordinates()), coordinatesFile);
         }
         catch (Exception e) {
             System.err.println("Error occured during file saving :(");

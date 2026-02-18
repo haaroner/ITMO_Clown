@@ -5,7 +5,7 @@ import java.io.BufferedReader;
 /**
  * Info command class.
  */
-public class Info extends Command{
+public final class Info extends Command{
     public Info() {
     }
     /**

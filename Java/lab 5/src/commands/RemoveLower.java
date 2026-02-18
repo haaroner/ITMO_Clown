@@ -11,7 +11,7 @@ import java.io.IOException;
  * Remove lower command class
  * @author Clown
  */
-public class RemoveLower extends Command{
+public final class RemoveLower extends Command{
     public RemoveLower() {
 
     }
