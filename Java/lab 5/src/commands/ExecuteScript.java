@@ -34,11 +34,11 @@ public final class ExecuteScript extends Command{
                 BufferedReader scriptReader = SystemManager.openFile(data[1]);
                 if(Objects.nonNull(scriptReader)) {
                     ConsoleManager.startScan(scriptReader);
-                    System.setOut(origin);
                     System.out.println("File executed");
                     scriptReader.close();
-                    SystemManager.closeFile(data[1]);
                 }
+                System.setOut(origin);
+                SystemManager.closeFile(data[1]);
             } catch (FileNotFoundException e) {
                 System.err.println("File not found");
             } catch (IOException e) {

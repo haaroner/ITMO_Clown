@@ -58,7 +58,7 @@ public final class SystemManager {
                     Thread.setDefaultUncaughtExceptionHandler((thread, e) -> {
                         Throwable cause = e.getCause() != null ? e.getCause() : e;
                         if (cause instanceof com.opencsv.exceptions.CsvException) {
-                            return;  // Все CSV ошибки молча игнорируем
+                            return;  // ignoring all OpenCsvErrors
                         }
                     });
                     if(!(SystemManager.checkReadable(routesFile) && SystemManager.checkReadable(coordinatesFile) && SystemManager.checkReadable(locationFile))) {
@@ -96,9 +96,15 @@ public final class SystemManager {
                         .withSeparator(',')
                         .build()
                         .parse();
-
-                for(T t: rawData)
+                ArrayList<Integer> idList = new ArrayList<>();
+                for(T t: rawData) {
+                    if(idList.contains(t.getId()))
+                        System.err.println("File ["+file+"] contains elements with similar ID, previous elements with this ID: " + t.getId() + " will be replaced by last one");
+                    idList.add(t.getId());
                     t.updateMaxId();
+                }
+
+
                 return rawData;
             }
             catch (RuntimeException e){
@@ -128,7 +134,7 @@ public final class SystemManager {
      * @return
      */
     static private LinkedHashMap<Integer, Route> getNewData(List<Route> routes, List<Coordinates> coordinates, List<Location> locations) {
-            LinkedHashMap<Integer, Route> newData = new LinkedHashMap<Integer, Route>();
+            LinkedHashMap<Integer, Route> newData = new LinkedHashMap<>();
             for(Route route: routes) {
                 route.setFrom((Location) getById(route.getFromId(), locations));
                 route.setTo((Location) getById(route.getToId(), locations));
@@ -162,7 +168,7 @@ public final class SystemManager {
                 writer.close();
             }
             else{
-                System.err.println("Cannot write to this file");
+                System.err.println("Cannot write to this file: " + file);
             }
 
         } catch (IOException | CsvDataTypeMismatchException | CsvRequiredFieldEmptyException e) {
