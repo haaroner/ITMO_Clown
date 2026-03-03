@@ -24,7 +24,7 @@ public final class ReplaceLower extends Command{
      */
     public static void apply(String[] data, BufferedReader console) {
         try {
-            Integer id = ConsoleManager.ask("ID", Integer.class, console);
+            Integer id = ConsoleManager.ask("ID", Integer.class, console, false);
             Route newRoute = ConsoleManager.getNewRoute(console);
             Route cur = CollectionManager.getItem(id);
             if (Objects.nonNull(cur)) {

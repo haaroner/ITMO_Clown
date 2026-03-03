@@ -31,7 +31,8 @@ public final class Route extends Element implements Comparable<Route>, Validatab
         this.distance = distance;
         this.creationDate = new java.util.Date();
         this.coordinatesId = this.coordinates.getId();
-        this.fromId = this.from.getId();
+        if(Objects.nonNull(this.from))
+            this.fromId = this.from.getId();
         this.toId = this.to.getId();
         this.updateMaxId();
     }
@@ -79,8 +80,7 @@ public final class Route extends Element implements Comparable<Route>, Validatab
 
         if(creationDate == null) return false;
 
-        if(from == null) return false;
-        if(!from.validate()) return false;
+        if(Objects.nonNull(from) && !from.validate()) return false;
 
         if(to == null) return false;
         if(!to.validate()) return false;
@@ -120,9 +120,14 @@ public final class Route extends Element implements Comparable<Route>, Validatab
 
     @Override
     public String toString() {
-        if(this.validate())
-            return "id: " + id.toString() + " name: " + name + " coordinates: " + coordinates.toString() + " creationDate: " + creationDate.toString() +
-                " from: " + from.toString() + " to: " + to.toString() + " distance: " + distance;
+        if(this.validate()) {
+            if(Objects.nonNull(from))
+                return "id: " + id.toString() + " name: " + name + " coordinates: " + coordinates.toString() + " creationDate: " + creationDate.toString() +
+                    " from: " + from.toString() + " to: " + to.toString() + " distance: " + distance;
+            else
+                return "id: " + id.toString() + " name: " + name + " coordinates: " + coordinates.toString() + " creationDate: " + creationDate.toString() +
+                        " from: " + "null" + " to: " + to.toString() + " distance: " + distance;
+        }
         return "Route have not passed validation test, may be some data is missing";
     }
 

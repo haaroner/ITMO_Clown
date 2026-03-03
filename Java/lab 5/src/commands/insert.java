@@ -22,7 +22,6 @@ public final class Insert extends Command{
      */
     public static void apply(String[] data, BufferedReader console) {
         try {//TODO перекинуть это в консоль
-            System.out.println("from: ");
             Route route = ConsoleManager.getNewRoute(console);
             if(route.validate())
                 CollectionManager.putItem(route.getId(), route);

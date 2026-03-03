@@ -6,8 +6,9 @@ package Commands;
  * @author Clown
  */
 public enum CommandType {
-    info(Info.class, "info", "displays all commands"),
+    help(Help.class, "help", "displays all commands"),
     exit(Exit.class, "exit", "stops program"),
+    info(Info.class, "info", "displays info about collection"),
     clear(ClearCollection.class, "clear", "clears collection"),
     show(Show.class, "show", "shows current collection"),
     save(Save.class, "save", "saves current collection"),

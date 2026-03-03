@@ -22,28 +22,16 @@ public final class CollectionManager {
         return collection;
     }
 
+    public static int getLength() {
+        return collection.size();
+    }
+
     /**
      *
      * @param newCollection
      */
     public static void setCollection(LinkedHashMap<Integer, Route> newCollection) {
         collection = validateCollection(newCollection);
-    }
-
-    /**
-     * Returns Route with max distance
-     * @return Route
-     */
-    public static Route getMaxByDistance() {
-        double maxDistance = 0;
-        Route maxRoute = null;
-        for(Route element: collection.values()){
-            if(element.getDistance() > maxDistance) {
-                maxDistance = element.getDistance();
-                maxRoute = element;
-            }
-        }
-        return maxRoute;
     }
 
     /**

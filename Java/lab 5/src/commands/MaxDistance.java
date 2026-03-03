@@ -23,9 +23,16 @@ public final class MaxDistance extends Command{
     public static void apply(String[] data, BufferedReader console) {
         if(data.length >= 1) {
             try{
-                Route route = CollectionManager.getMaxByDistance();
-                if(!Objects.isNull(route))
-                    System.out.println(route);
+                double maxDistance = 0;
+                Route maxRoute = null;
+                for(Route element: CollectionManager.getCollection().values()){
+                    if(element.getDistance() > maxDistance) {
+                        maxDistance = element.getDistance();
+                        maxRoute = element;
+                    }
+                }
+                if(!Objects.isNull(maxRoute))
+                    System.out.println(maxRoute);
                 else
                     System.out.println("Empty collection");
             }

@@ -22,7 +22,7 @@ public final class Show extends Command{
      * @param console which console to use
      */
     public static void apply(String[] data, BufferedReader console) {
-        System.out.println("Collection: ");
+        System.out.println("Routes Collection: ");
         for (Map.Entry<Integer, Route> entry : CollectionManager.getCollection().entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue().toString());
         }

@@ -5,6 +5,7 @@ import Models.Location;
 import Models.Route;
 
 import java.util.Date;
+import java.util.Objects;
 
 public final class RouteBuilder {
     public RouteBuilder RouteBuilder(){
@@ -39,7 +40,8 @@ public final class RouteBuilder {
 
     public RouteBuilder setFrom (Location location) {
         this.from = location;
-        this.fromId = location.getId();
+        if(Objects.nonNull(location))
+            this.fromId = location.getId();
         return this;
     }
 

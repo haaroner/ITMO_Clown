@@ -1,8 +1,10 @@
 package Commands;
 
 import Managers.ConsoleManager;
+import Managers.SystemManager;
 
 import java.io.*;
+import java.util.Objects;
 
 /**
  * Command class for executing file script
@@ -26,12 +28,17 @@ public final class ExecuteScript extends Command{
             System.out.println("Executing script...\nSerial output will be disabled, only errors will appear");
             try{
                 PrintStream origin = System.out;
-                /*System.setOut(new PrintStream(new java.io.OutputStream() {
+                System.setOut(new PrintStream(new java.io.OutputStream() {
                     public void write(int b){}
-                }));*/
-                ConsoleManager.startScan(new BufferedReader(new FileReader(data[1])));
-                System.setOut(origin);
-                System.out.println("File executed");
+                }));
+                BufferedReader scriptReader = SystemManager.openFile(data[1]);
+                if(Objects.nonNull(scriptReader)) {
+                    ConsoleManager.startScan(scriptReader);
+                    System.setOut(origin);
+                    System.out.println("File executed");
+                    scriptReader.close();
+                    SystemManager.closeFile(data[1]);
+                }
             } catch (FileNotFoundException e) {
                 System.err.println("File not found");
             } catch (IOException e) {

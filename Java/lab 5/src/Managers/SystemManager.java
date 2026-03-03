@@ -2,6 +2,8 @@ package Managers;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Path;
+import java.nio.file.attribute.FileTime;
 import java.util.*;
 
 import com.opencsv.bean.StatefulBeanToCsv;
@@ -34,6 +36,7 @@ public final class SystemManager {
     private static BufferedReader defaultConsole = new BufferedReader(new InputStreamReader(System.in));
     private static CollectionManager collectionManager = new CollectionManager();
     private static String routesFile, locationFile, coordinatesFile;
+    private static ArrayList<Path> openFiles = new ArrayList<>();
     public SystemManager () {
 
     }
@@ -52,6 +55,16 @@ public final class SystemManager {
                     routesFile = fileNames[0];
                     coordinatesFile = fileNames[1];
                     locationFile = fileNames[2];
+                    Thread.setDefaultUncaughtExceptionHandler((thread, e) -> {
+                        Throwable cause = e.getCause() != null ? e.getCause() : e;
+                        if (cause instanceof com.opencsv.exceptions.CsvException) {
+                            return;  // Все CSV ошибки молча игнорируем
+                        }
+                    });
+                    if(!(SystemManager.checkReadable(routesFile) && SystemManager.checkReadable(coordinatesFile) && SystemManager.checkReadable(locationFile))) {
+                        System.err.println("Some of files is not readable, exiting...");
+                        return;
+                    }
                     LinkedHashMap<Integer, Route> data = getNewData(readFromFile(Route.class, routesFile),
                             readFromFile(Coordinates.class, coordinatesFile),
                             readFromFile(Location.class, locationFile));
@@ -63,7 +76,7 @@ public final class SystemManager {
                     collectionManager.setCollection(data);
                 }
                 catch (NullPointerException e) {
-                    System.err.println("Some of data might be damaged.");
+                    System.err.println("Some of data might be damaged. Starting with empty data base");
                 }
             }
             try {
@@ -89,7 +102,7 @@ public final class SystemManager {
                 return rawData;
             }
             catch (RuntimeException e){
-                System.err.println("Problem in parsing. File :" + file + ", Line: ");
+                System.out.println("Problem in parsing. File :" + file + ", Line: ");
                 return null;
             }
         }
@@ -141,10 +154,16 @@ public final class SystemManager {
 
     static public <T extends Element> void saveToFile (List<T> list, String file) {
         try {
-            Writer writer = new FileWriter(file);
-            StatefulBeanToCsv<T> beanToCsv = new StatefulBeanToCsvBuilder<T>(writer).build();
-            beanToCsv.write(list);
-            writer.close();
+            Path path = Paths.get(file);
+            if((!Files.exists(path)) || SystemManager.checkWritable(file)) {
+                Writer writer = new FileWriter(file);
+                StatefulBeanToCsv<T> beanToCsv = new StatefulBeanToCsvBuilder<T>(writer).build();
+                beanToCsv.write(list);
+                writer.close();
+            }
+            else{
+                System.err.println("Cannot write to this file");
+            }
 
         } catch (IOException | CsvDataTypeMismatchException | CsvRequiredFieldEmptyException e) {
             System.err.println("Error occured during file saving :(");
@@ -181,5 +200,85 @@ public final class SystemManager {
         catch (Exception e) {
             System.err.println("Error occured during file saving :(");
         }
+    }
+
+    static public FileTime getInitTime() {
+        try {
+            Path path = Paths.get(routesFile);
+            return (FileTime) Files.getAttribute(path, "creationTime");
+        } catch (IOException e) {
+            System.out.println("file reading exception occurred");
+            return null;
+        }
+    }
+
+    static public BufferedReader openFile(String file) {
+        try{
+            Path newPath = Paths.get(file);
+            if(!Files.exists(newPath)){
+                System.err.println("No such file: " + file);
+                System.err.flush();
+                return null;
+            }
+
+            if(!SystemManager.checkReadable(file)){
+                System.err.println("File is not readable: " + file);
+                System.err.flush();
+                return null;
+            }
+
+            for(Path filePath: openFiles) {
+                if(Files.isSameFile(filePath, newPath))
+                {
+                    System.err.println("This file has already been opened: " + file );
+                    System.err.flush();
+                    return null;
+                }
+            }
+            openFiles.add(newPath);
+            return new BufferedReader(new FileReader(file));
+        } catch (IOException e) {
+            System.err.println("no such file found");
+            System.err.flush();
+            return null;
+        }
+    }
+
+    static public boolean checkReadable(String file) {
+        Path path = Paths.get(file);
+        if(!Files.exists(path))
+            return false;
+        return Files.isReadable(path);
+    }
+
+    static public boolean checkWritable(String file) {
+        Path path = Paths.get(file);
+        if(!Files.exists(path))
+            return true;
+        return Files.isWritable(path);
+    }
+
+    static public void closeFile(String file) {
+        Path newPath = Paths.get(file);
+        if(!Files.exists(newPath)){
+            return ;
+        }
+        Iterator<Path> iterator = openFiles.iterator();
+        while(iterator.hasNext()){
+            Path curPath = iterator.next();
+            try {
+                if(Files.isSameFile(curPath, newPath)) {
+                    iterator.remove();
+                    return;
+                    }
+
+            } catch (IOException e) {
+                System.err.println("unexpected err");
+            }
+        }
+    }
+
+    public static boolean isFileOpen() {
+        return !openFiles.isEmpty();
     }
 }

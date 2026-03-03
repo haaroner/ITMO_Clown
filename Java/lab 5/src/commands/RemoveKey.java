@@ -21,12 +21,7 @@ public final class RemoveKey extends Command{
      * @param console which console to use
      */
     public static void apply(String[] data, BufferedReader console) {
-
-        try{
-            Integer id = ConsoleManager.ask("ID: ", Integer.class, console);
+            Integer id = ConsoleManager.ask("ID: ", Integer.class, console, false);
             CollectionManager.removeItem(id);
-        } catch (IOException e) {
-        System.err.println("Cannot convert argument to id");
-        }
     }
 }
