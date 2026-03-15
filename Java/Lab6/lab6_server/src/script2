@@ -1,0 +1,4 @@
+execute_script script3
+execute_script src/script1
+execute_script src/script2
+show
