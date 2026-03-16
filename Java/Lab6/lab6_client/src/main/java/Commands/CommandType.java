@@ -11,7 +11,7 @@ public enum CommandType {
     info(Info.class, "info", "displays info about collection"),
     clear(ClearCollection.class, "clear", "clears collection"),
     show(Show.class, "show", "shows current collection"),
-    save(Save.class, "save", "saves current collection"),
+    //save(Save.class, "save", "saves current collection"),
     insert(Insert.class, "insert", "inserts new item  to collection"),
     update(Update.class, "update", "updates item in collection"),
     remove_greater_key(RemoveGreater.class, "remove_greater_key", "removes elements with greater IDs"),

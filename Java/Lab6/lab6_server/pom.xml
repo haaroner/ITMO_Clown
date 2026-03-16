@@ -32,7 +32,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ИМЯ_ВАШЕГО_ГЛАВНОГО_КЛАССА</mainClass>
+                            <mainClass>Main.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

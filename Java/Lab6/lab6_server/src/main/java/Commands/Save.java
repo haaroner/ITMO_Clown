@@ -10,6 +10,15 @@ import java.io.BufferedReader;
  * @author Clown
  */
 public final class Save extends Command{
+    private final static Save INSTANCE = new Save();
+
+    private Save() {
+
+    }
+
+    public static Save getInstance() {
+        return INSTANCE;
+    }
 
     /**
      * Command apply method. Saves current collection to the file

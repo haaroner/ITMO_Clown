@@ -2,12 +2,13 @@ package Managers;
 
 import Commands.CommandType;
 import Commands.NetCommand;
+import Models.Route;
+import Models.ServerResponse;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.*;
 import java.nio.file.attribute.FileTime;
+import java.util.Map;
 import java.util.Objects;
 
 public final class NetManager {
@@ -30,7 +31,7 @@ public final class NetManager {
         host = InetAddress.getByName("localhost");
     }
 
-    public void sendCommand(NetCommand netCommand) throws IOException {
+    public void sendCommand(NetCommand netCommand) throws IOException, ClassNotFoundException {
         if(Objects.nonNull(netCommand)) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(baos);
@@ -39,19 +40,23 @@ public final class NetManager {
             arr = baos.toByteArray();
             dp = new DatagramPacket(arr, arr.length, host, port);
             ds.send(dp);
+            byte[] recArr = new byte[65535];
+            DatagramPacket receivePacket = new DatagramPacket(recArr, recArr.length);
+            ds.receive(receivePacket);
+            ByteArrayInputStream ais = new ByteArrayInputStream(receivePacket.getData(), 0, receivePacket.getLength());
+
+            ObjectInputStream ois = new ObjectInputStream(ais);
+            ServerResponse newResponse = (ServerResponse) ois.readObject();
+            ois.close();
+            System.out.println(newResponse.getData());
+//            for(Map.Entry<Integer, Route> entry: newResponse.getRoutes().entrySet()) {
+//                System.out.println(entry.getKey() + " " + entry.getValue());
+//            }
+//            if(newResponse.getRoutes().isEmpty()) {
+//                System.out.println("Empty collection");
+//            }
         }
     }
-
-    public DatagramPacket sendRequest(CommandType command,byte[] arr, int port, InetAddress addr) {
-        dp = new DatagramPacket(arr, arr.length, addr, port);
-        return dp;
-    }
-
-
-    public void getInitTime(){
-
-    }
-    //public void sendCommandToServer
 
     public static NetManager getInstance() {
         return INSTANCE;

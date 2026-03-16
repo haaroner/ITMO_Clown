@@ -3,6 +3,7 @@ package Managers;
 import Builders.CoordinatesBuilder;
 import Builders.LocationBuilder;
 import Builders.RouteBuilder;
+import Commands.Save;
 import Models.Coordinates;
 import Models.Location;
 import Models.Route;
@@ -111,10 +112,15 @@ public final class ConsoleManager {
             String[] line = input.split(" ");
             if (line.length > 0) {
                 try {
+                    CommandType commandType = CommandType.valueOf(line[0]);
                     Class<? extends Command> newCommand = CommandType.valueOf(line[0]).getClazz();
                     Command instance = newCommand.getDeclaredConstructor().newInstance();
                     Method method = instance.getClass().getMethod("apply", String[].class, BufferedReader.class, Route.class);
                     Object[] args = {line, console, null};
+                    if(commandType == CommandType.exit) {
+                        Save save = (Save) Save.getInstance();
+                        save.apply(line, console, null);
+                    }
                     method.invoke(instance, args);
 
                     //TODO Если у команды не те типы ключей - просто System.print и return;

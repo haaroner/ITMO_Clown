@@ -116,17 +116,19 @@ public final class ConsoleManager {
                     Command instance = newCommand.getDeclaredConstructor().newInstance();
                     Method method = instance.getClass().getMethod("apply", String[].class, BufferedReader.class, Route.class);
                     Object[] args = {line, console, null};
-                    //Route newRoute = (Route) method.invoke(instance, args);
-                    Route newRoute;
-                    if(commandType == CommandType.insert ||
-                            commandType == CommandType.update ||
-                            commandType == CommandType.replace_if_lower)
-                        newRoute = getNewRoute(console);
-                    else
-                        newRoute = null;
-                    NetCommand netCommand = new NetCommand(instance, line, newRoute);
-                    NetManager.getInstance().sendCommand(netCommand);
-
+                    if(commandType == CommandType.execute_script || commandType == CommandType.exit)
+                        method.invoke(instance, args);
+                    else {
+                        Route newRoute;
+                        if (commandType == CommandType.insert ||
+                                commandType == CommandType.update ||
+                                commandType == CommandType.replace_if_lower)
+                            newRoute = getNewRoute(console);
+                        else
+                            newRoute = null;
+                        NetCommand netCommand = new NetCommand(instance, line, newRoute);
+                        NetManager.getInstance().sendCommand(netCommand);
+                    }
 
                     //TODO Если у команды не те типы ключей - просто System.print и return;
                 } catch (IllegalArgumentException e) {

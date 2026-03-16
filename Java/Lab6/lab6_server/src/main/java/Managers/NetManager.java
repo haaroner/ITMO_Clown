@@ -4,11 +4,9 @@ import Commands.Command;
 import Commands.CommandType;
 import Commands.NetCommand;
 import Models.Route;
+import Models.ServerResponse;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.lang.reflect.Method;
 import java.net.*;
 import java.nio.ByteBuffer;
@@ -26,6 +24,7 @@ public final class NetManager {
     DatagramPacket dp;
     Selector selector;
     DatagramChannel channel;
+    InetSocketAddress clientAddress;
 
     private NetManager() {
 
@@ -40,6 +39,20 @@ public final class NetManager {
         channel.register(selector, SelectionKey.OP_READ);
     }
 
+    private void sendResponse (String data, DatagramChannel channel) throws IOException {
+        ServerResponse.getInstance().setRoutes(CollectionManager.getInstance().getCollection());
+        ServerResponse.getInstance().setData(data);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.writeObject(ServerResponse.getInstance());
+        oos.close();
+        ByteBuffer buff = ByteBuffer.wrap(baos.toByteArray());
+        //byte[] arr = baos.toByteArray();
+        channel.send(buff, clientAddress);
+
+    }
+
     public void scan(BufferedReader console) throws IOException, ClassNotFoundException {
         int readyChannels = selector.selectNow();
 
@@ -50,7 +63,7 @@ public final class NetManager {
                 keys.remove();
 
                 if (key.isReadable()) {
-                    handleCommand(handleRead(channel), console);
+                    handleCommand(handleRead(channel), console, channel);
                 }
             }
         }
@@ -59,6 +72,7 @@ public final class NetManager {
     private NetCommand handleRead(DatagramChannel channel) throws IOException, ClassNotFoundException {
         ByteBuffer buffer = ByteBuffer.allocate(1024);
         InetSocketAddress clientAddr = (InetSocketAddress) channel.receive(buffer);
+        this.clientAddress = clientAddr;
 
         if(clientAddr != null) {
             buffer.flip();
@@ -76,15 +90,17 @@ public final class NetManager {
         return null;
     }
 
-    private void handleCommand(NetCommand command, BufferedReader console){
+    private void handleCommand(NetCommand command, BufferedReader console, DatagramChannel channel) throws IOException {
         String[] line = command.getLine();
-        try {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
-//            Class<? extends Command> newCommand = CommandType.valueOf(line[0]).getClazz();
-//            Command instance = newCommand.getDeclaredConstructor().newInstance();
-//            Method method = instance.getClass().getMethod("apply", String[].class, BufferedReader.class);
-//            Object[] args = {line, console};
-//            method.invoke(instance, args);
+        PrintStream originalOut = System.out;
+        PrintStream originalErr = System.err;
+        try {
+            System.setOut(new PrintStream(outContent));
+            System.setErr(new PrintStream(errContent));
+
             Method method = command.getCommand().getClass().getMethod("apply", String[].class, BufferedReader.class, Route.class);
             Object[] args = {line, console, command.getRoute()};
             method.invoke(command.getCommand(), args);
@@ -97,7 +113,13 @@ public final class NetManager {
             System.out.println("Unexpected error occurred, try again");
             System.out.println(line[0]);
         }
+        finally {
+            System.setOut(originalOut);
+            System.setErr(originalErr);
+        }
 
+        String out = outContent.toString() + errContent.toString();
+        this.sendResponse(out, channel);
     }
 
 
