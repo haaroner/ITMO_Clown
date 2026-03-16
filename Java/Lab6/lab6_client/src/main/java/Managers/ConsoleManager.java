@@ -114,8 +114,8 @@ public final class ConsoleManager {
                     CommandType commandType = CommandType.valueOf(line[0]);
                     Class<? extends Command> newCommand = CommandType.valueOf(line[0]).getClazz();
                     Command instance = newCommand.getDeclaredConstructor().newInstance();
-                    Method method = instance.getClass().getMethod("apply", String[].class, BufferedReader.class);
-                    Object[] args = {line, console};
+                    Method method = instance.getClass().getMethod("apply", String[].class, BufferedReader.class, Route.class);
+                    Object[] args = {line, console, null};
                     //Route newRoute = (Route) method.invoke(instance, args);
                     Route newRoute;
                     if(commandType == CommandType.insert ||

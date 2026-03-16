@@ -23,11 +23,16 @@ public final class ReplaceLower extends Command{
     public void apply(String[] data, BufferedReader console, Route route) {
         try {
             Integer id = ConsoleManager.getInstance().ask("ID", Integer.class, console, false);
-            Route newRoute = ConsoleManager.getInstance().getNewRoute(console);
+            if(Objects.isNull(route))
+                route = ConsoleManager.getInstance().getNewRoute(console);
+            else {
+                route.setId(CollectionManager.getInstance());
+                route.updateMaxId();
+            }
             Route cur = CollectionManager.getInstance().getItem(id);
             if (Objects.nonNull(cur)) {
-                if (cur.compareTo(newRoute) > 0) {
-                    CollectionManager.getInstance().putItem(cur.getId(), newRoute);
+                if (cur.compareTo(route) > 0) {
+                    CollectionManager.getInstance().putItem(cur.getId(), route);
                     System.out.println("Route added");
                 }
                 else {

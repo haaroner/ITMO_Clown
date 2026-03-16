@@ -17,7 +17,7 @@ public final class Show extends Command{
      * @param data input from console
      * @param console which console to use
      */
-    public void apply(String[] data, BufferedReader console) {
+    public void apply(String[] data, BufferedReader console, Route route) {
         System.out.println("Routes Collection: ");
         for (Map.Entry<Integer, Route> entry : CollectionManager.getInstance().getCollection().entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue().toString());

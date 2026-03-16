@@ -1,6 +1,7 @@
 package Commands;
 
 import Managers.SystemManager;
+import Models.Route;
 
 import java.io.BufferedReader;
 
@@ -15,7 +16,7 @@ public final class Save extends Command{
      * @param data input from console
      * @param console which console to use
      */
-    public void apply(String[] data, BufferedReader console) {
+    public void apply(String[] data, BufferedReader console, Route route) {
         SystemManager.getInstance().saveCollectionToFile();
         System.out.println("Collection saved");
     }

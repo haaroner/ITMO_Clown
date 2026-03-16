@@ -1,5 +1,7 @@
 package Commands;
 
+import Models.Route;
+
 import java.io.BufferedReader;
 import java.io.Serializable;
 
@@ -20,7 +22,7 @@ public class Command implements Serializable {
      * @param data input from console
      * @param console which console to use
      */
-    public void apply(String[] data, BufferedReader console){
+    public void apply(String[] data, BufferedReader console, Route route) {
         System.out.println("Command applied");
     }
 }

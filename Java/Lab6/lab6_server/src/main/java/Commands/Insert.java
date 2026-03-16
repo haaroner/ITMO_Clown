@@ -23,6 +23,10 @@ public final class Insert extends Command{
         try {//TODO перекинуть это в консоль
             if(Objects.isNull(route))
                 route = ConsoleManager.getInstance().getNewRoute(console);
+            else {
+                route.setId(CollectionManager.getInstance());
+                route.updateMaxId();
+            }
             if(route.validate())
                 CollectionManager.getInstance().putItem(route.getId(), route);
             else

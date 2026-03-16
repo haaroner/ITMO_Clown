@@ -2,6 +2,7 @@ package Commands;
 
 import Managers.ConsoleManager;
 import Managers.SystemManager;
+import Models.Route;
 
 import java.io.*;
 import java.util.Objects;
@@ -17,7 +18,7 @@ public final class ExecuteScript extends Command{
      * @param data input from console
      * @param console which console to use
      */
-    public void apply(String[] data, BufferedReader console) {
+    public void apply(String[] data, BufferedReader console, Route route) {
         if(data.length < 2) {
             System.out.println("not enough arguments");
             return;

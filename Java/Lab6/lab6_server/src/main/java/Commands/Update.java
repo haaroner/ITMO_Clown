@@ -29,6 +29,10 @@ public final class Update extends Command{
                 }
                 if(Objects.isNull(route))
                     route = ConsoleManager.getInstance().getNewRoute(console);
+                else {
+                    route.setId(CollectionManager.getInstance());
+                    route.updateMaxId();
+                }
                 if (!route.validate())
                     System.out.println("New object have not passed validation test, check data conditions");
                 else {

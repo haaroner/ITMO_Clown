@@ -16,13 +16,13 @@ public final class RemoveByDistance extends Command{
      * @param data input from console
      * @param console which console to use
      */
-    public void apply(String[] data, BufferedReader console) {
+    public void apply(String[] data, BufferedReader console, Route route) {
         if (data.length >= 2) {
             try {
                 long distance = Long.parseLong(data[1]);
-                for (Route route : CollectionManager.getInstance().getCollection().values())
-                    if (route.getDistance() == distance) {
-                        CollectionManager.getInstance().removeItem(route.getId());
+                for (Route _route : CollectionManager.getInstance().getCollection().values())
+                    if (_route.getDistance() == distance) {
+                        CollectionManager.getInstance().removeItem(_route.getId());
                         return;
                     }
             } catch (NumberFormatException e) {

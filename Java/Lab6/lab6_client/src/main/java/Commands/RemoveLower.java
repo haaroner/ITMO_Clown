@@ -2,6 +2,7 @@ package Commands;
 
 import Managers.CollectionManager;
 import Managers.ConsoleManager;
+import Models.Route;
 import Utility.Element;
 
 import java.io.BufferedReader;
@@ -18,7 +19,7 @@ public final class RemoveLower extends Command{
      * @param data input from console
      * @param console which console to use
      */
-    public void apply(String[] data, BufferedReader console) {
+    public void apply(String[] data, BufferedReader console, Route route) {
         try {
             String input = ConsoleManager.getInstance().ask("", String.class, console, false);
             Integer id = Integer.valueOf(input);
