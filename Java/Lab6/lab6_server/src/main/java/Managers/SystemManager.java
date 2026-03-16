@@ -49,7 +49,7 @@ public final class SystemManager {
      * Inits program and gets data from files
      * @param fileNames of data
      */
-    public void init(String[] fileNames) {
+    public void init(String[] fileNames) throws IOException {
             if(fileNames.length < 3) {
                 System.out.println("3 file`s names should be given \n exiting...");
                 System.exit(1);
@@ -83,11 +83,15 @@ public final class SystemManager {
                     System.err.println("Some of data might be damaged. Starting with empty data base");
                 }
             }
+
+            NetManager.getInstance().initServer(12345);
+
             try {
                 ConsoleManager.getInstance().startScan(defaultConsole);
-            } catch (IOException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 System.err.println("Error occurred while running program\nexiting...");
             }
+
             //TODO вставить парсинг Route и распихать по id-шникам распаршенные подразделы
         }
 

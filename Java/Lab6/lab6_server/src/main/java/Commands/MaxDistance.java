@@ -11,16 +11,13 @@ import java.util.Objects;
  * @author Clown
  */
 public final class MaxDistance extends Command{
-    public MaxDistance() {
-
-    }
 
     /**
      * Command apply method. Returns one of the Routes from collection with max distance
      * @param data input from console
      * @param console which console to use
      */
-    public static void apply(String[] data, BufferedReader console) {
+    public void apply(String[] data, BufferedReader console, Route route) {
         if(data.length >= 1) {
             try{
                 double maxDistance = 0;

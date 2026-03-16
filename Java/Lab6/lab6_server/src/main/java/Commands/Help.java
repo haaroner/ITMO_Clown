@@ -1,19 +1,19 @@
 package Commands;
 
+import Models.Route;
+
 import java.io.BufferedReader;
 
 /**
  * Info command class.
  */
 public final class Help extends Command{
-    public Help() {
-    }
     /**
      * Command apply method. Display all command's names and descriptions
      * @param data input from console
      * @param console which console to use
      */
-    public static void apply(String[] data, BufferedReader console) {
+    public void apply(String[] data, BufferedReader console, Route route) {
         if(data.length > 1)
             System.out.println("This command doesn't need any arguments,  they`ll be ignored");
 

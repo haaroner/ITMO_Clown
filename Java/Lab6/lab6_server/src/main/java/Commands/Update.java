@@ -6,22 +6,20 @@ import Models.Route;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Update collection element command class
  * @author Clown
  */
 public final class Update extends Command{
-    public Update() {
-
-    }
 
     /**
      * Command apply method. If there is Route in Collection with specified ID updates element
      * @param data input from console
      * @param console which console to use
      */
-    public static void apply(String[] data, BufferedReader console) {
+    public void apply(String[] data, BufferedReader console, Route route) {
         if (data.length >= 2) {
             try {//TODO перекинуть это в консоль
                 Integer id = Integer.valueOf(data[1]);
@@ -29,7 +27,8 @@ public final class Update extends Command{
                     System.out.println("No such element in collection");
                     return;
                 }
-                Route route = ConsoleManager.getInstance().getNewRoute(console);
+                if(Objects.isNull(route))
+                    route = ConsoleManager.getInstance().getNewRoute(console);
                 if (!route.validate())
                     System.out.println("New object have not passed validation test, check data conditions");
                 else {

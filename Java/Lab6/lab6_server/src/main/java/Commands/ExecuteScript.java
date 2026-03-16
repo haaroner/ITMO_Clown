@@ -2,6 +2,7 @@ package Commands;
 
 import Managers.ConsoleManager;
 import Managers.SystemManager;
+import Models.Route;
 
 import java.io.*;
 import java.util.Objects;
@@ -11,15 +12,13 @@ import java.util.Objects;
  * @author Clown
  */
 public final class ExecuteScript extends Command{
-    public ExecuteScript() {
-    }
 
     /**
      * Command apply method. Executes script
      * @param data input from console
      * @param console which console to use
      */
-    public static void apply(String[] data, BufferedReader console) {
+    public void apply(String[] data, BufferedReader console, Route route) {
         if(data.length < 2) {
             System.out.println("not enough arguments");
             return;
@@ -43,6 +42,8 @@ public final class ExecuteScript extends Command{
                 System.err.println("File not found");
             } catch (IOException e) {
                 System.err.println("IO error");
+            } catch (ClassNotFoundException e) {
+                System.err.println("aboba");
             }
         }
     }

@@ -87,10 +87,11 @@ public final class ConsoleManager {
      * @param console which console to use
      * @throws IOException in case of IO problems
      */
-    public void startScan(BufferedReader console) throws IOException {
+    public void startScan(BufferedReader console) throws IOException, ClassNotFoundException {
         while(true) {
             reaskInfo = !SystemManager.getInstance().isFileOpen();
             if (!scanNewCommand(console)) break;
+            NetManager.getInstance().scan(console);
         }
     }
 
@@ -103,8 +104,8 @@ public final class ConsoleManager {
      * @throws IOException in case of IO problems
      */
     private boolean scanNewCommand(BufferedReader console) throws IOException {
-        if(useTypeNewCommand)
-            System.out.println("type new command:");
+        if(!console.ready())
+            return true;
         String input = console.readLine();
         if(Objects.nonNull(input)) {
             String[] line = input.split(" ");
@@ -112,8 +113,8 @@ public final class ConsoleManager {
                 try {
                     Class<? extends Command> newCommand = CommandType.valueOf(line[0]).getClazz();
                     Command instance = newCommand.getDeclaredConstructor().newInstance();
-                    Method method = instance.getClass().getMethod("apply", String[].class, BufferedReader.class);
-                    Object[] args = {line, console};
+                    Method method = instance.getClass().getMethod("apply", String[].class, BufferedReader.class, Route.class);
+                    Object[] args = {line, console, null};
                     method.invoke(instance, args);
 
                     //TODO Если у команды не те типы ключей - просто System.print и return;

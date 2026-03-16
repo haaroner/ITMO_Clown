@@ -6,23 +6,23 @@ import Models.Route;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Insert command class
  * @author Clown
  */
 public final class Insert extends Command{
-    public Insert(){
-    }
 
     /**
      * Command apply method. Inserts new Route to the Collection
      * @param data input from console
      * @param console which console to use
      */
-    public static void apply(String[] data, BufferedReader console) {
+    public void apply(String[] data, BufferedReader console, Route route) {
         try {//TODO перекинуть это в консоль
-            Route route = ConsoleManager.getInstance().getNewRoute(console);
+            if(Objects.isNull(route))
+                route = ConsoleManager.getInstance().getNewRoute(console);
             if(route.validate())
                 CollectionManager.getInstance().putItem(route.getId(), route);
             else

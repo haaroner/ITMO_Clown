@@ -11,16 +11,12 @@ import java.util.Map;
  * @author Clown
  */
 public final class ClearCollection extends Command{
-    public ClearCollection() {
-
-    }
-
     /**
      * Command apply method. Clears collection
      * @param data input from console
      * @param console which console to use
      */
-    public static void apply(String[] data, BufferedReader console) {
+    public void apply(String[] data, BufferedReader console, Route route) {
         for (Map.Entry<Integer, Route> entry : CollectionManager.getInstance().getCollection().entrySet()) {
             CollectionManager.getInstance().removeItem(entry.getKey());
         }

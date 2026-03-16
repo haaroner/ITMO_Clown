@@ -10,21 +10,18 @@ import java.io.BufferedReader;
  * @author Clown
  */
 public final class CountGreaterDist extends Command{
-    public CountGreaterDist() {
-
-    }
     /**
      * Command apply method. Counts all objects in collection with greater distance than given
      * @param data input from console
      * @param console which console to use
      */
-    public static void apply(String[] data, BufferedReader console) {
+    public void apply(String[] data, BufferedReader console, Route route) {
         int cnt = 0;
         if (data.length >= 2) {
             try {
                 long distance = Long.parseLong(data[1]);
-                for (Route route : CollectionManager.getInstance().getCollection().values())
-                    if (route.getDistance() > distance) {
+                for (Route _route : CollectionManager.getInstance().getCollection().values())
+                    if (_route.getDistance() > distance) {
                         cnt++;
                     }
                 System.out.println(cnt);

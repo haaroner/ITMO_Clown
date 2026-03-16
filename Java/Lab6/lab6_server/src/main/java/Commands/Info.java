@@ -14,16 +14,12 @@ import java.util.Map;
  */
 public final class Info extends Command{
 
-    public Info() {
-
-    }
-
     /**
      * Command apply method. Displays all Routes in collection
      * @param data input from console
      * @param console which console to use
      */
-    public static void apply(String[] data, BufferedReader console) {
+    public void apply(String[] data, BufferedReader console, Route route) {
         System.out.println("Routes collection info: ");
         System.out.println("size: "+CollectionManager.getInstance().getLength());
         System.out.println("creation time: "+SystemManager.getInstance().getInitTime());
