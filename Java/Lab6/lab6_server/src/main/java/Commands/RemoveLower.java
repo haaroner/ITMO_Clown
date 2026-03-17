@@ -7,13 +7,14 @@ import Utility.Element;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Remove lower command class
  * @author Clown
  */
 public final class RemoveLower extends Command{
-
+    private Integer id;
     /**
      * Command apply method. Similarly to Remove greater command removes every item with lower ID
      * @param data input from console
@@ -21,11 +22,14 @@ public final class RemoveLower extends Command{
      */
     public void apply(String[] data, BufferedReader console, Route route) {
         try {
-            String input = ConsoleManager.getInstance().ask("", String.class, console, false);
-            Integer id = Integer.valueOf(input);
-            for (Element element : CollectionManager.getInstance().getCollection().values())
-                if (element.getId() <= id)
-                    CollectionManager.getInstance().removeItem(element.getId());
+            List<Route> toRemove= CollectionManager.
+                    getInstance().
+                    getCollection().
+                    values().
+                    stream().
+                    filter(entry -> entry.getId() <= this.id).toList();
+
+            toRemove.stream().forEach(entry -> CollectionManager.getInstance().removeItem(entry.getId()));
         }
         catch (NumberFormatException e){
             System.err.println("Cannot get ID from argument");

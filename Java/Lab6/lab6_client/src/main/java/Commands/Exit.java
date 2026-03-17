@@ -1,5 +1,6 @@
 package Commands;
 
+import Managers.NetManager;
 import Models.Route;
 
 import java.io.BufferedReader;
@@ -16,6 +17,7 @@ public final class Exit extends Command{
      */
     public void apply(String[] data, BufferedReader console, Route route) {
         System.out.println("Stopping the program...");
+        NetManager.getInstance().closeChannel();
         System.exit(0);
     }
 }

@@ -14,6 +14,7 @@ Models\Route.class
 Commands\ReplaceLower.class
 Interfaces\Validatable.class
 Commands\CountGreaterDist.class
+Managers\NetManager.class
 Builders\LocationBuilder.class
 Commands\ExecuteScript.class
 Commands\Info.class

@@ -116,7 +116,11 @@ public final class ConsoleManager {
                     Command instance = newCommand.getDeclaredConstructor().newInstance();
                     Method method = instance.getClass().getMethod("apply", String[].class, BufferedReader.class, Route.class);
                     Object[] args = {line, console, null};
-                    if(commandType == CommandType.execute_script || commandType == CommandType.exit)
+
+                    if(commandType == CommandType.remove_greater_key || commandType==CommandType.remove_lower_key)
+                        method.invoke(instance, args);
+                    if(commandType == CommandType.execute_script ||
+                            commandType == CommandType.exit)
                         method.invoke(instance, args);
                     else {
                         Route newRoute;

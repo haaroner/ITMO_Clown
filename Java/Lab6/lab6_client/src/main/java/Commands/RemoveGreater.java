@@ -13,6 +13,7 @@ import java.io.IOException;
  * @author Clown
  */
 public final class RemoveGreater extends Command{
+    private Integer id;
 
     /**
      * Command apply method. Removes all Routes with Higher ID
@@ -20,15 +21,6 @@ public final class RemoveGreater extends Command{
      * @param console which console to use
      */
     public void apply(String[] data, BufferedReader console, Route route) {
-        try {
-            String input = ConsoleManager.getInstance().ask("", String.class, console, false);
-            Integer id = Integer.valueOf(input);
-            for (Element element : CollectionManager.getInstance().getCollection().values())
-                if (element.getId() >= id)
-                    CollectionManager.getInstance().removeItem(element.getId());
-        }
-        catch (NumberFormatException e){
-            System.err.println("Cannot get ID from argument");
-        }
+            this.id = ConsoleManager.getInstance().ask("", Integer.class, console, false);
     }
 }

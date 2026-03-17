@@ -4,6 +4,9 @@ import Managers.CollectionManager;
 import Models.Route;
 
 import java.io.BufferedReader;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * Remove by distance class
@@ -20,11 +23,20 @@ public final class RemoveByDistance extends Command{
         if (data.length >= 2) {
             try {
                 long distance = Long.parseLong(data[1]);
-                for (Route _route : CollectionManager.getInstance().getCollection().values())
-                    if (_route.getDistance() == distance) {
-                        CollectionManager.getInstance().removeItem(_route.getId());
-                        return;
-                    }
+
+                Optional<Map.Entry<Integer, Route>> obj = CollectionManager.
+                        getInstance().
+                        getCollection().
+                        entrySet().
+                        stream().
+                        filter(entry -> entry.getValue().getDistance() == distance).
+                        findFirst();
+                if (obj.isEmpty()){
+                    System.out.println("No such Route");
+                }
+                else {
+                    CollectionManager.getInstance().removeItem(obj.get().getKey());
+                }
             } catch (NumberFormatException e) {
                 System.out.println("Cannot convert to dist");
             }

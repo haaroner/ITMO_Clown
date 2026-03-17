@@ -134,6 +134,6 @@ public final class Route extends Element implements Comparable<Route>, Validatab
 
     @Override
     public int compareTo(Route other) {
-        return Integer.parseInt("" + (Math.abs(this.from.getX() - this.to.getX()) - Math.abs(other.from.getX() - other.to.getX())));
+        return Integer.parseInt(""+(this.distance - other.getDistance()));
     }
 }

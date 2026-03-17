@@ -114,8 +114,13 @@ public final class ConsoleManager {
                 try {
                     CommandType commandType = CommandType.valueOf(line[0]);
                     Class<? extends Command> newCommand = CommandType.valueOf(line[0]).getClazz();
-                    Command instance = newCommand.getDeclaredConstructor().newInstance();
+                    Command instance;
+                    if(commandType == CommandType.save)
+                        instance = (Command) newCommand.getMethod("getInstance").invoke(null);
+                    else
+                        instance = newCommand.getDeclaredConstructor().newInstance();
                     Method method = instance.getClass().getMethod("apply", String[].class, BufferedReader.class, Route.class);
+                    method.setAccessible(true);
                     Object[] args = {line, console, null};
                     if(commandType == CommandType.exit) {
                         Save save = (Save) Save.getInstance();
@@ -126,11 +131,6 @@ public final class ConsoleManager {
                     //TODO Если у команды не те типы ключей - просто System.print и return;
                 } catch (IllegalArgumentException e) {
                     System.out.println("No command found");
-                    System.out.println(line[0]);
-                } catch (InstantiationException e) {
-                    if(!reaskInfo)
-                        return true;
-                    System.out.println("command not found, try again");
                     System.out.println(line[0]);
                 } catch (Throwable e) {
                     System.out.println("Unexpected error occurred, try again");

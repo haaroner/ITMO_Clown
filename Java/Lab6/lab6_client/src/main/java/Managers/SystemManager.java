@@ -2,10 +2,12 @@ package Managers;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
 import java.util.*;
 
+import Models.ServerResponse;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import java.io.Writer;
@@ -50,40 +52,33 @@ public final class SystemManager {
      * @param fileNames of data
      */
     public void init(String[] fileNames) {
-            if(fileNames.length < 3) {
-                System.out.println("3 file`s names should be given \n exiting...");
-                System.exit(1);
+        try {
+            NetManager.getInstance().initClient();
+            NetCommand initCommand = new NetCommand(Show.class.getDeclaredConstructor().newInstance(), new String[0], null);
+            ServerResponse newResponse = NetManager.getInstance().sendCommand(initCommand);
+            if(Objects.isNull(newResponse)) {
+                System.out.println("Couldnt load collection from server, shuttind down...");
+                System.exit(69);
             }
-            else {
-                try {
-                    routesFile = fileNames[0];
-                    coordinatesFile = fileNames[1];
-                    locationFile = fileNames[2];
-                    Thread.setDefaultUncaughtExceptionHandler((thread, e) -> {
-                        Throwable cause = e.getCause() != null ? e.getCause() : e;
-                        if (cause instanceof com.opencsv.exceptions.CsvException) {
-                            return;  // ignoring all OpenCsvErrors
-                        }
-                    });
-                    if(!(SystemManager.getInstance().checkReadable(routesFile) && SystemManager.getInstance().checkReadable(coordinatesFile) && SystemManager.getInstance().checkReadable(locationFile))) {
-                        System.err.println("Some of files is not readable, exiting...");
-                        return;
-                    }
-                    LinkedHashMap<Integer, Route> data = getNewData(readFromFile(Route.class, routesFile),
-                            readFromFile(Coordinates.class, coordinatesFile),
-                            readFromFile(Location.class, locationFile));
-
-                    for (Map.Entry<Integer, Route> entry : data.entrySet()) {
-                        System.out.println(entry.getKey() + ": " + entry.getValue().toString());
-
-                    }
-                    CollectionManager.getInstance().setCollection(data);
+            LinkedHashMap<Integer, Route> data = newResponse.getRoutes();
+            CollectionManager.getInstance().setCollection(data);
                 }
                 catch (NullPointerException e) {
                     System.err.println("Some of data might be damaged. Starting with empty data base");
-                }
-            }
-            try {
+                } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+        try {
                 ConsoleManager.getInstance().startScan(defaultConsole);
             } catch (IOException e) {
                 System.err.println("Error occurred while running program\nexiting...");

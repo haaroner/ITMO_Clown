@@ -5,6 +5,8 @@ import Models.Route;
 
 import java.io.BufferedReader;
 
+import static org.apache.commons.lang3.CharSetUtils.count;
+
 /**
  * count_greater_dist Command class
  * @author Clown
@@ -20,11 +22,16 @@ public final class CountGreaterDist extends Command{
         if (data.length >= 2) {
             try {
                 long distance = Long.parseLong(data[1]);
-                for (Route _route : CollectionManager.getInstance().getCollection().values())
-                    if (_route.getDistance() > distance) {
-                        cnt++;
-                    }
-                System.out.println(cnt);
+
+                System.out.println(CollectionManager.
+                        getInstance().
+                        getCollection().
+                        values().
+                        stream().
+                        filter(_route -> route.getDistance() > distance).
+                        count());
+
+
             } catch (NumberFormatException e) {
                 System.out.println("Cannot convert input to dist");
             }

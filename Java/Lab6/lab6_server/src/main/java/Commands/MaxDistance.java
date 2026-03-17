@@ -4,6 +4,7 @@ import Managers.CollectionManager;
 import Models.Route;
 
 import java.io.BufferedReader;
+import java.util.Comparator;
 import java.util.Objects;
 
 /**
@@ -20,16 +21,8 @@ public final class MaxDistance extends Command{
     public void apply(String[] data, BufferedReader console, Route route) {
         if(data.length >= 1) {
             try{
-                double maxDistance = 0;
-                Route maxRoute = null;
-                for(Route element: CollectionManager.getInstance().getCollection().values()){
-                    if(element.getDistance() > maxDistance) {
-                        maxDistance = element.getDistance();
-                        maxRoute = element;
-                    }
-                }
-                if(!Objects.isNull(maxRoute))
-                    System.out.println(maxRoute);
+                if(CollectionManager.getInstance().getLength() > 0)
+                    System.out.println(CollectionManager.getInstance().getCollection().values().stream().max(Comparator.naturalOrder()).get());
                 else
                     System.out.println("Empty collection");
             }
