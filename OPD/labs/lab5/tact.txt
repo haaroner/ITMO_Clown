@@ -1,0 +1,9 @@
+Instruction fetch:
+1)ip -> br   ip -> ar
+2)br+1->ip, M(ar)->dr
+3)dr->cr
+
+ADDRESS+OPERAND -------
+
+Execution
+DR#4 -> AC
