@@ -321,7 +321,7 @@
 	\newpage
 	\large \textbf{\textcolor{structure.fg}{Графики интегральных сумм}}\\
 	\textbf{Метод левых прямоугольников}
-	\includegraphics[width=0.5\textwidth]{Sin_left.png}
+	\includegraphics[width=0.75\textwidth]{Sin_left.png}
 	\\n = 31; Ранг разбиения: 0.1; S\textsubscript{гр} = 1.9953899
 	Формула погрешности для метода левых прямоугольников:
 	$$|R_n| \le \max_{x \in [a, b]} |f'(x)| \frac{(b - a)^2}{2n}$$
@@ -332,7 +332,7 @@
 	$$ |S_\text{ист} - S_\text{гр}| = 0,0046101 < 0,15 < R_n \implies \text{Рассчитано корректно}$$
 	\newpage
 	\textbf{Метод правых прямоугольников}
-	\includegraphics[width=0.5\textwidth]{Sin_right.png}
+	\includegraphics[width=0.75\textwidth]{Sin_right.png}
 	\\n = 13; Ранг разбиения: 0.24; S\textsubscript{гр} = 1.9927496961573818
 	Формула погрешности для метода правых прямоугольников(такая же):
 	$$|R_n| \le \max_{x \in [a, b]} |f'(x)| \frac{(b - a)^2}{2n}$$
@@ -343,7 +343,7 @@
 	$$ |S_\text{ист} - S_\text{гр}| = 0.007250304 < 0.008 < R_n \implies \text{Рассчитано корректно}$$
 	\newpage
 	\textbf{Метод средних прямоугольников}
-	\includegraphics[width=0.5\textwidth]{Sin_middle.png}
+	\includegraphics[width=0.75\textwidth]{Sin_middle.png}
 	\\n = 18; Ранг разбиения: 0.17; S\textsubscript{гр} = 1.9990795211790413
 	Формула погрешности для метода средних прямоугольников:
 	$$|R_n| \le \max_{x \in [a, b]} |f''(x)| \frac{(b - a)^3}{24n^2}$$
@@ -353,9 +353,9 @@
 	$$ n = 18 \implies R_n \leq \frac{\pi^3}{7776} < 0,003987432700656 $$ 
 	$$ |S_\text{ист} - S_\text{гр}| = 0.0009204788209587 < R_n \implies \text{Рассчитано корректно}$$
 	\newpage
-	\textbf{Метод трапеций}
-	\includegraphics[width=0.5\textwidth]{Sin_trap.png}
-	\\n = 34; Ранг разбиения: 0.9; S\textsubscript{гр} = 1.9953252293472543
+	\textbf{Метод трапеций}\\
+	\includegraphics[width=0.75\textwidth]{Sin_trap.png}
+	\\n = 34; Ранг разбиения: 0.09; S\textsubscript{гр} = 1.9953252293472543
 	Формула погрешности для метода трапеций:
 	$$|R_n| \le \max_{x \in [a, b]} |f''(x)| \frac{(b - a)^3}{12n^2}$$
 	\newpage

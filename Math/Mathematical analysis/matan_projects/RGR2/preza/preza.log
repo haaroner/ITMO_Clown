@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.10.29)  17 APR 2026 01:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.10.29)  17 APR 2026 01:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1437,11 +1437,11 @@ Overfull \hbox (26.14243pt too wide) detected at line 307
 [30]
 
 [31]
-<Sin_left.png, id=232, 599.23875pt x 450.18187pt>
+<Sin_left.png, id=232, 602.25pt x 445.665pt>
 File: Sin_left.png Graphic file (type png)
 <use Sin_left.png>
 Package pdftex.def Info: Sin_left.png  used on input line 324.
-(pdftex.def)             Requested size: 135.41289pt x 101.72618pt.
+(pdftex.def)             Requested size: 203.11932pt x 150.30684pt.
 
 
 [32 <./Sin_left.png>]
@@ -1456,11 +1456,11 @@ T1/cmss/m/n/12 0046101 \OML/cmm/m/it/12 < \OT1/cmss/m/n/12 0\OML/cmm/m/it/12 ;
 
 
 [33]
-<Sin_right.png, id=245, 587.94656pt x 450.18187pt>
+<Sin_right.png, id=245, 598.48593pt x 443.40656pt>
 File: Sin_right.png Graphic file (type png)
 <use Sin_right.png>
 Package pdftex.def Info: Sin_right.png  used on input line 335.
-(pdftex.def)             Requested size: 135.41289pt x 103.6839pt.
+(pdftex.def)             Requested size: 203.11932pt x 150.4856pt.
 
 
 [34 <./Sin_right.png>]
@@ -1475,11 +1475,11 @@ s/m/n/12 =[]\OMS/cmsy/m/n/12 )  []
 
 
 [35]
-<Sin_middle.png, id=257, 599.99156pt x 444.15938pt>
+<Sin_middle.png, id=257, 601.4972pt x 449.42906pt>
 File: Sin_middle.png Graphic file (type png)
 <use Sin_middle.png>
 Package pdftex.def Info: Sin_middle.png  used on input line 346.
-(pdftex.def)             Requested size: 135.41289pt x 100.2433pt.
+(pdftex.def)             Requested size: 203.11932pt x 151.76833pt.
 
 
 [36 <./Sin_middle.png>]
@@ -1493,11 +1493,11 @@ erncmss/m/sl/12 S[]\OMS/cmsy/m/n/12 j \OT1/cmss/m/n/12 = 0\OML/cmm/m/it/12 :\OT
 
 
 [37]
-<Sin_trap.png, id=270, 601.4972pt x 443.40656pt>
+<Sin_trap.png, id=270, 596.98032pt x 434.37282pt>
 File: Sin_trap.png Graphic file (type png)
 <use Sin_trap.png>
 Package pdftex.def Info: Sin_trap.png  used on input line 357.
-(pdftex.def)             Requested size: 135.41289pt x 99.82306pt.
+(pdftex.def)             Requested size: 203.11932pt x 147.79085pt.
 
 
 [38 <./Sin_trap.png>]
@@ -1929,7 +1929,7 @@ ssi12.pfb><D:/mikTex/fonts/type1/public/amsfonts/cm/cmssi8.pfb><D:/mikTex/fonts
 cmsy6.pfb><D:/mikTex/fonts/type1/public/amsfonts/cm/cmsy8.pfb><D:/mikTex/fonts/
 type1/public/amsfonts/latxfont/line10.pfb><D:/mikTex/fonts/type1/public/amsfont
 s/symbols/msam10.pfb>
-Output written on preza.pdf (93 pages, 4472090 bytes).
+Output written on preza.pdf (93 pages, 4471270 bytes).
 PDF statistics:
  994 PDF objects out of 1000 (max. 8388607)
  191 named destinations out of 1000 (max. 500000)
