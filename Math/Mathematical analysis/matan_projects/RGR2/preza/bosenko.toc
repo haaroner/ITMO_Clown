@@ -1,0 +1,5 @@
+\babel@toc {russian}{}\relax 
+\contentsline {chapter}{Задание}{1}{}%
+\contentsline {chapter}{Аналитическая часть}{2}{}%
+\contentsline {chapter}{Результаты работы программы}{3}{}%
+\contentsline {chapter}{Вывод формул для погрешностей}{6}{}%

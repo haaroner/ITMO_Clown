@@ -1,0 +1,4 @@
+\babel@toc {russian}{}\relax 
+\contentsline {chapter}{Результаты работы программы}{46}{}%
+\beamer@subsectionintoc {2}{1}{Таблица эксперементальных значений}{68}{0}{0}
+\beamer@subsectionintoc {2}{2}{Графики}{69}{0}{0}
