@@ -1,0 +1,86 @@
+ORG 0X0
+V0:	WORD	$DEFAULT, 0X180;
+V1:	WORD	$IRQ1,0X180;
+V2:	WORD	$IRQ2,0X180;
+V3:	WORD	$DEFAULT, 0X180;
+V4:	WORD	$DEFAULT, 0X180;
+V5:	WORD	$DEFAULT, 0X180;
+V6:	WORD	$DEFAULT, 0X180;
+V7:	WORD	$DEFAULT, 0X180;
+DEFAULT: IRET
+
+ORG 0X20
+START:	DI	;ЗАПРЕТ ПРЕРЫВАНИЙ
+	CLA	;
+	OUT 1	;
+	OUT 7	;
+	OUT 9	;
+	OUT 11	;
+	OUT 13	;
+	OUT 15	;
+	OUT 17	;
+	LD #9	;
+	OUT 3	;1001 -> MR ВУ-1 (IRQ1)
+	LD #0XA	;
+	OUT 5	;1010 -> MR ВУ-2 (IRQ2)
+	JUMP $PROG	;ПЕРЕХОД К ОСНОВНОЙ ПРОГЕ
+
+	ORG 0X37	;АДРЕС ЯЧЕЙКИ 0X37
+X:	WORD 0
+MAX:	WORD 25
+MIN:	WORD -25
+PROG:	
+MYLOOP:	DI
+	LD X	;
+	INC	;
+	;ASL	;
+	;ADD X	;
+	ST X	;
+	CALL CHECK	;
+	EI
+	JUMP MYLOOP;
+
+	ORG 0X52;
+IRQ1:	
+	DI
+	NOP	;
+	PUSH	;SAVE AC
+	;IN 0X3	;
+	LD X	;
+	NEG	;
+	ASL	;
+	ASL	;
+	SUB X	; *-5
+	SUB #2	;-2
+	OUT 2	;ВЫВОД F(X) = -5X-2
+	POP	; GET AC
+	;CALL CHECK
+	EI
+	IRET	;RETURN
+	ORG 0X70
+IRQ2:		;
+	DI
+	PUSH	;СОХРАНИТЬ AC
+	CLA	;
+	;IN 5	;
+	IN 4	;ПРОЧИТАТЬ РД
+	NEG	;ИЗМЕНИТЬ ЗНАК
+	SXTB
+	ST X	;СОХРАНИТЬ В Х
+	POP	;ВЕРНУТЬ AC
+	;CALL CHECK
+	EI
+	IRET	;ВЫХОД
+CHECK:
+	DI	;
+	LD X	;
+	CMP MAX	;
+	BMI COND2	;
+	LD MIN	;
+COND2:	CMP MIN
+	BPL SKIP
+	LD MIN
+SKIP:	ST X	;
+	EI	;
+	RET	;
+	
