@@ -1,0 +1,142 @@
+package Managers;
+
+import Builders.CoordinatesBuilder;
+import Builders.LocationBuilder;
+import Builders.RouteBuilder;
+import Enums.DbTableType;
+import Models.Coordinates;
+import Models.Location;
+import Models.Route;
+import Utility.Element;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+public final class DbManager {
+    private static final String URL = "jdbc:postgresql://pg:5432/studs";
+    private static final String USER = "s502355"; // Ваш логин
+    private static final String PASS = "IMWN#6870";
+    private DbManager () {
+
+    }
+
+    private static class DbHolder {
+        private static final DbManager INSTANCE = new DbManager();
+    }
+
+    public static DbManager getInstance() {
+        return  DbHolder.INSTANCE;
+    }
+
+    public <T extends Element> void addItem(T newData, Connection connection) throws SQLException {
+        if(Objects.nonNull(newData)) {
+            System.out.println("start");
+
+            PreparedStatement statement = connection.prepareStatement(newData.getSaveQuery(), PreparedStatement.RETURN_GENERATED_KEYS);
+            newData.formSaveQuery(statement);
+            statement.executeUpdate();
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    Integer newId = Math.toIntExact(generatedKeys.getLong(1));
+                    System.out.println(newId);
+                    newData.setId(newId);
+                }
+            }
+            statement.close();
+            System.out.println("end");
+
+        }
+    }
+
+    public boolean addWholeRoute(Route newRoute, Connection connection) throws SQLException {
+            try {
+                connection.setAutoCommit(false);
+                addItem(newRoute.getFrom(), connection);
+                addItem(newRoute.getTo(), connection);
+                addItem(newRoute.getCoordinates(), connection);
+                newRoute.updateLinks();
+                System.out.println("123");
+                addItem(newRoute, connection);
+                connection.commit();
+                connection.setAutoCommit(true);
+                return true;
+            }
+            catch (SQLException e) {
+                connection.rollback();
+                e.printStackTrace();
+                return false;
+            }
+    }
+
+    public boolean addWholeRoute(Route newRoute) {
+        try(Connection connection = DriverManager.getConnection(URL, USER, PASS);) {
+            addWholeRoute(newRoute, connection);
+            return true;
+        } catch (SQLException e) {
+            System.err.println("Cannot initiate connection with database, error message :\n" + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean removeWholeRoute(Integer id, Connection connection) throws SQLException {
+            try(PreparedStatement statement = connection.prepareStatement(Route.getRemoveQuery());){
+                statement.setInt(1, id);
+                int affectedRows = statement.executeUpdate();
+
+                if(affectedRows > 0) System.out.println("success");
+                else System.out.println("No such route");
+                return true;
+            }
+    }
+
+    public boolean removeWholeRoute(Integer id) {
+        try(Connection connection = DriverManager.getConnection(URL, USER, PASS);) {
+            removeWholeRoute(id, connection);
+            return true;
+        }
+        catch (SQLException e) {
+            System.err.println("Cannot initiate connection with database, error message :\n" + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean updateWholeRoute(Integer id, Route newRoute){
+        try(Connection connection = DriverManager.getConnection(URL, USER, PASS);) {
+            removeWholeRoute(id, connection);
+            addWholeRoute(newRoute, connection);
+        } catch (SQLException e) {
+            System.err.println("Cannot initiate connection with database, error message :\n" + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    public <T extends Element> List<List<?>> loadCollectionFromDb() {
+        String coordsSql = "SELECT * FROM COORDINATES";
+        String locsSql = "SELECT * FROM LOCATIONS";
+        String routesSql = "SELECT * FROM ROUTES";
+        List<List<?>> result = new ArrayList<>();
+        try(Connection connection = DriverManager.getConnection(URL, USER, PASS)) {
+            Statement statement = connection.createStatement();
+            ResultSet coordsResult = statement.executeQuery(coordsSql);
+            List<Coordinates> newCoordinates = new CoordinatesBuilder().buildByResultSet(coordsResult);
+
+            ResultSet locationsResult = statement.executeQuery(locsSql);
+            List<Location> newLocations = new LocationBuilder().buildByResultSet(locationsResult);
+
+            ResultSet routesResult = statement.executeQuery(routesSql);
+            List<Route> newRoutes = new RouteBuilder().buildByResultSet(routesResult);
+            statement.close();
+
+            result.add(newRoutes);
+            result.add(newCoordinates);
+            result.add(newLocations);
+        } catch (SQLException e) {
+            System.err.println("Unable to load collection from DB, shutting down");
+            System.exit(0);
+        }
+        return result;
+    }
+}
