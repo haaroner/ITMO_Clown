@@ -5,6 +5,8 @@ import Interfaces.Validatable;
 import com.opencsv.bean.CsvBindByName;
 
 import java.io.Serializable;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public final class Coordinates extends Element implements Validatable, Serializable {
     private static Integer maxId = 0;
@@ -17,6 +19,11 @@ public final class Coordinates extends Element implements Validatable, Serializa
         maxId = Math.max(this.id, maxId);
         this.x = x;
         this.y = y;
+    }
+
+    @Override
+    public void setId(Integer newId) {
+        this.id = newId;
     }
 
     public Coordinates() {}
@@ -45,5 +52,17 @@ public final class Coordinates extends Element implements Validatable, Serializa
     @Override
     public Integer getId() {
         return this.id;
+    }
+
+    @Override
+    public String getSaveQuery() {
+        return "INSERT INTO COORDINATES (X, Y) VALUES (?,?)";
+    }
+
+    @Override
+    public PreparedStatement formSaveQuery(PreparedStatement statement) throws SQLException {
+        statement.setInt(1, this.x);
+        statement.setDouble(2, this.y);
+        return statement;
     }
 }

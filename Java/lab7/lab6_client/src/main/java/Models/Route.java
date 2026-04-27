@@ -6,6 +6,10 @@ import Managers.CollectionManager;
 import Utility.Element;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.Objects;
 
 public final class Route extends Element implements Comparable<Route>, Validatable, Serializable {
@@ -38,6 +42,15 @@ public final class Route extends Element implements Comparable<Route>, Validatab
         this.updateMaxId();
     }
 
+    public Route(Integer id, String name, Integer coordinatesId,  Integer fromId, Integer toId, Long distance) {
+        this.id = id;
+        this.name = name;
+        this.coordinatesId = coordinatesId;
+        this.fromId = fromId;
+        this.toId = toId;
+        this.distance = distance;
+    }
+
     public void updateMaxId() {
         maxId = Math.max(this.id, maxId);
     }
@@ -64,6 +77,10 @@ public final class Route extends Element implements Comparable<Route>, Validatab
 
     public void setTo(Location to) {
         this.to = to;
+    }
+
+    public void setDate(java.util.Date date){
+        this.creationDate = date;
     }
 
     public void setCoordinates(Coordinates coordinates) {
@@ -95,6 +112,11 @@ public final class Route extends Element implements Comparable<Route>, Validatab
         return this.id;
     }
 
+    @Override
+    public void setId(Integer newId) {
+        this.id = newId;
+    }
+
     public Integer getToId() {
         return this.toId;
     }
@@ -119,12 +141,21 @@ public final class Route extends Element implements Comparable<Route>, Validatab
         return to;
     }
 
+    public void updateLinks() {
+        this.toId = this.to.getId();
+        if(Objects.nonNull(from))
+            this.fromId = this.from.getId();
+        else
+            this.fromId = null;
+        this.coordinatesId = this.coordinates.getId();
+    }
+
     @Override
     public String toString() {
         if(this.validate()) {
             if(Objects.nonNull(from))
                 return "id: " + id.toString() + " name: " + name + " coordinates: " + coordinates.toString() + " creationDate: " + creationDate.toString() +
-                    " from: " + from.toString() + " to: " + to.toString() + " distance: " + distance;
+                        " from: " + from.toString() + " to: " + to.toString() + " distance: " + distance;
             else
                 return "id: " + id.toString() + " name: " + name + " coordinates: " + coordinates.toString() + " creationDate: " + creationDate.toString() +
                         " from: " + "null" + " to: " + to.toString() + " distance: " + distance;
@@ -134,6 +165,29 @@ public final class Route extends Element implements Comparable<Route>, Validatab
 
     @Override
     public int compareTo(Route other) {
-        return Integer.parseInt("" + (Math.abs(this.from.getX() - this.to.getX()) - Math.abs(other.from.getX() - other.to.getX())));
+        return Integer.parseInt(""+(this.distance - other.getDistance()));
+    }
+
+    @Override
+    public String getSaveQuery() {
+        return "INSERT INTO ROUTES (COORDINTAES_ID, FROM_ID, TO_ID, ROUTE_DATE, DISTANCE, NAME) VALUES (?,?,?,?,?,?)";
+    }
+
+    @Override
+    public PreparedStatement formSaveQuery(PreparedStatement statement) throws SQLException {
+        statement.setInt(1, this.coordinatesId);
+        if(Objects.nonNull(this.from))
+            statement.setInt(2, this.fromId);
+        else
+            statement.setNull(2, Types.BIGINT);
+        statement.setInt(3, this.toId);
+        statement.setDate(4, java.sql.Date.valueOf("2024-01-01"));
+        statement.setLong(5, this.distance);
+        statement.setString(6, this.name);
+        return statement;
+    }
+
+    public static String getRemoveQuery() {
+        return "DELETE FROM ROUTES WHERE ROUTE_ID = ?";
     }
 }

@@ -2,6 +2,9 @@ package Utility;
 
 import Interfaces.Validatable;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 /**
  * Abstract Element class
  * Superclass of {@link Models.Route},{@link Models.Location}, {@link Models.Coordinates}
@@ -9,6 +12,9 @@ import Interfaces.Validatable;
  */
 public abstract class Element implements Validatable{
     private Integer id;
-    abstract public Integer getId();
-    abstract public void updateMaxId();
+    public abstract Integer getId();
+    public abstract void updateMaxId();
+    public abstract String getSaveQuery();
+    public abstract void setId(Integer newId);
+    public abstract PreparedStatement formSaveQuery(PreparedStatement statement) throws SQLException;
 }
