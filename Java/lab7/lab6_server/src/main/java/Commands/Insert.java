@@ -19,12 +19,12 @@ public final class Insert extends Command{
      * @param data input from console
      * @param console which console to use
      */
-    public void apply(String[] data, BufferedReader console, Route route) {
+    public synchronized void apply(String[] data, BufferedReader console, Route route) {
         try {//TODO перекинуть это в консоль
             if(Objects.isNull(route))
                 route = ConsoleManager.getInstance().getNewRoute(console);
             else {
-                route.setId(CollectionManager.getInstance());
+                route.setId(0);
                 route.updateMaxId();
             }
             if(route.validate())

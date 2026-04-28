@@ -9,8 +9,12 @@ import Models.Location;
 import Models.Route;
 import Utility.Element;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,9 +34,65 @@ public final class DbManager {
         return  DbHolder.INSTANCE;
     }
 
+    public synchronized boolean checkIsUserRegistered(String user) {
+        String sql = "SELECT 1 FROM USERS WHERE USER_NAME = ? LIMIT 1";
+        try(Connection connection = DriverManager.getConnection(URL, USER, PASS);
+            PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, user);
+            try(ResultSet routesResult = statement.executeQuery()) {
+                return routesResult.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public synchronized boolean checkIsUserAuth(String user, String pswd) {
+        String sql = "SELECT * FROM USERS WHERE USER_NAME = ? LIMIT 1";
+        try(Connection connection = DriverManager.getConnection(URL, USER, PASS);
+            PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setString(1, user);
+            ResultSet result = statement.executeQuery();
+            if(result.next()) {
+                byte[] hashDB = result.getBytes("HASH");
+                String salt = result.getString("SALT");
+                String pepper = SystemManager.getInstance().getPepper();
+                MessageDigest md = MessageDigest.getInstance("SHA-256");
+                byte[] hashCalc = md.digest((pswd + salt + pepper).getBytes("UTF-8"));
+                //System.out.println(Arrays.toString(hashCalc) + "  " + Arrays.toString(hashDB));
+                //System.out.println(salt);
+                return Arrays.equals(hashCalc, hashDB);
+            }
+            else {
+                System.out.println("no such user");
+                return false;
+            }
+        } catch (SQLException | UnsupportedEncodingException | NoSuchAlgorithmException e) {
+            return false;
+        }
+    }
+
+    public synchronized void registerUser(String user, String pswd) {
+        String sql = "INSERT INTO USERS (USER_NAME, SALT, HASH) VALUES (?,?,?)";
+        try(Connection connection = DriverManager.getConnection(URL, USER, PASS);
+            PreparedStatement statement = connection.prepareStatement(sql)) {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = md.digest((pswd + "salt" + SystemManager.getInstance().getPepper()).getBytes("UTF-8"));
+            statement.setString(1, user);
+            statement.setString(2,"salt");
+            statement.setBytes(3, hashBytes);
+            statement.executeUpdate();
+        } catch (NoSuchAlgorithmException | SQLException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
     public <T extends Element> void addItem(T newData, Connection connection) throws SQLException {
         if(Objects.nonNull(newData)) {
-            System.out.println("start");
+            //System.out.println("start");
 
             PreparedStatement statement = connection.prepareStatement(newData.getSaveQuery(), PreparedStatement.RETURN_GENERATED_KEYS);
             newData.formSaveQuery(statement);
@@ -45,7 +105,7 @@ public final class DbManager {
                 }
             }
             statement.close();
-            System.out.println("end");
+            //System.out.println("end");
 
         }
     }
@@ -57,7 +117,7 @@ public final class DbManager {
                 addItem(newRoute.getTo(), connection);
                 addItem(newRoute.getCoordinates(), connection);
                 newRoute.updateLinks();
-                System.out.println("123");
+                //System.out.println("123");
                 addItem(newRoute, connection);
                 connection.commit();
                 connection.setAutoCommit(true);

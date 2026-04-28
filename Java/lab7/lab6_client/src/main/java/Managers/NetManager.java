@@ -25,6 +25,8 @@ public final class NetManager {
     private DatagramPacket dp;
     private DatagramChannel channel;
     private Selector selector;
+    private String user;
+    private String pswd;
 
     private NetManager() {
 
@@ -45,13 +47,14 @@ public final class NetManager {
             System.out.println("Exiting...");
             System.exit(69);
         }
-
-
     }
 
     public ServerResponse sendCommand(NetCommand netCommand) throws IOException, ClassNotFoundException {
         try {
             if (Objects.nonNull(netCommand)) {
+                //System.out.println("123");
+                netCommand.setUser(this.user);
+                netCommand.setPswd(this.pswd);
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 ObjectOutputStream oos = new ObjectOutputStream(baos);
                 oos.writeObject(netCommand);
@@ -86,6 +89,19 @@ public final class NetManager {
             System.out.println("Unable to connect to server, may be it is not reachable now");
         }
         return null;
+    }
+
+    public void setUser(String user, String pswd) {
+        this.user = user;
+        this.pswd = pswd;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public String getPswd() {
+        return pswd;
     }
 
     public void closeChannel() {

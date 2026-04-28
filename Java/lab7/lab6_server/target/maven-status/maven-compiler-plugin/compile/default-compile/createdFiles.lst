@@ -1,7 +1,9 @@
 Commands\Command.class
+Managers\ExecutionManager$ExecutionHolder.class
 Managers\SystemManager.class
 Commands\ExecuteScript$1.class
 Managers\CollectionManager.class
+Commands\Authorize.class
 Enums\DbTableType.class
 Commands\ClearCollection.class
 Models\Location.class
@@ -24,8 +26,10 @@ Managers\DbManager.class
 Utility\Element.class
 Models\Coordinates.class
 Commands\CommandType.class
+Managers\ExecutionManager.class
 Commands\Exit.class
 Managers\ConsoleManager.class
+Managers\NetManager$responseTask.class
 Commands\Insert.class
 Commands\MaxDistance.class
 Managers\DbManager$DbHolder.class
@@ -34,3 +38,4 @@ Commands\Help.class
 Main\Main.class
 Builders\CoordinatesBuilder.class
 Commands\Save.class
+Commands\Register.class

@@ -2,6 +2,7 @@ Commands\Command.class
 Managers\SystemManager.class
 Commands\ExecuteScript$1.class
 Managers\CollectionManager.class
+Commands\Authorize.class
 Commands\ClearCollection.class
 Models\Location.class
 Builders\RouteBuilder.class
@@ -30,3 +31,4 @@ Commands\Help.class
 Main\Main.class
 Builders\CoordinatesBuilder.class
 Commands\Save.class
+Commands\Register.class

@@ -23,7 +23,7 @@ public final class RemoveGreater extends Command{
      * @param data input from console
      * @param console which console to use
      */
-    public void apply(String[] data, BufferedReader console, Route route) {
+    public synchronized void apply(String[] data, BufferedReader console, Route route) {
         try {
             List<Route> toRemove= CollectionManager.
                     getInstance().

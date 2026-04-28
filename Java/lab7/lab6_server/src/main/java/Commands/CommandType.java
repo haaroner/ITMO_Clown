@@ -21,8 +21,9 @@ public enum CommandType {
     remove_by_distance(RemoveByDistance.class, "remove_by_distance", "removes one element by it's dist"),
     count_greater_distance(CountGreaterDist.class, "count_greater_distance", "Prints number of elements with dist greater than given"),
     execute_script(ExecuteScript.class, "execute_script", "executes script from file"),
-    replace_if_lower(ReplaceLower.class, "replace_if_lower", "replaces if comparator show lower number");
-
+    replace_if_lower(ReplaceLower.class, "replace_if_lower", "replaces if comparator show lower number"),
+    register(Register.class, "register", "registers new user"),
+    authorize(Authorize.class, "authorize", "authorizes pepson");
     private final Class<? extends Command> clazz;
     private final String name, description;
 

@@ -20,7 +20,7 @@ public final class ReplaceLower extends Command{
      * @param data input from console
      * @param console which console to use
      */
-    public void apply(String[] data, BufferedReader console, Route route) {
+    public synchronized void apply(String[] data, BufferedReader console, Route route) {
         try {
             Integer id = ConsoleManager.getInstance().ask("ID", Integer.class, console, false);
             if(Objects.isNull(route))
@@ -44,7 +44,7 @@ public final class ReplaceLower extends Command{
             System.err.println("IOException occurred");
         }
         catch (NumberFormatException e){
-            System.err.println("Cannot get ID from argument");
+           System.err.println("Cannot get ID from argument");
         }
     }
 }

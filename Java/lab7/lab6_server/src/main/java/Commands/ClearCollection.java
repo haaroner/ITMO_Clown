@@ -16,7 +16,7 @@ public final class ClearCollection extends Command{
      * @param data input from console
      * @param console which console to use
      */
-    public void apply(String[] data, BufferedReader console, Route route) {
+    public synchronized void apply(String[] data, BufferedReader console, Route route) {
         for (Map.Entry<Integer, Route> entry : CollectionManager.getInstance().getCollection().entrySet()) {
             CollectionManager.getInstance().removeItem(entry.getKey());
         }

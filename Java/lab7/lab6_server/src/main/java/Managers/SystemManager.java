@@ -26,6 +26,7 @@ import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
 import java.io.*;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * System manager class.
@@ -38,6 +39,7 @@ public final class SystemManager {
     private BufferedReader defaultConsole = new BufferedReader(new InputStreamReader(System.in));
     private String routesFile, locationFile, coordinatesFile;
     private ArrayList<Path> openFiles = new ArrayList<>();
+    private String pepper;
     private SystemManager () {
 
     }
@@ -51,10 +53,10 @@ public final class SystemManager {
      * @param fileNames of data
      */
     public void init(String[] fileNames) throws IOException {
-
+        pepper = ConsoleManager.getInstance().ask("PSWD pepper: ", String.class, defaultConsole, false);
                 try {
                     List<List<?>> fromDb = DbManager.getInstance().loadCollectionFromDb();
-                    LinkedHashMap<Integer, Route> data = getNewData((List<Route>) fromDb.get(0), (List<Coordinates>) fromDb.get(1), (List<Location>) fromDb.get(2));
+                    ConcurrentSkipListMap<Integer, Route> data = getNewData((List<Route>) fromDb.get(0), (List<Coordinates>) fromDb.get(1), (List<Location>) fromDb.get(2));
 
                     for (Map.Entry<Integer, Route> entry : data.entrySet()) {
                         System.out.println(entry.getKey() + ": " + entry.getValue().toString());
@@ -118,6 +120,10 @@ public final class SystemManager {
         }
     }
 
+    public String getPepper() {
+        return pepper;
+    }
+
     /**
      * Linkes all parsed data to one collection by IDs of elements
      * @param routes - all routes to link with loc-ns and coord-s
@@ -125,8 +131,8 @@ public final class SystemManager {
      * @param locations locations to link with their routes by ID
      * @return
      */
-    private LinkedHashMap<Integer, Route> getNewData(List<Route> routes, List<Coordinates> coordinates, List<Location> locations) {
-            LinkedHashMap<Integer, Route> newData = new LinkedHashMap<>();
+    private ConcurrentSkipListMap<Integer, Route> getNewData(List<Route> routes, List<Coordinates> coordinates, List<Location> locations) {
+        ConcurrentSkipListMap<Integer, Route> newData = new ConcurrentSkipListMap<>();
             for(Route route: routes) {
                 route.setFrom((Location) getById(route.getFromId(), locations));
                 route.setTo((Location) getById(route.getToId(), locations));

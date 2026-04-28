@@ -90,7 +90,9 @@ public final class Route extends Element implements Comparable<Route>, Validatab
 
     @Override
     public boolean validate() {
-        if(id == null || id <= 0) return false;
+        //System.out.println(id + " " + name + " " + coordinates + " " + creationDate + " " +
+        //      from + " " + to + " " + distance);
+        //if(id == null || id <= 0) return false;
         if(name == null || name.isEmpty()) return false;
 
         if(coordinates == null) return false;

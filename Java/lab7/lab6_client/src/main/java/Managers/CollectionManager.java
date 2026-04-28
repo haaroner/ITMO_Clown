@@ -3,6 +3,7 @@ package Managers;
 import Models.Route;
 
 import java.util.LinkedHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 
 /**
@@ -22,13 +23,13 @@ public final class CollectionManager {
         return INSTANCE;
     }
 
-    private LinkedHashMap<Integer, Route> collection = new LinkedHashMap<>();
+    private ConcurrentSkipListMap<Integer, Route> collection = new ConcurrentSkipListMap<>();
 
     /**
      *
      * @return LinkedHashMap<Integer, Route>
      */
-    public LinkedHashMap<Integer, Route> getCollection() {
+    public ConcurrentSkipListMap<Integer, Route> getCollection() {
         return collection;
     }
 
@@ -40,7 +41,7 @@ public final class CollectionManager {
      *
      * @param newCollection
      */
-    public void setCollection(LinkedHashMap<Integer, Route> newCollection) {
+    public void setCollection(ConcurrentSkipListMap<Integer, Route> newCollection) {
         collection = validateCollection(newCollection);
     }
 
@@ -85,7 +86,7 @@ public final class CollectionManager {
      * @param newCollection
      * @return Collection with validated elements
      */
-    private LinkedHashMap<Integer, Route> validateCollection(LinkedHashMap<Integer, Route> newCollection){
+    private ConcurrentSkipListMap<Integer, Route> validateCollection(ConcurrentSkipListMap<Integer, Route> newCollection){
         for (Integer id: newCollection.keySet()) {
             if(!newCollection.get(id).validate())
                 newCollection.remove(id);

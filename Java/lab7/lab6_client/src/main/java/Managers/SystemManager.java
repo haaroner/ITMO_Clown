@@ -27,6 +27,7 @@ import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
 import java.io.*;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * System manager class.
@@ -39,6 +40,7 @@ public final class SystemManager {
     private BufferedReader defaultConsole = new BufferedReader(new InputStreamReader(System.in));
     private String routesFile, locationFile, coordinatesFile;
     private ArrayList<Path> openFiles = new ArrayList<>();
+    private String pepper;
     private SystemManager () {
 
     }
@@ -57,10 +59,10 @@ public final class SystemManager {
             NetCommand initCommand = new NetCommand(Show.class.getDeclaredConstructor().newInstance(), new String[0], null);
             ServerResponse newResponse = NetManager.getInstance().sendCommand(initCommand);
             if(Objects.isNull(newResponse)) {
-                System.out.println("Couldnt load collection from server, shuttind down...");
+                System.out.println("Couldnt load collection from server, shutting down...");
                 System.exit(69);
             }
-            LinkedHashMap<Integer, Route> data = newResponse.getRoutes();
+            ConcurrentSkipListMap<Integer, Route> data = newResponse.getRoutes();
             CollectionManager.getInstance().setCollection(data);
                 }
                 catch (NullPointerException e) {

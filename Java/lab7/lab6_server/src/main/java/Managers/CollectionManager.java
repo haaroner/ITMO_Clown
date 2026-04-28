@@ -2,7 +2,9 @@ package Managers;
 
 import Models.Route;
 
+import javax.swing.*;
 import java.util.LinkedHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 
 /**
@@ -22,13 +24,13 @@ public final class CollectionManager {
         return INSTANCE;
     }
 
-    private LinkedHashMap<Integer, Route> collection = new LinkedHashMap<>();
+    private ConcurrentSkipListMap<Integer, Route> collection = new ConcurrentSkipListMap<>();
 
     /**
      *
      * @return LinkedHashMap<Integer, Route>
      */
-    public LinkedHashMap<Integer, Route> getCollection() {
+    public ConcurrentSkipListMap<Integer, Route> getCollection() {
         return collection;
     }
 
@@ -40,7 +42,7 @@ public final class CollectionManager {
      *
      * @param newCollection
      */
-    public void setCollection(LinkedHashMap<Integer, Route> newCollection) {
+    public void setCollection(ConcurrentSkipListMap<Integer, Route> newCollection) {
         collection = validateCollection(newCollection);
     }
 
@@ -49,23 +51,30 @@ public final class CollectionManager {
      * @param id of element
      * @param newElement new Route in collection
      */
-    public void putItem(Integer id, Route newElement){
+    public synchronized void putItem(Integer id, Route newElement, String user, String pswd){
         if(newElement.validate()) {
-            DbManager.getInstance().addWholeRoute(newElement);
-            collection.put(id, newElement);
+            if(DbManager.getInstance().addWholeRoute(newElement, user, pswd))
+                collection.put(id, newElement);
+            else
+                System.out.println("Error during adding to DB");
         }
     }
 
-    public void removeItem(Integer id) {
-        DbManager.getInstance().removeWholeRoute(id);
-        collection.remove(id);
+    public synchronized void removeItem(Integer id) {
+        if(DbManager.getInstance().removeWholeRoute(id))
+            collection.remove(id);
+        else
+            System.out.println("Error while deleting from DB");
     }
 
-    public void updateItem(Integer id, Route newElement) {
+    public synchronized void updateItem(Integer id, Route newElement) {
         if(newElement.validate()) {
-            DbManager.getInstance().updateWholeRoute(id, newElement);
-            collection.remove(id);
-            collection.put(id, newElement);
+            if(DbManager.getInstance().updateWholeRoute(id, newElement)) {
+                collection.remove(id);
+                collection.put(id, newElement);
+            }
+            else
+                System.out.println("Error while updating");
         }
     }
 
@@ -98,7 +107,7 @@ public final class CollectionManager {
      * @param newCollection
      * @return Collection with validated elements
      */
-    private LinkedHashMap<Integer, Route> validateCollection(LinkedHashMap<Integer, Route> newCollection){
+    private ConcurrentSkipListMap<Integer, Route> validateCollection(ConcurrentSkipListMap<Integer, Route> newCollection){
         for (Integer id: newCollection.keySet()) {
             if(!newCollection.get(id).validate())
                 newCollection.remove(id);

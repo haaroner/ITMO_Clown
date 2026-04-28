@@ -14,7 +14,11 @@ import myExceptions.CommandExecutionException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Console and file interact class.
@@ -23,6 +27,7 @@ import java.util.Objects;
  */
 public final class ConsoleManager {
     private final static ConsoleManager INSTANCE = new ConsoleManager();
+
 
     private boolean useTypeNewCommand = true, reaskInfo = true;
     private ConsoleManager() {
@@ -89,10 +94,12 @@ public final class ConsoleManager {
      * @throws IOException in case of IO problems
      */
     public void startScan(BufferedReader console) throws IOException, ClassNotFoundException {
+        ExecutionManager.getInstance().startUdpScan();
+        System.out.println("Starting console scan...");
         while(true) {
-            reaskInfo = !SystemManager.getInstance().isFileOpen();
-            if (!scanNewCommand(console)) break;
-            NetManager.getInstance().scan(console);
+            //reaskInfo = !SystemManager.getInstance().isFileOpen();
+            scanNewCommand(console);
+            //ExecutionManager.getInstance().startCommandProcessing();
         }
     }
 
@@ -112,6 +119,7 @@ public final class ConsoleManager {
             String[] line = input.split(" ");
             if (line.length > 0) {
                 try {
+                    //System.out.println("123");
                     CommandType commandType = CommandType.valueOf(line[0]);
                     Class<? extends Command> newCommand = CommandType.valueOf(line[0]).getClazz();
                     Command instance;
@@ -119,6 +127,10 @@ public final class ConsoleManager {
                         instance = (Command) newCommand.getMethod("getInstance").invoke(null);
                     else
                         instance = newCommand.getDeclaredConstructor().newInstance();
+
+                    if(commandType == CommandType.exit){
+                        ExecutionManager.getInstance().stopUdpScan();
+                    }
                     Method method = instance.getClass().getMethod("apply", String[].class, BufferedReader.class, Route.class);
                     method.setAccessible(true);
                     Object[] args = {line, console, null};

@@ -19,7 +19,7 @@ public final class Update extends Command{
      * @param data input from console
      * @param console which console to use
      */
-    public void apply(String[] data, BufferedReader console, Route route) {
+    public synchronized void apply(String[] data, BufferedReader console, Route route) {
         if (data.length >= 2) {
             try {//TODO перекинуть это в консоль
                 Integer id = Integer.valueOf(data[1]);
@@ -37,8 +37,8 @@ public final class Update extends Command{
                     System.out.println("New object have not passed validation test, check data conditions");
                 else {
                     CollectionManager.getInstance().updateItem(id, route);
-//                    CollectionManager.getInstance().removeItem(id);
-//                    CollectionManager.getInstance().putItem(route.getId(), route);
+                    CollectionManager.getInstance().removeItem(id);
+                    CollectionManager.getInstance().putItem(route.getId(), route);
                 }
                 //TODO сделать РУТ(тоже автоматически id), связать их, валидация, закинуть в коллекцию =>
                 // победа
