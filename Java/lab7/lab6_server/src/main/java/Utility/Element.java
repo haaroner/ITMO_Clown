@@ -1,13 +1,13 @@
-package Utility;
+package utility;
 
-import Interfaces.Validatable;
+import interfaces.Validatable;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
  * Abstract Element class
- * Superclass of {@link Models.Route},{@link Models.Location}, {@link Models.Coordinates}
+ * Superclass of {@link models.Route},{@link models.Location}, {@link models.Coordinates}
  * @author Clown
  */
 public abstract class Element implements Validatable{

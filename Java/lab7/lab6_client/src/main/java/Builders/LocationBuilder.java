@@ -1,6 +1,6 @@
-package Builders;
+package builders;
 
-import Models.Location;
+import models.Location;
 
 import java.util.Objects;
 import java.util.function.Supplier;

@@ -1,7 +1,7 @@
-package Commands;
+package commands;
 
-import Managers.NetManager;
-import Models.Route;
+import managers.NetManager;
+import models.Route;
 
 import java.io.BufferedReader;
 

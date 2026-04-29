@@ -1,24 +1,18 @@
-package Managers;
+package managers;
 
-import Commands.Command;
-import Commands.CommandType;
-import Commands.NetCommand;
-import Models.Route;
-import Models.ServerResponse;
+import commands.CommandType;
+import commands.NetCommand;
+import models.Route;
+import models.ServerResponse;
 
 import java.io.*;
 import java.lang.reflect.Method;
 import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
-import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.RecursiveAction;
-import java.util.concurrent.RecursiveTask;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +30,7 @@ public final class NetManager {
     private InetAddress clientAddress;
     private int clientPort;
     private static final Logger logger = LoggerFactory.getLogger(NetManager.class);
+    private static final int maxResponseLength = 2;
 
     private NetManager() {
 
@@ -48,7 +43,7 @@ public final class NetManager {
     }
 
     private class responseTask extends RecursiveAction {
-      private List<NetCommand> responses = new ArrayList<>();
+      private List<NetCommand> responses;
 
       public responseTask (List<NetCommand> responses) {
           this.responses = responses;
@@ -56,7 +51,7 @@ public final class NetManager {
 
       @Override
         protected void compute() {
-            if(true) {
+            if(this.responses.size() <= maxResponseLength) {
                 logger.info("Sending response:");
                 ServerResponse.getInstance().setRoutes(CollectionManager.getInstance().getCollection());
                 ServerResponse.getInstance().setData(responses.get(0).getResponse());
@@ -81,6 +76,15 @@ public final class NetManager {
                     e.printStackTrace();
                 }
                 logger.info("Ready!");
+            }
+            else {
+                List<NetCommand> responses1 = responses.subList(0, 2);
+                List<NetCommand> responses2 = responses.subList(2, responses.size());
+//                System.arraycopy(responses, 0, responses1, 0, 2);
+//                System.arraycopy(responses, 2, responses2, 0, responses.size()-2);
+                responseTask task1 = new responseTask(responses1);
+                responseTask task2 = new responseTask(responses2);
+                invokeAll(task1, task2);
             }
       }
 
@@ -193,13 +197,19 @@ public final class NetManager {
             System.arraycopy(line, 0, userLine, 0, line.length);
             userLine[line.length] = command.getUser();
             userLine[line.length+1] = command.getPswd();
-            Object[] args = {line, console, command.getRoute()};
-            method.invoke(command.getCommand(), args);
+            Object[] args = {userLine, console, command.getRoute()};
+            if(DbManager.getInstance().checkIsUserAuth(command.getUser(), command.getPswd()))
+                method.invoke(command.getCommand(), args);
+            else if(commandType == CommandType.register || commandType == CommandType.authorize) {
+                method.invoke(command.getCommand(), args);
+            } else
+                System.out.println("Authorize or register before invoking commands!");
 
             //TODO Если у команды не те типы ключей - просто System.print и return;
         } catch (IllegalArgumentException e) {
             System.out.println("No command found");
             System.out.println(line[0]);
+            e.printStackTrace();
         } catch (Throwable e) {
             System.out.println("NetManager error: \n" + e);
             System.out.println(line[0]);

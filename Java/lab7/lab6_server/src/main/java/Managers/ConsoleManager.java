@@ -1,24 +1,19 @@
-package Managers;
+package managers;
 
-import Builders.CoordinatesBuilder;
-import Builders.LocationBuilder;
-import Builders.RouteBuilder;
-import Commands.Save;
-import Models.Coordinates;
-import Models.Location;
-import Models.Route;
-import Commands.Command;
-import Commands.CommandType;
-import myExceptions.CommandExecutionException;
+import builders.CoordinatesBuilder;
+import builders.LocationBuilder;
+import builders.RouteBuilder;
+import models.Coordinates;
+import models.Location;
+import models.Route;
+import commands.Command;
+import commands.CommandType;
+import exceptions.CommandExecutionException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Objects;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Console and file interact class.
@@ -105,7 +100,7 @@ public final class ConsoleManager {
 
     /**
      * Scans new command from specified console and invokes it's apply method
-     * It is based on making new .class from commands name written in {@link Commands.CommandType}
+     * It is based on making new .class from commands name written in {@link commands.CommandType}
      * After it makes new instance of this class and invokes method apply
      * @param console which to use
      * @return true/false. True - command invoked, false - No commands remaining (EOF)

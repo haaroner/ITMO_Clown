@@ -1,17 +1,8 @@
-package Main;
+package main;
 
-import Commands.NetCommand;
-import Managers.NetManager;
-import Managers.SystemManager;
+import managers.SystemManager;
 
 import java.io.*;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetSocketAddress;
-import java.nio.channels.DatagramChannel;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
-import java.util.Iterator;
 
 /**
  * This is the main class. Program's entry point

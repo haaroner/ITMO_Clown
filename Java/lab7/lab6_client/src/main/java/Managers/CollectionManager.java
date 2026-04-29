@@ -1,8 +1,7 @@
-package Managers;
+package managers;
 
-import Models.Route;
+import models.Route;
 
-import java.util.LinkedHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 

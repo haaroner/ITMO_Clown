@@ -1,11 +1,9 @@
-package Commands;
+package commands;
 
-import Managers.CollectionManager;
-import Models.Route;
+import managers.CollectionManager;
+import models.Route;
 
 import java.io.BufferedReader;
-
-import static org.apache.commons.lang3.CharSetUtils.count;
 
 /**
  * count_greater_dist Command class

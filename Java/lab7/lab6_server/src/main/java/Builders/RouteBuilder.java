@@ -1,8 +1,8 @@
-package Builders;
+package builders;
 
-import Models.Coordinates;
-import Models.Location;
-import Models.Route;
+import models.Coordinates;
+import models.Location;
+import models.Route;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

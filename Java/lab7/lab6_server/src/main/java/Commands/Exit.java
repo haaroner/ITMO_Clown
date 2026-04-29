@@ -1,6 +1,6 @@
-package Commands;
+package commands;
 
-import Models.Route;
+import models.Route;
 
 import java.io.BufferedReader;
 

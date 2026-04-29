@@ -1,8 +1,8 @@
-package Commands;
+package commands;
 
-import Managers.CollectionManager;
-import Managers.ConsoleManager;
-import Models.Route;
+import managers.CollectionManager;
+import managers.ConsoleManager;
+import models.Route;
 
 import java.io.BufferedReader;
 import java.io.IOException;

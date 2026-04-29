@@ -1,6 +1,6 @@
-package Builders;
+package builders;
 
-import Models.Coordinates;
+import models.Coordinates;
 
 public final class CoordinatesBuilder {
     public CoordinatesBuilder CoordinatesBuilder(){

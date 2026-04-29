@@ -1,10 +1,9 @@
-package Commands;
+package commands;
 
-import Managers.CollectionManager;
-import Models.Route;
+import managers.CollectionManager;
+import models.Route;
 
 import java.io.BufferedReader;
-import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
@@ -35,7 +34,7 @@ public final class RemoveByDistance extends Command{
                     System.out.println("No such Route");
                 }
                 else {
-                    CollectionManager.getInstance().removeItem(obj.get().getKey());
+                    CollectionManager.getInstance().removeItem(obj.get().getKey(), data[data.length-2], data[data.length-1]);
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Cannot convert to dist");

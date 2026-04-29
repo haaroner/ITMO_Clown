@@ -1,8 +1,7 @@
-package Commands;
+package commands;
 
-import Managers.NetManager;
-import Managers.SystemManager;
-import Models.Route;
+import managers.NetManager;
+import models.Route;
 
 import java.io.BufferedReader;
 
@@ -18,6 +17,7 @@ public final class Authorize extends Command{
      */
     public synchronized void apply(String[] data, BufferedReader console, Route route) {
         this.data = data;
+        //System.out.println("length(client): " + data.length + " " + Arrays.toString(data));
         if(data.length >= 3)
             NetManager.getInstance().setUser(data[1], data[2]);
     }

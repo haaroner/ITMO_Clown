@@ -1,12 +1,11 @@
-package Models;
+package models;
 
-import Interfaces.Validatable;
+import interfaces.Validatable;
 import com.opencsv.bean.*;
-import Managers.CollectionManager;
-import Utility.Element;
+import managers.CollectionManager;
+import utility.Element;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -23,6 +22,7 @@ public final class Route extends Element implements Comparable<Route>, Validatab
     private java.util.Date creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     private Location from; //Поле может быть null
     private Location to; //Поле не может быть null
+    private String owner;
     @CsvBindByName private Integer fromId;
     @CsvBindByName private Integer toId;
     @CsvBindByName private long distance; //Значение поля должно быть больше 1
@@ -57,6 +57,14 @@ public final class Route extends Element implements Comparable<Route>, Validatab
 
     public Route() {
 
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getOwner() {
+        return owner;
     }
 
     public void setId(CollectionManager manager){
@@ -172,7 +180,7 @@ public final class Route extends Element implements Comparable<Route>, Validatab
 
     @Override
     public String getSaveQuery() {
-        return "INSERT INTO ROUTES (COORDINTAES_ID, FROM_ID, TO_ID, ROUTE_DATE, DISTANCE, NAME) VALUES (?,?,?,?,?,?)";
+        return "INSERT INTO ROUTES (COORDINTAES_ID, FROM_ID, TO_ID, ROUTE_DATE, DISTANCE, NAME, OWNER) VALUES (?,?,?,?,?,?,?)";
     }
 
     @Override
@@ -186,6 +194,7 @@ public final class Route extends Element implements Comparable<Route>, Validatab
         statement.setDate(4, java.sql.Date.valueOf("2024-01-01"));
         statement.setLong(5, this.distance);
         statement.setString(6, this.name);
+        statement.setString(7, this.owner);
         return statement;
     }
 

@@ -1,9 +1,7 @@
-package Managers;
+package managers;
 
-import Commands.CommandType;
-import Commands.NetCommand;
-import Models.Route;
-import Models.ServerResponse;
+import commands.NetCommand;
+import models.ServerResponse;
 
 import java.io.*;
 import java.net.*;
@@ -11,9 +9,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
-import java.nio.file.attribute.FileTime;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Objects;
 
 public final class NetManager {
@@ -55,6 +51,7 @@ public final class NetManager {
                 //System.out.println("123");
                 netCommand.setUser(this.user);
                 netCommand.setPswd(this.pswd);
+                //System.out.println("auth sent(client):" + this.user + this.pswd);
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 ObjectOutputStream oos = new ObjectOutputStream(baos);
                 oos.writeObject(netCommand);
@@ -94,6 +91,7 @@ public final class NetManager {
     public void setUser(String user, String pswd) {
         this.user = user;
         this.pswd = pswd;
+        //System.out.println("was saved(client): " + this.user + this.pswd);
     }
 
     public String getUser() {

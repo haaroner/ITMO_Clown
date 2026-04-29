@@ -1,4 +1,4 @@
-package Interfaces;
+package interfaces;
 
 /**
  * Interface for realisation of validation function for elements of collection

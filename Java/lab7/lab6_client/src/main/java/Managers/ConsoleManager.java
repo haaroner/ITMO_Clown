@@ -1,15 +1,15 @@
-package Managers;
+package managers;
 
-import Builders.CoordinatesBuilder;
-import Builders.LocationBuilder;
-import Builders.RouteBuilder;
-import Commands.NetCommand;
-import Models.Coordinates;
-import Models.Location;
-import Models.Route;
-import Commands.Command;
-import Commands.CommandType;
-import myExceptions.CommandExecutionException;
+import builders.CoordinatesBuilder;
+import builders.LocationBuilder;
+import builders.RouteBuilder;
+import commands.NetCommand;
+import models.Coordinates;
+import models.Location;
+import models.Route;
+import commands.Command;
+import commands.CommandType;
+import exceptions.CommandExecutionException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -97,7 +97,7 @@ public final class ConsoleManager {
 
     /**
      * Scans new command from specified console and invokes it's apply method
-     * It is based on making new .class from commands name written in {@link Commands.CommandType}
+     * It is based on making new .class from commands name written in {@link commands.CommandType}
      * After it makes new instance of this class and invokes method apply
      * @param console which to use
      * @return true/false. True - command invoked, false - No commands remaining (EOF)
@@ -117,7 +117,10 @@ public final class ConsoleManager {
                     Method method = instance.getClass().getMethod("apply", String[].class, BufferedReader.class, Route.class);
                     Object[] args = {line, console, null};
 
-                    if(commandType == CommandType.remove_greater_key || commandType==CommandType.remove_lower_key)
+                    if(commandType == CommandType.authorize || commandType == CommandType.register)
+                        method.invoke(instance, args);
+                    if(commandType == CommandType.remove_greater_key || commandType==CommandType.remove_lower_key ||
+                            commandType == CommandType.remove_key)
                         method.invoke(instance, args);
                     if(commandType == CommandType.execute_script ||
                             commandType == CommandType.exit)

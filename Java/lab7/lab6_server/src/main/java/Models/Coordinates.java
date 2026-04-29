@@ -1,7 +1,7 @@
-package Models;
+package models;
 
-import Utility.Element;
-import Interfaces.Validatable;
+import utility.Element;
+import interfaces.Validatable;
 import com.opencsv.bean.CsvBindByName;
 
 import java.io.Serializable;

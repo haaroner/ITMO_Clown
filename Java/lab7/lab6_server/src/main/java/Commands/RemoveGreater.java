@@ -1,16 +1,10 @@
-package Commands;
+package commands;
 
-import Managers.CollectionManager;
-import Managers.ConsoleManager;
-import Models.Route;
-import Utility.Element;
+import managers.CollectionManager;
+import models.Route;
 
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Remove with greater ID Routes command class
@@ -32,7 +26,7 @@ public final class RemoveGreater extends Command{
                     stream().
                     filter(entry -> entry.getId() >= this.id).toList();
 
-            toRemove.stream().forEach(entry -> CollectionManager.getInstance().removeItem(entry.getId()));
+            toRemove.stream().forEach(entry -> CollectionManager.getInstance().removeItem(entry.getId(), data[data.length-2], data[data.length-1]));
         }
         catch (NumberFormatException e){
             System.err.println("Cannot get ID from argument");

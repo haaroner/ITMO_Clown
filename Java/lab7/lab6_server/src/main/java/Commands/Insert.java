@@ -1,8 +1,8 @@
-package Commands;
+package commands;
 
-import Managers.CollectionManager;
-import Managers.ConsoleManager;
-import Models.Route;
+import managers.CollectionManager;
+import managers.ConsoleManager;
+import models.Route;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,7 +28,7 @@ public final class Insert extends Command{
                 route.updateMaxId();
             }
             if(route.validate())
-                CollectionManager.getInstance().putItem(route.getId(), route);
+                CollectionManager.getInstance().putItem(route.getId(), route, data[data.length-2], data[data.length-1]);
             else
                 System.out.println("New object have not passed validation test, check data conditions");
             //TODO сделать РУТ(тоже автоматически id), связать их, валидация, закинуть в коллекцию =>

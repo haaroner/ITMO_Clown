@@ -1,8 +1,6 @@
-package Main;
+package main;
 
-import Commands.NetCommand;
-import Managers.NetManager;
-import Managers.SystemManager;
+import managers.SystemManager;
 
 import java.io.IOException;
 

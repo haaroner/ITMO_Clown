@@ -1,8 +1,7 @@
-package Builders;
+package builders;
 
-import Models.Coordinates;
+import models.Coordinates;
 
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

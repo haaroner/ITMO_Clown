@@ -1,4 +1,4 @@
-package Managers;
+package managers;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
 import java.util.*;
 
-import Models.ServerResponse;
+import models.ServerResponse;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import java.io.Writer;
@@ -18,11 +18,11 @@ import java.nio.file.Paths;
 
 import com.opencsv.bean.CsvToBeanBuilder;
 
-import Utility.Element;
-import Commands.*;
-import Models.Coordinates;
-import Models.Location;
-import Models.Route;
+import utility.Element;
+import commands.*;
+import models.Coordinates;
+import models.Location;
+import models.Route;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 

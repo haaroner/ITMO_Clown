@@ -1,7 +1,7 @@
-package Commands;
+package commands;
 
-import Managers.CollectionManager;
-import Models.Route;
+import managers.CollectionManager;
+import models.Route;
 
 import java.io.BufferedReader;
 import java.util.Map;
@@ -18,7 +18,7 @@ public final class ClearCollection extends Command{
      */
     public synchronized void apply(String[] data, BufferedReader console, Route route) {
         for (Map.Entry<Integer, Route> entry : CollectionManager.getInstance().getCollection().entrySet()) {
-            CollectionManager.getInstance().removeItem(entry.getKey());
+            CollectionManager.getInstance().removeItem(entry.getKey(), data[data.length-2], data[data.length-1]);
         }
         System.out.println("Cleared");
     }

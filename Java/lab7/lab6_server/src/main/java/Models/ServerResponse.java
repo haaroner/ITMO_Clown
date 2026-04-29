@@ -1,7 +1,6 @@
-package Models;
+package models;
 
 import java.io.Serializable;
-import java.util.LinkedHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 public class ServerResponse implements Serializable {

@@ -1,8 +1,8 @@
-package Commands;
+package commands;
 
-import Managers.CollectionManager;
-import Managers.ConsoleManager;
-import Models.Route;
+import managers.CollectionManager;
+import managers.ConsoleManager;
+import models.Route;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,6 +25,7 @@ public final class Update extends Command{
                 Integer id = Integer.valueOf(data[1]);
                 if(!CollectionManager.getInstance().checkItem(id)) {
                     System.out.println("No such element in collection");
+                    System.out.println("Keys are: " + CollectionManager.getInstance().getKeys());
                     return;
                 }
                 if(Objects.isNull(route))
@@ -36,9 +37,9 @@ public final class Update extends Command{
                 if (!route.validate())
                     System.out.println("New object have not passed validation test, check data conditions");
                 else {
-                    CollectionManager.getInstance().updateItem(id, route);
-                    CollectionManager.getInstance().removeItem(id);
-                    CollectionManager.getInstance().putItem(route.getId(), route);
+                    CollectionManager.getInstance().updateItem(id, route, data[data.length-2], data[data.length-1]);
+                   // CollectionManager.getInstance().removeItem(id, data[data.length-2], data[data.length-1]);
+                    //CollectionManager.getInstance().putItem(route.getId(), route, data[data.length-2], data[data.length-1]);
                 }
                 //TODO сделать РУТ(тоже автоматически id), связать их, валидация, закинуть в коллекцию =>
                 // победа

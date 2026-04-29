@@ -1,11 +1,10 @@
-package Commands;
+package commands;
 
-import Managers.CollectionManager;
-import Models.Route;
+import managers.CollectionManager;
+import models.Route;
 
 import java.io.BufferedReader;
 import java.util.Comparator;
-import java.util.Objects;
 
 /**
  * Get Route with max distance command

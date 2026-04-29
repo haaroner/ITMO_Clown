@@ -1,8 +1,8 @@
-package Commands;
+package commands;
 
-import Managers.ConsoleManager;
-import Managers.SystemManager;
-import Models.Route;
+import managers.ConsoleManager;
+import managers.SystemManager;
+import models.Route;
 
 import java.io.*;
 import java.util.Objects;

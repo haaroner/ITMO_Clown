@@ -1,9 +1,8 @@
-package Commands;
+package commands;
 
-import Models.Route;
+import models.Route;
 
 import java.io.Serializable;
-import java.lang.reflect.Method;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.util.Arrays;
@@ -16,7 +15,7 @@ public final class NetCommand implements Serializable {
     private DatagramPacket dp;
     private InetAddress clientAddress;
     private int clientPort;
-    private String user, pswd;
+    private String user = "", pswd = "";
 
     public NetCommand (Command command, String[] line, Route myRoute) {
         this.command = command;

@@ -1,12 +1,10 @@
-package Commands;
+package commands;
 
-import Managers.CollectionManager;
-import Managers.SystemManager;
-import Models.Route;
+import managers.CollectionManager;
+import managers.SystemManager;
+import models.Route;
 
 import java.io.BufferedReader;
-import java.nio.file.Path;
-import java.util.Map;
 
 /**
  * Show command class

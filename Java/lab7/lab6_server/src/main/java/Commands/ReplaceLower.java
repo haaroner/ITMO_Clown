@@ -1,8 +1,8 @@
-package Commands;
+package commands;
 
-import Managers.CollectionManager;
-import Managers.ConsoleManager;
-import Models.Route;
+import managers.CollectionManager;
+import managers.ConsoleManager;
+import models.Route;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,7 +32,7 @@ public final class ReplaceLower extends Command{
             Route cur = CollectionManager.getInstance().getItem(id);
             if (Objects.nonNull(cur)) {
                 if (cur.compareTo(route) > 0) {
-                    CollectionManager.getInstance().putItem(cur.getId(), route);
+                    CollectionManager.getInstance().putItem(cur.getId(), route, data[data.length-2], data[data.length-1]);
                     System.out.println("Route added");
                 }
                 else {

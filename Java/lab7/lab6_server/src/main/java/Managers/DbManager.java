@@ -1,13 +1,12 @@
-package Managers;
+package managers;
 
-import Builders.CoordinatesBuilder;
-import Builders.LocationBuilder;
-import Builders.RouteBuilder;
-import Enums.DbTableType;
-import Models.Coordinates;
-import Models.Location;
-import Models.Route;
-import Utility.Element;
+import builders.CoordinatesBuilder;
+import builders.LocationBuilder;
+import builders.RouteBuilder;
+import models.Coordinates;
+import models.Location;
+import models.Route;
+import utility.Element;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -52,6 +51,7 @@ public final class DbManager {
         String sql = "SELECT * FROM USERS WHERE USER_NAME = ? LIMIT 1";
         try(Connection connection = DriverManager.getConnection(URL, USER, PASS);
             PreparedStatement statement = connection.prepareStatement(sql)){
+            //System.out.println("auth data: " + user + pswd);
             statement.setString(1, user);
             ResultSet result = statement.executeQuery();
             if(result.next()) {
@@ -60,6 +60,7 @@ public final class DbManager {
                 String pepper = SystemManager.getInstance().getPepper();
                 MessageDigest md = MessageDigest.getInstance("SHA-256");
                 byte[] hashCalc = md.digest((pswd + salt + pepper).getBytes("UTF-8"));
+                //System.out.println("Auth =" + Arrays.equals(hashCalc, hashDB));
                 //System.out.println(Arrays.toString(hashCalc) + "  " + Arrays.toString(hashDB));
                 //System.out.println(salt);
                 return Arrays.equals(hashCalc, hashDB);
@@ -78,9 +79,10 @@ public final class DbManager {
         try(Connection connection = DriverManager.getConnection(URL, USER, PASS);
             PreparedStatement statement = connection.prepareStatement(sql)) {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hashBytes = md.digest((pswd + "salt" + SystemManager.getInstance().getPepper()).getBytes("UTF-8"));
+            String salt = java.util.UUID.randomUUID().toString();
+            byte[] hashBytes = md.digest((pswd + salt + SystemManager.getInstance().getPepper()).getBytes("UTF-8"));
             statement.setString(1, user);
-            statement.setString(2,"salt");
+            statement.setString(2,salt);
             statement.setBytes(3, hashBytes);
             statement.executeUpdate();
         } catch (NoSuchAlgorithmException | SQLException e) {
@@ -100,8 +102,9 @@ public final class DbManager {
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     Integer newId = Math.toIntExact(generatedKeys.getLong(1));
-                    System.out.println(newId);
+                    //System.out.println(newId);
                     newData.setId(newId);
+                    //System.out.println("new ID:" + newId);
                 }
             }
             statement.close();
@@ -110,7 +113,7 @@ public final class DbManager {
         }
     }
 
-    public boolean addWholeRoute(Route newRoute, Connection connection) throws SQLException {
+    public boolean addWholeRoute(Route newRoute, Connection connection, String user) throws SQLException {
             try {
                 connection.setAutoCommit(false);
                 addItem(newRoute.getFrom(), connection);
@@ -118,6 +121,7 @@ public final class DbManager {
                 addItem(newRoute.getCoordinates(), connection);
                 newRoute.updateLinks();
                 //System.out.println("123");
+                newRoute.setOwner(user);
                 addItem(newRoute, connection);
                 connection.commit();
                 connection.setAutoCommit(true);
@@ -130,9 +134,9 @@ public final class DbManager {
             }
     }
 
-    public boolean addWholeRoute(Route newRoute) {
+    public boolean addWholeRoute(Route newRoute, String user, String pswd) {
         try(Connection connection = DriverManager.getConnection(URL, USER, PASS);) {
-            addWholeRoute(newRoute, connection);
+            addWholeRoute(newRoute, connection, user);
             return true;
         } catch (SQLException e) {
             System.err.println("Cannot initiate connection with database, error message :\n" + e.getMessage());
@@ -140,21 +144,49 @@ public final class DbManager {
         }
     }
 
-    public boolean removeWholeRoute(Integer id, Connection connection) throws SQLException {
-            try(PreparedStatement statement = connection.prepareStatement(Route.getRemoveQuery());){
-                statement.setInt(1, id);
-                int affectedRows = statement.executeUpdate();
-
-                if(affectedRows > 0) System.out.println("success");
-                else System.out.println("No such route");
-                return true;
+    public boolean cheсkRouteOwner(Connection connection, Integer id, String user, String pswd) {
+        String sql = "SELECT USERS.USER_NAME as NAME, USERS.SALT as SALT, USERS.HASH as HASH FROM ROUTES LEFT JOIN USERS ON USERS.USER_NAME = ROUTES.OWNER WHERE ROUTES.ROUTE_ID = ?";
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            try(ResultSet resultSet = statement.executeQuery()) {
+                if(resultSet.next()) {
+                    String name = resultSet.getString("NAME");
+                    String salt = resultSet.getString("SALT");
+                    byte[] hashDB = resultSet.getBytes("HASH");
+                    MessageDigest md = MessageDigest.getInstance("SHA-256");
+                    byte[] hashBytes = md.digest((pswd + salt + SystemManager.getInstance().getPepper()).getBytes("UTF-8"));
+                   // System.out.println("Owner: " + (Objects.equals(name, user) && Arrays.equals(hashDB, hashBytes)));
+                  //  System.out.println(Arrays.toString(hashDB) + " " + Arrays.toString(hashBytes));
+                    return Objects.equals(name, user) && Arrays.equals(hashDB, hashBytes);
+                }
             }
+
+        } catch (SQLException | UnsupportedEncodingException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
-    public boolean removeWholeRoute(Integer id) {
+    public boolean removeWholeRoute(Integer id, Connection connection, String user, String pswd) throws SQLException {
+           if(cheсkRouteOwner(connection, id, user, pswd)) {
+               try (PreparedStatement statement = connection.prepareStatement(Route.getRemoveQuery());) {
+                   statement.setInt(1, id);
+                   int affectedRows = statement.executeUpdate();
+
+                   if (affectedRows > 0) System.out.println("success");
+                   else System.out.println("No such route");
+                   return true;
+               }
+           }
+           else{
+               System.out.println("Route is belonging to another user");
+               return false;
+           }
+    }
+
+    public boolean removeWholeRoute(Integer id, String user, String pswd) {
         try(Connection connection = DriverManager.getConnection(URL, USER, PASS);) {
-            removeWholeRoute(id, connection);
-            return true;
+            return removeWholeRoute(id, connection, user, pswd);
         }
         catch (SQLException e) {
             System.err.println("Cannot initiate connection with database, error message :\n" + e.getMessage());
@@ -162,10 +194,14 @@ public final class DbManager {
         }
     }
 
-    public boolean updateWholeRoute(Integer id, Route newRoute){
+    public boolean updateWholeRoute(Integer id, Route newRoute, String user, String pswd){
         try(Connection connection = DriverManager.getConnection(URL, USER, PASS);) {
-            removeWholeRoute(id, connection);
-            addWholeRoute(newRoute, connection);
+            if(cheсkRouteOwner(connection, id, user, pswd)) {
+                if (removeWholeRoute(id, connection, user, pswd))
+                    addWholeRoute(newRoute, connection, user);
+            }
+            else
+                return false;
         } catch (SQLException e) {
             System.err.println("Cannot initiate connection with database, error message :\n" + e.getMessage());
             return false;

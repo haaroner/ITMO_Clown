@@ -1,9 +1,8 @@
-package Managers;
+package managers;
 
-import Models.Route;
+import models.Route;
 
-import javax.swing.*;
-import java.util.LinkedHashMap;
+import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 
@@ -54,24 +53,26 @@ public final class CollectionManager {
     public synchronized void putItem(Integer id, Route newElement, String user, String pswd){
         if(newElement.validate()) {
             if(DbManager.getInstance().addWholeRoute(newElement, user, pswd))
-                collection.put(id, newElement);
+                collection.put(newElement.getId(), newElement);
             else
                 System.out.println("Error during adding to DB");
         }
     }
 
-    public synchronized void removeItem(Integer id) {
-        if(DbManager.getInstance().removeWholeRoute(id))
+    public synchronized void removeItem(Integer id, String user, String pswd) {
+        if(DbManager.getInstance().removeWholeRoute(id, user, pswd)) {
+            System.out.println("removing object :" + id);
             collection.remove(id);
+        }
         else
             System.out.println("Error while deleting from DB");
     }
 
-    public synchronized void updateItem(Integer id, Route newElement) {
+    public synchronized void updateItem(Integer id, Route newElement, String user, String pswd) {
         if(newElement.validate()) {
-            if(DbManager.getInstance().updateWholeRoute(id, newElement)) {
+            if(DbManager.getInstance().updateWholeRoute(id, newElement, user, pswd)) {
                 collection.remove(id);
-                collection.put(id, newElement);
+                collection.put(newElement.getId(), newElement);
             }
             else
                 System.out.println("Error while updating");
@@ -85,6 +86,10 @@ public final class CollectionManager {
      */
     public boolean checkItem(Integer id) {
         return collection.containsKey(id);
+    }
+
+    public Set<Integer> getKeys(){
+        return collection.keySet();
     }
 
     /**

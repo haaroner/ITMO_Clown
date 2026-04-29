@@ -1,7 +1,8 @@
-package Managers;
+package managers;
 
-import Commands.NetCommand;
-import Models.Route;
+import commands.CommandType;
+import commands.NetCommand;
+import models.Route;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -58,9 +59,14 @@ public final class ExecutionManager {
                         e.printStackTrace();
                     }
                     BufferedReader zaglushka = new BufferedReader(new InputStreamReader(System.in));
-                    Object[] args = {command.getLine(), zaglushka, command.getRoute()};
+                    String[] userLine = new String[command.getLine().length + 2];
+                    System.arraycopy(command.getLine(), 0, userLine, 0, command.getLine().length);
+                    userLine[command.getLine().length] = command.getUser();
+                    userLine[command.getLine().length+1] = command.getPswd();
+                    Object[] args = {userLine, zaglushka, command.getRoute()};
                     try {
                         invokeLock.lock();
+
                         PrintStream originalOut = System.out;
                         PrintStream originalErr = System.err;
                         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -68,7 +74,17 @@ public final class ExecutionManager {
                         try {
                             System.setOut(new PrintStream(outContent));
                             System.setErr(new PrintStream(errContent));
-                            method.invoke(command.getCommand(), args);
+                            try {
+                                CommandType commandType = CommandType.valueOf(command.getLine()[0]);
+                                if(DbManager.getInstance().checkIsUserAuth(command.getUser(), command.getPswd()))
+                                    method.invoke(command.getCommand(), args);
+                                else if(commandType == CommandType.register || commandType == CommandType.authorize)
+                                    method.invoke(command.getCommand(), args);
+                                else
+                                    System.out.println("Not authorized!");
+                            } catch (ArrayIndexOutOfBoundsException e) {
+                                method.invoke(command.getCommand(), args);
+                            }
                         }  catch (IllegalAccessException | InvocationTargetException e) {
                             System.out.println("No command found");
                             System.out.println(command.getLine()[0]);
